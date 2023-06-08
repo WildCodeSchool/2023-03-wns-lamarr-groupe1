@@ -33,37 +33,30 @@ export class FilesModels extends BaseEntity {
 
   @Field()
   @Column()
-  is_public!: boolean;
+  isPublic!: boolean;
 
-  @BeforeInsert()
-  setDefaultIsPublic(): void {
-    this.is_public = true;
-  }
-
-  @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
-  @Field()
-  @Column({ nullable: true })
-  updated_at: Date;
+  @CreateDateColumn()
+  updatedAt!: Date;
 
   @Field()
   @Column()
-  nb_of_report!: number;
+  nbOfReport: number;
 
   @BeforeInsert()
   setDefaultNbOfReport(): void {
-    this.nb_of_report = 0;
+    this.nbOfReport = 0;
   }
 
   @Field()
   @Column()
-  nb_of_download!: number;
+  nbOfDownload: number;
 
   @BeforeInsert()
   setDefaultNbOfDownload(): void {
-    this.nb_of_download = 0;
+    this.nbOfDownload = 0;
   }
 
   @Field(() => [IssuesModels])
@@ -84,9 +77,9 @@ export class FilesModels extends BaseEntity {
 
   @Field(() => [UsersModels])
   @ManyToOne(() => UsersModels, (user) => user.files)
-  user: UsersModels;
+  user!: UsersModels;
 
   @Field(() => [LanguageModels])
   @ManyToOne(() => LanguageModels, (language) => language.files)
-  language: LanguageModels;
+  language!: LanguageModels;
 }

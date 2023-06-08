@@ -23,11 +23,10 @@ export class CommentsModels extends BaseEntity {
 
   @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
-  @Field()
-  @Column({ nullable: true })
-  updated_at: Date;
+  @CreateDateColumn()
+  updatedAt!: Date;
 
   @Field(() => [FilesModels])
   @ManyToOne(() => FilesModels, (file) => file.comments)

@@ -23,7 +23,7 @@ export class SubscriptionModels extends BaseEntity {
 
   @Field()
   @Column()
-  subscribed_at!: Date;
+  subscribedAt!: Date;
 
   @Field()
   @Column()

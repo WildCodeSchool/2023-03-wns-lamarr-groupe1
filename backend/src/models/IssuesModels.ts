@@ -31,13 +31,11 @@ export class IssuesModels extends BaseEntity {
   @Column()
   issue!: string;
 
-  @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
-  @Field()
-  @Column({ nullable: true })
-  updated_at: Date;
+  @CreateDateColumn()
+  updatedAt!: Date;
 
   @Field((type) => IssuesStatus)
   @Column()
