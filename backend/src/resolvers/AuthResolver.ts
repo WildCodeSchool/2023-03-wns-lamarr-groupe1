@@ -9,7 +9,8 @@ export class AuthResolver {
   //                 -> (retourner le JWT)
   @Mutation(() => String)
   async signUp(
-    @Arg("input") {firstname,lastname,username,password,email}: SignUpInput
+    @Arg("input")
+    { firstname, lastname, username, password, email }: SignUpInput
   ): Promise<string> {
     const hashedPassword = await argon2.hash(password);
 
@@ -19,7 +20,7 @@ export class AuthResolver {
       lastname,
       username,
       email,
-      password: hashedPassword
+      password: hashedPassword,
     }).save();
 
     const token = sign(
@@ -60,6 +61,6 @@ export class AuthResolver {
   @Query(() => String)
   async getProfile(@Ctx() context: any): Promise<string> {
     console.log("user", context.user);
-    return (context.user )?.email;
+    return context.user?.email;
   }
 }
