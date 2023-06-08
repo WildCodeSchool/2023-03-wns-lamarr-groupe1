@@ -4,11 +4,11 @@ import { IsUnique } from './IsUniqueValidator';
 
 @InputType()
 export class SignUpInput {
-  @Field()
+  @Field({ nullable: true })
   @MaxLength(100)
   firstname: string;
 
-  @Field()
+  @Field({ nullable: true })
   @MaxLength(100)
   lastname: string;
 
