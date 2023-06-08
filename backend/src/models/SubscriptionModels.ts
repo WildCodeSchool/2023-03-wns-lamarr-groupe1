@@ -12,7 +12,7 @@ import { UsersModels } from "./UsersModels";
 
 @ObjectType()
 @Entity()
-export class ReportsModels extends BaseEntity {
+export class SubscriptionModels extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
   id: number;

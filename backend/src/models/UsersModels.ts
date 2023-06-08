@@ -24,12 +24,12 @@ export class UsersModels extends BaseEntity {
   id!: number;
 
   @Field()
-  @Column()
-  firstname: string;
+  @Column({ nullable: true })
+  firstname!: string;
 
   @Field()
-  @Column()
-  lastname: string;
+  @Column({ nullable: true })
+  lastname!: string;
 
   @Field()
   @Column()
