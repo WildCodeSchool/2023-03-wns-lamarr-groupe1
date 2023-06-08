@@ -28,8 +28,8 @@ export class FilesModels extends BaseEntity {
   filename!: string;
 
   @Field()
-  @Column()
-  content!: string;
+  @Column({ nullable: true })
+  content: string;
 
   @Field()
   @Column()
@@ -45,7 +45,7 @@ export class FilesModels extends BaseEntity {
   created_at!: Date;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   updated_at: Date;
 
   @Field()

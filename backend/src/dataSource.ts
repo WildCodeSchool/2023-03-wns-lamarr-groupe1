@@ -1,5 +1,13 @@
 import { DataSource } from "typeorm";
 import { UsersModels } from "./models/UsersModels";
+import { IssuesModels } from "./models/IssuesModels";
+import { ContactModels } from "./models/ContactModels";
+import { CommentsModels } from "./models/CommentsModels";
+import { ReportsModels } from "./models/ReportsModels";
+import { InteractionsModels } from "./models/InteractionsModels";
+import { FilesModels } from "./models/FilesModels";
+import { SubscriptionModels } from "./models/SubscriptionModels";
+import { LanguageModels } from "./models/LanguageModels";
 
 const dataSource = new DataSource({
   type: "postgres",
@@ -11,7 +19,17 @@ const dataSource = new DataSource({
 
   synchronize: true,
 
-  entities: [UsersModels],
+  entities: [
+    UsersModels,
+    IssuesModels,
+    ContactModels,
+    CommentsModels,
+    ReportsModels,
+    InteractionsModels,
+    FilesModels,
+    SubscriptionModels,
+    LanguageModels,
+  ],
 });
 
 export default dataSource;

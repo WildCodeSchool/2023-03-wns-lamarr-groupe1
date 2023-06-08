@@ -26,7 +26,7 @@ export class CommentsModels extends BaseEntity {
   created_at!: Date;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   updated_at: Date;
 
   @Field(() => [FilesModels])
