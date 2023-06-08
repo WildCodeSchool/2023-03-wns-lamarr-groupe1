@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  Unique,
   OneToMany,
 } from "typeorm";
 import { IsInt } from "class-validator";
@@ -16,28 +15,30 @@ import { CommentsModels } from "./CommentsModels";
 import { ReportsModels } from "./ReportsModels";
 import { InteractionsModels } from "./InteractionsModels";
 import { FilesModels } from "./FilesModels";
+import { IsUnique } from "../inputs/IsUniqueValidator";
 
 @ObjectType()
 @Entity()
-@Unique(["username", "email"])
 export class UsersModels extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Field()
   @Column()
-  firstname!: string;
+  firstname: string;
 
   @Field()
   @Column()
-  lastname!: string;
+  lastname: string;
 
   @Field()
   @Column()
+  @IsUnique('username', { message: 'Le noms d\'utilisateur choisi éxiste déjà. Merci d\'en choisir un autre'})
   username!: string;
 
   @Field()
   @Column()
+  @IsUnique('email', { message: 'L\'email choisi éxiste déjà. Merci d\'en choisir un autre'})
   email!: string;
 
   @Field()
