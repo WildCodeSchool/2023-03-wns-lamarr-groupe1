@@ -1,29 +1,31 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { IsInt  } from 'class-validator';
 import { Field, ObjectType } from "type-graphql";
+import { IsUnique } from "../inputs/IsUniqueValidator";
 
 
 @ObjectType()
 @Entity()
-@Unique(["username", "email"])
 export class UsersModels extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Field()
   @Column()
-  firstname!: string;
+  firstname: string;
 
   @Field()
   @Column()
-  lastname!: string;
+  lastname: string;
 
   @Field()
   @Column()
+  @IsUnique('username', { message: 'Le noms d\'utilisateur choisi éxiste déjà. Merci d\'en choisir un autre'})
   username!: string;
 
   @Field()
   @Column()
+  @IsUnique('email', { message: 'L\'email choisi éxiste déjà. Merci d\'en choisir un autre'})
   email!: string;
 
   @Field()
