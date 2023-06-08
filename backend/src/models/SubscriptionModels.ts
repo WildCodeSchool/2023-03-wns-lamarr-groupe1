@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToOne,
+  JoinColumn,
+  BeforeInsert,
+} from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { UsersModels } from "./UsersModels";
 
@@ -11,17 +19,22 @@ export class ReportsModels extends BaseEntity {
 
   @Field()
   @Column()
-  status: string;
+  status!: string;
 
   @Field()
   @Column()
-  subscribed_at: Date;
+  subscribed_at!: Date;
 
   @Field()
   @Column()
-  duration: string;
+  duration!: string;
 
   @OneToOne(() => UsersModels)
   @JoinColumn()
   user: UsersModels;
+
+  @BeforeInsert()
+  setDefaultStatus(): void {
+    this.status = "inactive";
+  }
 }

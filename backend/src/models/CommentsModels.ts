@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  ManyToOne,
+  CreateDateColumn,
+} from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { FilesModels } from "./FilesModels";
 import { UsersModels } from "./UsersModels";
@@ -12,11 +19,11 @@ export class CommentsModels extends BaseEntity {
 
   @Field()
   @Column()
-  comment: string;
+  comment!: string;
 
   @Field()
-  @Column()
-  created_at: Date;
+  @CreateDateColumn()
+  created_at!: Date;
 
   @Field()
   @Column()

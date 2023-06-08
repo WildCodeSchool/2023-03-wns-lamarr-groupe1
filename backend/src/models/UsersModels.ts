@@ -8,7 +8,7 @@ import {
   Unique,
   OneToMany,
 } from "typeorm";
-import { IsInt  } from 'class-validator';
+import { IsInt } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
 import { IssuesModels } from "./IssuesModels";
 import { ContactModels } from "./ContactModels";

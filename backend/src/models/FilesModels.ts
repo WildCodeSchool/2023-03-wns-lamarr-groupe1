@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  BaseEntity,
+  ManyToOne,
+  BeforeInsert,
+  CreateDateColumn,
+} from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { IssuesModels } from "./IssuesModels";
 import { CommentsModels } from "./CommentsModels";
@@ -16,19 +25,24 @@ export class FilesModels extends BaseEntity {
 
   @Field()
   @Column()
-  filename: string;
+  filename!: string;
 
   @Field()
   @Column()
-  content: string;
+  content!: string;
 
   @Field()
   @Column()
-  is_public: boolean;
+  is_public!: boolean;
+
+  @BeforeInsert()
+  setDefaultIsPublic(): void {
+    this.is_public = true;
+  }
 
   @Field()
-  @Column()
-  created_at: Date;
+  @CreateDateColumn()
+  created_at!: Date;
 
   @Field()
   @Column()
@@ -36,11 +50,21 @@ export class FilesModels extends BaseEntity {
 
   @Field()
   @Column()
-  nb_of_report: number;
+  nb_of_report!: number;
+
+  @BeforeInsert()
+  setDefaultNbOfReport(): void {
+    this.nb_of_report = 0;
+  }
 
   @Field()
   @Column()
-  nb_of_download: number;
+  nb_of_download!: number;
+
+  @BeforeInsert()
+  setDefaultNbOfDownload(): void {
+    this.nb_of_download = 0;
+  }
 
   @Field(() => [IssuesModels])
   @OneToMany(() => IssuesModels, (issue) => issue.file)

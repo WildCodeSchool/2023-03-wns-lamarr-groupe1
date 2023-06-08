@@ -21,7 +21,7 @@ export class InteractionsModels extends BaseEntity {
 
   @Field((type) => InteractionType)
   @Column()
-  type: InteractionType;
+  type!: InteractionType;
 
   @Field(() => [FilesModels])
   @ManyToOne(() => FilesModels, (file) => file.interactions)
@@ -30,4 +30,5 @@ export class InteractionsModels extends BaseEntity {
   @Field(() => [UsersModels])
   @ManyToOne(() => UsersModels, (user) => user.interactions)
   user: UsersModels;
+  
 }

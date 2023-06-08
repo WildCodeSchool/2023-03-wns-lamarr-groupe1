@@ -4,6 +4,7 @@ import {
   Column,
   BaseEntity,
   ManyToOne,
+  CreateDateColumn,
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { UsersModels } from "./UsersModels";
@@ -17,15 +18,15 @@ export class ContactModels extends BaseEntity {
 
   @Field()
   @Column()
-  title: string;
+  title!: string;
+
+  @Field()
+  @CreateDateColumn()
+  created_at!: Date;
 
   @Field()
   @Column()
-  created_at: Date;
-
-  @Field()
-  @Column()
-  content: string;
+  content!: string;
 
   @Field(() => [UsersModels])
   @ManyToOne(() => UsersModels, (user) => user.contacts)
