@@ -5,7 +5,6 @@
 import { registerDecorator, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
 import { UsersModels } from '../models/UsersModels';
 
-
 @ValidatorConstraint({ async: true })
 class IsUniqueConstraint implements ValidatorConstraintInterface {
     async validate(value: any, args: ValidationArguments): Promise<boolean> {
@@ -15,14 +14,11 @@ class IsUniqueConstraint implements ValidatorConstraintInterface {
         const existingUser = await UsersModels.findOne({
           where: { [relatedPropertyName]: value },
         });
-      
         if (existingUser && existingUser.id !== object.id) {
           return false;
         }
-      
         return true;
       }
-      
 
   defaultMessage(args: ValidationArguments): string {
     const [relatedPropertyName] = args.constraints;

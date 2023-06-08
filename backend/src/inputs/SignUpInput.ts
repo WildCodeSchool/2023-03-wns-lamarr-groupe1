@@ -2,7 +2,6 @@ import { IsEmail, Length, MaxLength, MinLength, Matches  } from 'class-validator
 import { Field, InputType } from "type-graphql";
 import { IsUnique } from './IsUniqueValidator';
 
-
 @InputType()
 export class SignUpInput {
   @Field()
