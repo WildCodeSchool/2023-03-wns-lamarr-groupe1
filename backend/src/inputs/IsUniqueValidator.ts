@@ -1,7 +1,3 @@
-/* eslint-disable object-shorthand */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import { registerDecorator, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
 import { UsersModels } from '../models/UsersModels';
 
@@ -14,7 +10,7 @@ class IsUniqueConstraint implements ValidatorConstraintInterface {
         const existingUser = await UsersModels.findOne({
           where: { [relatedPropertyName]: value },
         });
-        if (existingUser && existingUser.id !== object.id) {
+        if (existingUser !== null && existingUser.id !== object.id) {
           return false;
         }
         return true;
@@ -22,7 +18,7 @@ class IsUniqueConstraint implements ValidatorConstraintInterface {
 
   defaultMessage(args: ValidationArguments): string {
     const [relatedPropertyName] = args.constraints;
-    return `${relatedPropertyName} must be unique`;
+    return `${JSON.stringify(relatedPropertyName)} doit être unique`;
   }
 }
 
@@ -31,7 +27,7 @@ export function IsUnique(property: string, validationOptions?: ValidationOptions
     registerDecorator({
       name: 'isUnique',
       target: object.constructor,
-      propertyName: propertyName,
+      propertyName,
       options: validationOptions,
       constraints: [property],
       validator: IsUniqueConstraint,
