@@ -14,17 +14,21 @@ export class SignUpInput {
 
   @Field()
   @Length(1, 80)
-  @IsUnique('username', { message: 'Le noms d\'utilisateur choisi éxiste déjà. Merci d\'en choisir un autre'})
+  @IsUnique("username", {
+    message:
+      "Le noms d'utilisateur choisi éxiste déjà. Merci d'en choisir un autre",
+  })
   username!: string;
 
   @Field()
   @IsEmail()
-  @IsUnique('email', { message: 'L\'email choisi éxiste déjà. Merci d\'en choisir un autre'})
+  @IsUnique("email", {
+    message: "L'email choisi éxiste déjà. Merci d'en choisir un autre",
+  })
   email!: string;
 
   @Field()
   @Matches(/^(?=.*[A-Z])(?=.*[!@#$%^&*])/)
   @MinLength(8)
   password!: string;
-
 }

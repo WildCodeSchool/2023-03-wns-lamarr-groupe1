@@ -23,7 +23,7 @@ export class ReportsModels extends BaseEntity {
 
   @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
   @Field(() => [FilesModels])
   @ManyToOne(() => FilesModels, (file) => file.reports)
