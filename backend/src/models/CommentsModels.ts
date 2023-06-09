@@ -5,6 +5,7 @@ import {
   BaseEntity,
   ManyToOne,
   CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { FilesModels } from "./FilesModels";
@@ -25,7 +26,7 @@ export class CommentsModels extends BaseEntity {
   @CreateDateColumn()
   createdAt!: Date;
 
-  @CreateDateColumn()
+  @UpdateDateColumn()
   updatedAt!: Date;
 
   @Field(() => [FilesModels])

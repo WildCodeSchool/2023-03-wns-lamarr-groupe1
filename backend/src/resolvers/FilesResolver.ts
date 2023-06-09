@@ -1,6 +1,7 @@
 import { Arg, Mutation, Authorized, Query } from "type-graphql";
 import { FilesModels } from "../models/FilesModels";
-import { FileInput } from "../inputs/FileInput";
+import { FileInput } from "../inputs/file/FileInput";
+import { UpdateFileInput } from "../inputs/file/UpdateFileInput";
 import { UsersModels } from "../models/UsersModels";
 import { LanguageModels } from "../models/LanguageModels";
 
@@ -43,7 +44,34 @@ export class FileResolver {
     return file;
   }
 
-  // Query to find all files
+  @Authorized()
+  @Mutation(() => FilesModels)
+  async updateFile(
+    @Arg("id") id: number,
+    @Arg("update")
+    { filename, content, isPublic, nbOfReport, nbOfDownload }: UpdateFileInput
+  ): Promise<FilesModels> {
+    // récupérer le fichier a update
+    const fileToUpdate = await FilesModels.findOneBy({
+      id,
+    });
+    if (fileToUpdate === null) {
+      throw new Error("File not found");
+    }
+
+    // update les data envoyer
+    const file = await FilesModels.merge(fileToUpdate, {
+      filename,
+      content,
+      isPublic,
+      nbOfReport,
+      nbOfDownload,
+    }).save();
+
+    return file;
+  }
+
+  // Query pour recuperer tous les fichier
   @Authorized()
   @Query(() => [FilesModels])
   async getFiles(): Promise<FilesModels[]> {
@@ -51,7 +79,7 @@ export class FileResolver {
     return files;
   }
 
-  // Query to find one file by id
+  // Query pour recuperer un fichier par son id
   @Authorized()
   @Query(() => FilesModels)
   async getFile(@Arg("fileId") fileId: number): Promise<FilesModels> {
