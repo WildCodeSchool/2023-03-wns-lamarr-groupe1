@@ -20,9 +20,8 @@ export class ContactModels extends BaseEntity {
   @Column()
   title!: string;
 
-  @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
   @Field()
   @Column()

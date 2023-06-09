@@ -1,17 +1,18 @@
 import { ApolloServer } from "apollo-server";
 import dataSource from "./dataSource";
 import { buildSchema } from "type-graphql";
-import { AuthResolver } from "./resolvers/AuthResolver";
 import { JwtPayload, verify } from "jsonwebtoken";
 import { UsersModels } from "./models/UsersModels";
 import { config } from "dotenv";
+import { join } from "path";
 
 config();
 
 const start = async (): Promise<void> => {
   await dataSource.initialize();
+  const path = join(__dirname, "./resolvers/**/*Resolver.ts");
   const schema = await buildSchema({
-    resolvers: [AuthResolver],
+    resolvers: [path],
     authChecker: ({ context }) => {
       return context.user;
     },

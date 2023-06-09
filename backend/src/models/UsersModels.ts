@@ -64,7 +64,7 @@ export class UsersModels extends BaseEntity {
   }
 
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
   @Field(() => [IssuesModels])
   @OneToMany(() => IssuesModels, (issue) => issue.user)
