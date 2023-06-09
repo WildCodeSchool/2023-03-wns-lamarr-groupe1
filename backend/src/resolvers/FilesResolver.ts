@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query } from "type-graphql";
+import { Arg, Mutation, Authorized, Query } from "type-graphql";
 import { FilesModels } from "../models/FilesModels";
 import { FileInput } from "../inputs/FileInput";
 import { UsersModels } from "../models/UsersModels";
@@ -6,6 +6,7 @@ import { LanguageModels } from "../models/LanguageModels";
 
 export class FileResolver {
   // Mutation addFile -> insérer un fichier en BDD
+  @Authorized()
   @Mutation(() => FilesModels)
   async addFile(
     @Arg("userId") userId: number,
@@ -43,6 +44,7 @@ export class FileResolver {
   }
 
   // Query to find all files
+  @Authorized()
   @Query(() => [FilesModels])
   async getFiles(): Promise<FilesModels[]> {
     const files = await FilesModels.find();
@@ -50,6 +52,7 @@ export class FileResolver {
   }
 
   // Query to find one file by id
+  @Authorized()
   @Query(() => FilesModels)
   async getFile(@Arg("fileId") fileId: number): Promise<FilesModels> {
     const file = await FilesModels.findOne({
