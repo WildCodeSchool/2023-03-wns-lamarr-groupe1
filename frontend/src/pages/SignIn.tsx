@@ -1,5 +1,5 @@
 import FormSignIn from "../components/common/FormSignIn";
-import "../styles/log/SignIn.scss";
+import "../styles/SignInUp.scss";
 const SignIn = () => {
   return (
     <div className="container-page-signin">

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const SIGN_IN_QUERY = gql`
-  query SignIn($email: String!, $password: String!) {
-    signIn(email: $email, password: $password)
+  query Query($password: String!, $email: String!) {
+    signIn(password: $password, email: $email)
   }
 `;
