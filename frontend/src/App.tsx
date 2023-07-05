@@ -1,13 +1,15 @@
 import React from "react";
 import "./App.css";
-import Navbar from "./components/common/navbar";
-import Landing from "./pages/landing";
+import { Route, Routes } from "react-router-dom";
+import SignIn from "./pages/SignIn";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-    </div>
+    <Routes>
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/sign-up" element={<SignUpPage />} />
+    </Routes>
   );
 }
 
