@@ -5,6 +5,7 @@ import {
   ManyToOne,
   BaseEntity,
   CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Field, ObjectType, registerEnumType } from "type-graphql";
 import { FilesModels } from "./FilesModels";
@@ -31,13 +32,11 @@ export class IssuesModels extends BaseEntity {
   @Column()
   issue!: string;
 
-  @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
-  @Field()
-  @Column({ nullable: true })
-  updated_at: Date;
+  @UpdateDateColumn()
+  updatedAt!: Date;
 
   @Field((type) => IssuesStatus)
   @Column()
