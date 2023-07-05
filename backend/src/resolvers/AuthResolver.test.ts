@@ -177,7 +177,6 @@ describe("AuthResolver", () => {
       const username = faker.internet.userName();
 
       await UsersModels.create({ email, password, username }).save();
-      console.log(email, password, username);
 
       const response = await callGraphQL({
         query: `
@@ -187,8 +186,6 @@ describe("AuthResolver", () => {
           `,
         variables: { email, password: pass },
       });
-      console.log(response.errors);
-      console.log(response.data);
       expect(response.errors).not.toBeTruthy();
       expect(response.data).toBeTruthy();
       expect(response.data?.signIn).toBeTruthy();
