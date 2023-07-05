@@ -1,6 +1,6 @@
 import { Arg, Authorized, Ctx, Mutation, Query } from "type-graphql";
 import { UsersModels } from "../models/UsersModels";
-import * as argon2 from "argon2";
+import * as argon2 from 'argon2'
 import { sign } from "jsonwebtoken";
 import { SignUpInput } from "../inputs/SignUpInput";
 
@@ -23,9 +23,10 @@ export class AuthResolver {
       password: hashedPassword,
     }).save();
 
+    console.log("process.env.ACCESS_TOKEN_SECRET",process.env.ACCESS_TOKEN_SECRET)
     const token = sign(
       { userId: createdUser.id },
-      process.env.ACCESS_TOKEN_SECRET as string
+      process.env.ACCESS_TOKEN_SECRET ?? 'test-secret'
     );
 
     return token;
@@ -51,7 +52,7 @@ export class AuthResolver {
 
     const token = sign(
       { userId: userFoundByEmail.id },
-      process.env.ACCESS_TOKEN_SECRET as string
+      process.env.ACCESS_TOKEN_SECRET ?? 'test-secret'
     );
 
     return token;

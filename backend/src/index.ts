@@ -1,52 +1,17 @@
 import { ApolloServer } from "apollo-server";
-import dataSource from "./dataSource";
-import { buildSchema } from "type-graphql";
-import { JwtPayload, verify } from "jsonwebtoken";
-import { UsersModels } from "./models/UsersModels";
+import dataSource from "./Utils/dataSource";
 import { config } from "dotenv";
-import { join } from "path";
+import { createApolloSchema } from "./Utils/createApolloSchema";
+import { apolloContext } from "./Utils/apolloContext";
 
 config();
 
 const start = async (): Promise<void> => {
   await dataSource.initialize();
-  const path = join(__dirname, "./resolvers/**/*Resolver.ts");
-  const schema = await buildSchema({
-    resolvers: [path],
-    authChecker: ({ context }) => {
-      return context.user;
-    },
-  });
+  const schema = await createApolloSchema();
   const server = new ApolloServer({
     schema,
-    context: async ({ req }) => {
-      if (req.headers.authorization == null) {
-        return {};
-      }
-
-      // "authorization": `Bearer ${token}`
-      try {
-        const bearer = req.headers.authorization.split("Bearer ")[1];
-        if (bearer.length === 0) {
-          return {};
-        }
-
-        const decodedPayload = verify(
-          bearer,
-          process.env.ACCESS_TOKEN_SECRET as string
-        );
-        if (typeof (decodedPayload as JwtPayload)?.userId === "number") {
-          const user = await UsersModels.findOne({
-            where: { id: (decodedPayload as JwtPayload).userId },
-          });
-          return { user };
-        }
-        return {};
-      } catch (error) {
-        console.log("error", error);
-        return {};
-      }
-    },
+    context: apolloContext,
   });
   try {
     const { url } = await server.listen({ port: 5000 });

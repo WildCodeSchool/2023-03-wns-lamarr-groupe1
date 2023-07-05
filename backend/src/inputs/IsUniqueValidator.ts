@@ -18,7 +18,7 @@ class IsUniqueConstraint implements ValidatorConstraintInterface {
 
   defaultMessage(args: ValidationArguments): string {
     const [relatedPropertyName] = args?.constraints;
-    return `${JSON.stringify(relatedPropertyName)} must be unique`;
+    return `${JSON.stringify(relatedPropertyName)} doit être unique`;
   }
 }
 
