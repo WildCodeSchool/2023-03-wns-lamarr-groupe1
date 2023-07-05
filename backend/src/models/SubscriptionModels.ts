@@ -6,7 +6,8 @@ import {
   OneToOne,
   JoinColumn,
   BeforeInsert,
-} from "typeorm";
+  CreateDateColumn
+} from "typeorm"
 import { Field, ObjectType } from "type-graphql";
 import { UsersModels } from "./UsersModels";
 
@@ -15,26 +16,30 @@ import { UsersModels } from "./UsersModels";
 export class SubscriptionModels extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Field()
   @Column()
-  status!: string;
+  status!: string
 
   @Field()
-  @Column()
-  subscribedAt!: Date;
+  @CreateDateColumn()
+  subscribedAt!: Date
 
   @Field()
-  @Column()
-  duration!: string;
+  @Column({ nullable: true })
+  subscriptionEndedAt!: Date
+
+  @Field()
+  @Column({ nullable: true })
+  duration: string
 
   @OneToOne(() => UsersModels)
   @JoinColumn()
-  user: UsersModels;
+  user: UsersModels
 
   @BeforeInsert()
   setDefaultStatus(): void {
-    this.status = "inactive";
+    this.status = "Inactive"
   }
 }

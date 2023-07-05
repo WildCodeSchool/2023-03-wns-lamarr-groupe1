@@ -3,6 +3,7 @@ import { UsersModels } from "../models/UsersModels";
 import * as argon2 from 'argon2'
 import { sign } from "jsonwebtoken";
 import { SignUpInput } from "../inputs/SignUpInput";
+import { SubscriptionModels } from "../models/SubscriptionModels"
 
 export class AuthResolver {
   // Mutation signUp -> insérer un utilisateur en BDD (à partir d'identifiants)
@@ -22,6 +23,10 @@ export class AuthResolver {
       email,
       password: hashedPassword,
     }).save();
+
+    await SubscriptionModels.create({
+      user: createdUser
+    }).save()
 
     console.log("process.env.ACCESS_TOKEN_SECRET",process.env.ACCESS_TOKEN_SECRET)
     const token = sign(
