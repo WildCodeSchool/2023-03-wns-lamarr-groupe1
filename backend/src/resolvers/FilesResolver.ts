@@ -4,6 +4,7 @@ import { FileInput } from "../inputs/file/FileInput";
 import { UpdateFileInput } from "../inputs/file/UpdateFileInput";
 import { UsersModels } from "../models/UsersModels";
 import { LanguageModels } from "../models/LanguageModels";
+import { GetFilesQuery } from "../queries/GetFilesQuery";
 
 export class FileResolver {
   // Mutation addFile -> insérer un fichier en BDD
@@ -72,10 +73,23 @@ export class FileResolver {
   }
 
   // Query pour recuperer tous les fichier
-  @Authorized()
   @Query(() => [FilesModels])
-  async getFiles(): Promise<FilesModels[]> {
-    const files = await FilesModels.find();
+  async getFiles(
+    @Arg("filter") { programmingLanguage, page }: GetFilesQuery
+  ): Promise<FilesModels[]> {
+    const pagination: number = page !== undefined ? page : 1;
+    const NUMBER_OF_FILES_PER_PAGE: number = 10;
+    const take = NUMBER_OF_FILES_PER_PAGE;
+    const skip = (pagination - 1) * NUMBER_OF_FILES_PER_PAGE;
+
+    const where: Record<string, any> = {};
+
+    if (programmingLanguage !== undefined) {
+      where.language = { name: programmingLanguage };
+    }
+
+    const files = await FilesModels.find({ where, take, skip });
+
     return files;
   }
 
