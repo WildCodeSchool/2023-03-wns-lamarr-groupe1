@@ -5,16 +5,16 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 const BasicPriceCard = () => {
   return (
     <div className="container-basic-price-card">
-      <div className="container-part-1">
+      <div className="container-part-1-basic">
         <h3>BASIC</h3>
         <div className="container-price">
-          <p>0</p>
-          <p>€</p>
-          <p>/mois</p>
+          <p className="price-card">0</p>
+          <p className="euro">€</p>
+          <p>/ mois</p>
         </div>
-        <p>S'INSCRIRE</p>
+        <button className="button-card">S'INSCRIRE</button>
       </div>
-      <div className="container-part-2">
+      <div className="container-part-2-basic">
         <div className="executions-code">
           <FontAwesomeIcon icon={faCheck} />
           <p>50 executions de code par jour</p>
