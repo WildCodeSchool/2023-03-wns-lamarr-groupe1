@@ -79,7 +79,8 @@ export class AuthResolver {
 
     if (
       userFoundByEmail.subscription.status === "Active" &&
-      userFoundByEmail.subscription.subscriptionEndedAt <= date
+      userFoundByEmail.subscription.subscriptionEndedAt <= date &&
+      userFoundByEmail.subscription.type === "Free"
     ) {
       const status = "Inactive"
       const duration = ""
@@ -89,6 +90,26 @@ export class AuthResolver {
         status,
         subscribedAt: date,
         type
+      }).save()
+    } else if (
+      userFoundByEmail.subscription.status === "Active" &&
+      userFoundByEmail.subscription.subscriptionEndedAt <= date &&
+      userFoundByEmail.subscription.type === "Expert"
+    ) {
+      const status = "Active"
+      const duration = "Monthly"
+      const type = "Expert"
+      const subscriptionEndedAt = calculateEndedAt(
+        duration,
+        status,
+        date
+      )
+      await SubscriptionModels.merge(userFoundByEmail.subscription, {
+        duration,
+        status,
+        subscribedAt: date,
+        type,
+        subscriptionEndedAt
       }).save()
     }
     const passwordValid: boolean = await argon2.verify(
