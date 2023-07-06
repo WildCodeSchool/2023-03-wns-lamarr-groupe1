@@ -9,12 +9,6 @@ import { Field, InputType } from "type-graphql";
     @Length(1, 100000)
     comment!: string;
 
-    // @Field()
-    // createdAt!: Date;
-
-    // @Field()
-    // updatedAt!: Date;
-
     @Field()
     fileId!: number;
 
