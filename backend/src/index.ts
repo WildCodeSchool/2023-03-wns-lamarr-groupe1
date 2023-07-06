@@ -1,15 +1,17 @@
 import { ApolloServer } from "apollo-server";
-import dataSource from "./dataSource";
-import { buildSchema } from "type-graphql";
-import { WildersResolver } from "./resolvers/WildersResolver";
+import dataSource from "./Utils/dataSource";
+import { config } from "dotenv";
+import { createApolloSchema } from "./Utils/createApolloSchema";
+import { apolloContext } from "./Utils/apolloContext";
+
+config();
 
 const start = async (): Promise<void> => {
   await dataSource.initialize();
-  const schema = await buildSchema({
-    resolvers: [WildersResolver],
-  });
+  const schema = await createApolloSchema();
   const server = new ApolloServer({
     schema,
+    context: apolloContext,
   });
   try {
     const { url } = await server.listen({ port: 5000 });

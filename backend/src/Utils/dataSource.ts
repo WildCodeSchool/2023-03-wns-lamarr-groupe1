@@ -1,4 +1,5 @@
 import { DataSource } from "typeorm";
+import { join } from "path";
 
 const dataSource = new DataSource({
   type: "postgres",
@@ -10,7 +11,7 @@ const dataSource = new DataSource({
 
   synchronize: true,
 
-  entities: [],
+  entities: [join(__dirname, "../models/**.ts")],
 });
 
 export default dataSource;

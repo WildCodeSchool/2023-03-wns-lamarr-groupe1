@@ -5,6 +5,8 @@ services:
       - 5000:5000
     volumes:
       - ./backend/src:/app/src
+    environment:
+      ACCESS_TOKEN_SECRET: uenimrgkjhrfugbzsyebyugr
 
   frontend:
     build: ./frontend
