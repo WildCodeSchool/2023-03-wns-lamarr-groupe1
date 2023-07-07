@@ -1,13 +1,23 @@
+.container-page-signup {
+  transform: scaleX(1) !important;
+  .container-card-form {
+    transform: scaleX(1) !important;
+  }
+}
 .container-page-signin {
-  width: 100%;
+  // height: 100vh;
+  // width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   color: #fff;
-  background: url("../assets/img/illustration-tech.svg") left center no-repeat;
-  background-size: 60%;
+  background: url("../assets/img/illustration-signIn.png") left center no-repeat;
+  transform: scaleX(-1);
+  background-size: 64%;
   .container-card-form {
-    margin-right: 10%;
+    transform: scaleX(-1);
+    margin-right: 80px;
+    width: 450px;
     background-color: #5340a9;
     border-radius: 15px;
     padding: 25px 20px;
@@ -19,17 +29,11 @@
     h2 {
       font-size: 32px;
       margin: 0;
+      text-transform: uppercase;
     }
 
     .details-text {
       max-width: 70%;
-    }
-
-    .error {
-      width: 100%;
-      border-radius: 5px;
-      color: #d8000c;
-      background-color: #fec2c2f5;
     }
 
     p {
@@ -45,16 +49,26 @@
         display: flex;
         justify-content: space-between;
 
-        input:first-child {
-          margin-right: 65px;
+        input {
+          width: 40%;
         }
       }
       input {
-        margin: 17px 0;
+        margin: 14px 0;
         border-radius: 5px;
         background-color: #fff;
         border: none;
         padding: 15px 15px;
+      }
+
+      .error-input {
+        align-self: flex-start;
+        margin: 0px;
+        padding: 3px 20px;
+        border-radius: 5px;
+        color: #d8000c;
+        background-color: #fec2c2f5;
+        height: auto;
       }
 
       button {
@@ -120,7 +134,21 @@
     }
   }
 }
-
+@media (max-width: 1025px) {
+  .container-page-signin {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background: none;
+    .container-card-form {
+      width: 400px;
+      margin-right: 0;
+    }
+  }
+}
 @media (max-width: 600px) {
   .container-page-signin {
     .container-card-form {
@@ -139,14 +167,19 @@
       .content-sso-signin {
         flex-direction: column;
       }
-
+    }
+  }
+}
+@media (max-width: 400px) {
+  .container-page-signin {
+    .container-card-form {
       form {
         .container-input-firstName-lastName {
           display: flex;
           justify-content: space-between;
 
-          input:first-child {
-            margin-right: 0px;
+          input {
+            width: 35%;
           }
         }
       }
