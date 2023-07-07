@@ -17,9 +17,9 @@ export class ReportsModels extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
-  @Column()
-  comment!: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  comment?: string;
 
   @Field()
   @CreateDateColumn()
