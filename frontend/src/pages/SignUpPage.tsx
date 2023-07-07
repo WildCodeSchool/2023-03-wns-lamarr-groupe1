@@ -1,8 +1,5 @@
 import FormSignUp from "../components/common/FormSignUp";
-<<<<<<< Updated upstream
-=======
 import Navbar from "../components/common/navbar";
->>>>>>> Stashed changes
 
 const SignUpPage = () => {
   return (

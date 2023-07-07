@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/common/navbar";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Home = () => {
 
   return (
     <div>
+      <Navbar />
       <p>
         Hello i'm the homepage ! I'll make my muscle grow up and i'll be back
         <br></br>
