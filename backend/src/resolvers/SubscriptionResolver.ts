@@ -8,17 +8,19 @@ export class SubscriptionResolver {
   async updateSubscription(
     @Arg("id") id: number,
     @Arg("update")
-    { status, duration }: UpdateSubscriptionInput
+    { type }: UpdateSubscriptionInput
   ): Promise<SubscriptionModels> {
     // passe la 1ère lettre ne majuscule
-    status = status.charAt(0).toUpperCase() + status.substring(1).toLowerCase()
-    duration =
-      duration.charAt(0).toUpperCase() + duration.substring(1).toLowerCase()
-    
+    type = type.charAt(0).toUpperCase() + type.substring(1).toLowerCase()
+    let status = ""
+    let duration = ""
+
+    let subscription: SubscriptionModels
+
     // définit une nouvelle date de début
     const subscribedAt = new Date()
-    
-    // récupérer le fichier a update
+
+    // récupérer la soucription a update
     const subscriptionToUpdate = await SubscriptionModels.findOneBy({
       id
     })
@@ -27,15 +29,42 @@ export class SubscriptionResolver {
     }
 
     // calcule la date de fin en fonction de la date de début
-    const subscriptionEndedAt = calculateEndedAt(duration, status, subscribedAt)
+    if (type === "Expert" && subscriptionToUpdate.status === "Inactive") {
+      status = "Active"
+      duration = "Monthly"
+      const subscriptionEndedAt = calculateEndedAt(
+        duration,
+        status,
+        subscribedAt
+      )
+      subscription = await SubscriptionModels.merge(subscriptionToUpdate, {
+        subscriptionEndedAt,
+        duration,
+        status,
+        subscribedAt,
+        type
+      }).save()
+    } else if (type === "Free" && subscriptionToUpdate.status === "Active") {
+      status = "Active"
+      duration = "Monthly"
+      subscription = await SubscriptionModels.merge(subscriptionToUpdate, {
+        duration,
+        status,
+        subscribedAt,
+        type
+      }).save()
+    } else {
+      status = "Inactive"
+      duration = ""
+      subscription = await SubscriptionModels.merge(subscriptionToUpdate, {
+        duration,
+        status,
+        subscribedAt,
+        type
+      }).save()
+    }
 
     // update les la date de fin
-    const subscription = await SubscriptionModels.merge(subscriptionToUpdate, {
-      subscriptionEndedAt,
-      duration,
-      status,
-      subscribedAt
-    }).save()
 
     return subscription
   }
@@ -45,8 +74,8 @@ export class SubscriptionResolver {
   async getSubscription(
     @Arg("subscriptionId") subscriptionId: number
   ): Promise<SubscriptionModels> {
-    const subscription = await SubscriptionModels.findOne({
-      where: { id: subscriptionId }
+    const subscription = await SubscriptionModels.findOneBy({
+      id: subscriptionId
     })
     if (subscription === null) {
       throw new Error("File not found")

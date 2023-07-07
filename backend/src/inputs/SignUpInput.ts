@@ -6,29 +6,33 @@ import { IsUnique } from './IsUniqueValidator';
 export class SignUpInput {
   @Field({ nullable: true })
   @MaxLength(100)
-  firstname: string;
+  firstname: string
 
   @Field({ nullable: true })
   @MaxLength(100)
-  lastname: string;
+  lastname: string
 
   @Field()
   @Length(1, 80)
   @IsUnique("username", {
     message:
-      "Le noms d'utilisateur choisi éxiste déjà. Merci d'en choisir un autre",
+      "Le noms d'utilisateur choisi éxiste déjà. Merci d'en choisir un autre"
   })
-  username!: string;
+  username!: string
 
   @Field()
   @IsEmail()
   @IsUnique("email", {
-    message: "L'email choisi éxiste déjà. Merci d'en choisir un autre",
+    message: "L'email choisi éxiste déjà. Merci d'en choisir un autre"
   })
-  email!: string;
+  email!: string
 
   @Field()
   @Matches(/^(?=.*[A-Z])(?=.*[!@#$%^&*])/)
   @MinLength(8)
-  password!: string;
+  password!: string
+
+  @Field()
+  @MaxLength(100)
+  type: string
 }
