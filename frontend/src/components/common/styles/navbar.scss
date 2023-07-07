@@ -1,12 +1,15 @@
+@import "../../../mixins.scss";
+
 nav {
   display: flex;
   justify-content: space-between;
   background-color: white;
-  color: #5340a9;
+  color: $primary;
   font-size: 18px;
   font-weight: 500;
   width: auto;
   height: auto;
+  padding: 15px 0;
 
   ul {
     display: flex;
@@ -20,7 +23,7 @@ nav {
     li {
       a {
         text-decoration: none;
-        color: #5340a9;
+        color: $primary;
         position: relative;
 
         &:hover {
@@ -36,7 +39,7 @@ nav {
           display: inline-block;
           width: 100%;
           height: 1px;
-          background-color: #5340a9;
+          background-color: rgba(83, 64, 169, 0.9);
           opacity: 0.9;
           bottom: -2px;
           left: 0;
@@ -58,9 +61,14 @@ nav {
 
     span {
       position: relative;
+
+      &:active {
+        color: $primary;
+      }
+
       a {
         text-decoration: none;
-        color: primary;
+        color: $primary;
         text-align: center;
 
         &:hover {
@@ -91,8 +99,8 @@ nav {
     .button {
       a {
         color: white;
-        border: solid 1px #5340a9;
-        background-color: #5340a9;
+        border: solid 1px $primary;
+        background-color: $primary;
         border-radius: 5px;
         font-weight: 500;
         font-size: 18px;
@@ -102,9 +110,9 @@ nav {
 
         &:hover {
           background-color: white;
-          color: #5340a9;
+          color: $primary;
           opacity: 0.9;
-          border: solid 1px #5340a9 0.9;
+          border: solid 1px $primary 0.9;
         }
       }
     }

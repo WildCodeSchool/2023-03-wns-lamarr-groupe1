@@ -1,14 +1,15 @@
 import FormSignIn from "../components/common/FormSignIn";
 import "../styles/SignInUp.scss";
-import Navbar from "../components/common/navbar";
+import Layout from "../components/common/layouts/Layout";
 
 const SignIn = () => {
   return (
     <>
-      <Navbar />
-      <div className="container-page-signin">
-        <FormSignIn />
-      </div>
+      <Layout>
+        <div className="container-page-signin">
+          <FormSignIn />
+        </div>
+      </Layout>
     </>
   );
 };
