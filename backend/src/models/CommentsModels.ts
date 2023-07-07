@@ -26,6 +26,7 @@ export class CommentsModels extends BaseEntity {
   @CreateDateColumn()
   createdAt!: Date;
 
+  @Field()
   @UpdateDateColumn()
   updatedAt!: Date;
 
