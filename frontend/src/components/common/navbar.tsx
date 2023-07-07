@@ -1,4 +1,5 @@
 import "./styles/navbar.scss";
+import { Link } from "react-router-dom";
 import img from "../../../src/assets/img/mainLogo.svg";
 
 export default function navbar() {
@@ -6,23 +7,28 @@ export default function navbar() {
     <nav>
       <ul>
         <li>
-          <img src={img} />
+          <img
+            src={img}
+            alt="main logo site web composé de cercles de couleur violets"
+          />
         </li>
         <li>
-          <a href="/pricing">Pricing</a>
+          <Link to={"#Accueil"}>Accueil</Link>
         </li>
         <li>
-          <a href="/aboutus">About us</a>
+          <Link to={"#aboutUs"}>A propos de nous</Link>
         </li>
         <li>
-          <a href="/contact">Contact</a>
+          <Link to={"#contact"}>Contact</Link>
         </li>
       </ul>
       <div>
-        <a href="/login">Connexion</a>
-        <button>
-          <a href="/signin">Inscription</a>
-        </button>
+        <span>
+          <Link to={"/sign-in"}>S'inscrire</Link>
+        </span>
+        <div className="button">
+          <Link to={"/sign-up"}>Connexion</Link>
+        </div>
       </div>
     </nav>
   );
