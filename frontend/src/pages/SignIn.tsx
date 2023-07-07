@@ -1,10 +1,16 @@
 import FormSignIn from "../components/common/FormSignIn";
 import "../styles/SignInUp.scss";
+import Layout from "../components/common/layouts/Layout";
+
 const SignIn = () => {
   return (
-    <div className="container-page-signin">
-      <FormSignIn />
-    </div>
+    <>
+      <Layout>
+        <div className="container-page-signin">
+          <FormSignIn />
+        </div>
+      </Layout>
+    </>
   );
 };
 
