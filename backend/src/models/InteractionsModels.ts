@@ -3,7 +3,7 @@ import { Field, ObjectType, registerEnumType } from "type-graphql";
 import { FilesModels } from "./FilesModels";
 import { UsersModels } from "./UsersModels";
 
-enum InteractionType {
+export enum InteractionType {
   Like = "like",
   Dislike = "dislike",
 }
