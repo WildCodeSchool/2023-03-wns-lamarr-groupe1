@@ -1,24 +1,22 @@
 import {
     Length,
-    IsEnum
+    IsEnum,
+    IsOptional
   } from "class-validator";
 import { Field, InputType } from "type-graphql";
-  
-enum IssuesType {
-  Open = "open",
-  Pending = "pending",
-  Close = "close"
-}
+import { IssuesType } from "../../enums/IssuesType";
 
   @InputType()
   export class UpdateIssuesInput {
 
-    @Field()
+    @Field({ nullable: true })
     @Length(1, 100000)
-    issue!: string;
-
-    @Field()
+    @IsOptional()
+    issue?: string;
+  
+    @Field({ nullable: true })
+    @IsOptional()
     @IsEnum(IssuesType)
-    status!: string;
+    status?: IssuesType;
   }
   

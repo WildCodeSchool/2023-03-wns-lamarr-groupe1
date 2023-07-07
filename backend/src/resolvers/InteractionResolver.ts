@@ -1,8 +1,9 @@
 import { Arg, Mutation, Authorized, Query } from "type-graphql";
-import { InteractionsModels, InteractionType } from "../models/InteractionsModels";
+import { InteractionsModels } from "../models/InteractionsModels";
 import { InteractionsInput } from "../inputs/interaction/InteractionsInput";
 import { UsersModels } from "../models/UsersModels";
 import { FilesModels } from "../models/FilesModels";
+import { InteractionType } from "../enums/InteractionType";
 
 export class InteractionsResolver {
 

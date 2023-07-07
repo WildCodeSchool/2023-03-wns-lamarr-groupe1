@@ -3,12 +3,9 @@ import {
     IsEnum
   } from "class-validator";
 import { Field, InputType } from "type-graphql";
+import { IssuesType } from "../../enums/IssuesType";
   
-enum IssuesType {
-  Open = "open",
-  Pending = "pending",
-  Close = "close"
-}
+
 
   @InputType()
   export class IssuesInput {
@@ -19,7 +16,7 @@ enum IssuesType {
 
     @Field()
     @IsEnum(IssuesType)
-    status!: string;
+    status!: IssuesType;
 
     @Field()
     fileId!: number;
