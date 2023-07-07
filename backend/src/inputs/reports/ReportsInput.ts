@@ -1,24 +1,20 @@
 import {
     Length,
-    IsEnum,
+    IsOptional,
   } from "class-validator";
 import { Field, InputType } from "type-graphql";
 
   @InputType()
   export class ReportsInput {
-    @Field()
-    id!: number;
-
-    @Field()
-    comment: string;
+    
+    @Field({ nullable: true })
+    @Length(1)
+    comment?: string;
 
     @Field()
     fileId!: number;
 
     @Field()
     userId!: number;
-
-    @Field()
-    createdAt!: number;
   }
   
