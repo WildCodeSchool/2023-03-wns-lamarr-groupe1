@@ -1,8 +1,14 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const ExpertPriceCard = () => {
+  const navigate = useNavigate();
+
+  const handleChangeSignUp = () => {
+    navigate("/sign-up?type=expert");
+  };
   return (
     <div className="container-expert-price-card">
       <div className="container-part-1-expert">
@@ -12,7 +18,9 @@ const ExpertPriceCard = () => {
           <p className="euro">€</p>
           <p>/ mois</p>
         </div>
-        <button className="button-card">ACHETER</button>
+        <button onClick={handleChangeSignUp} className="button-card-expert">
+          PROFITER DE L'OFFRE
+        </button>
       </div>
       <div className="container-part-2-expert">
         <div className="executions-code">
