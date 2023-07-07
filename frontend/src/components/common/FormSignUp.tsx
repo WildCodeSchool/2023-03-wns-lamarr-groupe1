@@ -4,6 +4,7 @@ import { SIGN_UP_MUTATION } from "../../graphql/mutations/SIGN_UP_MUTATION";
 import { useMutation } from "@apollo/client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { extractValidationsErrors } from "../../utils/extractValidationsErrors";
+import { useSearchParams } from "react-router-dom";
 
 interface IuserSignUp {
   firstname?: string;
@@ -13,8 +14,13 @@ interface IuserSignUp {
   password: string;
 }
 const FormSignUp = () => {
+  const [searchParams] = useSearchParams();
+  const queryType = searchParams.get("type");
+  console.log(queryType);
+
   const navigate = useNavigate();
   const [addUser, { loading }] = useMutation(SIGN_UP_MUTATION);
+
   const {
     register,
     handleSubmit,
@@ -23,58 +29,37 @@ const FormSignUp = () => {
   } = useForm<IuserSignUp>();
   console.log(errors.password?.message);
   const onSubmit: SubmitHandler<IuserSignUp> = async (data) => {
+    const input = {
+      ...data,
+      type: queryType || "free",
+    };
+
     try {
+      const formData = new FormData();
+      console.log(formData);
+
       const result = await addUser({
-        variables: { input: data },
+        variables: { input },
+
         onError: (error) => {
           const validationErrors: Record<string, string[]> =
             extractValidationsErrors(error.graphQLErrors);
-          console.log("validationErrors", validationErrors);
-
-          /*
-            const validationErrors = { email: ['Email déjà utilisé'], password: ['Mot de passe trop court'], firstName: ['Prénom requis'], lastName: ['Nom requis'] }
-          */
-
           for (const fieldKey of Object.keys(validationErrors)) {
             console.log(fieldKey); // chaîne de caractères (email, password, firstName, lastName)
-            // Pour accéder à la valeur de la clé, on fait validationErrors[fieldKey]
-
-            // email: ['Email déjà utilisé', 'Email invalide', 'Email requis', 'Email trop long', 'Email trop court']
             for (const message of validationErrors[fieldKey]) {
-              // setError("username", {
-              //   type: "manual",
-              //   message: "Dont Forget Your Username Should Be Cool!",
-              // })
-
               const testError = setError(fieldKey as keyof IuserSignUp, {
                 type: "manual",
                 message: message,
               });
               console.log(testError);
             }
-            // errors[fieldKey] -> liste des erreurs pour le champ `email`
-            // Option 1) Pour chaque clé, on utilise la fonction `setError` de react-hook-form
-            // Option 2) Crée un state juste pour les erreurs GraphQL, et afficher les erreurs dans le formulaire
           }
-          // 1. On boucle sur les clés de `errors`.
-          // La clé de `errors` est le nom du champ du formulaire
-          // La valeur de `errors` est un tableau de string, qui contient les messages d'erreurs
-
-          // for (const constraintKey of Object.keys(errorMessage.constraints)) {
-
-          // 2. Pour chaque clé, on utilise la fonction `setError` de react-hook-form
-
-          // graphQLErrors[0], chercher dans `extensions.exception.validationErrors.constraints` (map sur toutes les clés)
-
-          // 1. Vérifier s'il y a une erreur de validation (dans graphQLErrors[0])
-          // 2. Si oui, récupérer les messages d'erreurs, on faisant un map sur toutes les clés de `extensions.exception.validationErrors.constraints`
-          // 3. Afficher les messages d'erreurs dans le formulaire
         },
       });
-
+      console.log(data);
       const token = result.data.signUp;
       localStorage.setItem("token", token);
-      navigate("/");
+      input.type === "free" ? navigate("/") : navigate("/");
     } catch (error: any) {}
   };
   return (
