@@ -1,10 +1,14 @@
 import FormSignUp from "../components/common/FormSignUp";
+import Navbar from "../components/common/navbar";
 
 const SignUpPage = () => {
   return (
-    <div className="container-page-signin container-page-signup">
-      <FormSignUp />
-    </div>
+    <>
+      <Navbar />
+      <div className="container-page-signin">
+        <FormSignUp />
+      </div>
+    </>
   );
 };
 
