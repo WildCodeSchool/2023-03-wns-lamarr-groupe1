@@ -249,7 +249,6 @@ h3 {
     & p,
     svg {
       font-size: 14px;
-      margin-top: 20px;
     }
   }
   .container-part-2-basic {
@@ -257,17 +256,16 @@ h3 {
     & p,
     svg {
       font-size: 14px;
-      margin-top: 20px;
     }
   }
 
   .container-basic-price-card {
-    padding: 0;
+    padding: 0 1em;
     width: 65vw;
     height: 45vh;
   }
   .container-expert-price-card {
-    padding: 0;
+    padding: 0 1em;
     width: 65vw;
     height: 45vh;
   }

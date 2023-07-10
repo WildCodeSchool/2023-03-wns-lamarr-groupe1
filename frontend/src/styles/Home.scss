@@ -1,0 +1,16 @@
+.container-home {
+  & button {
+    margin-top: 15px;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 2em;
+}
+
+.hello {
+  font-size: 75px;
+  font-weight: 900;
+  margin: 15px;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Home.scss";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,12 +13,8 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <p>
-        Hello i'm the homepage ! I'll make my muscle grow up and i'll be back
-        <br></br>
-        Click beyond to see what Khemis, Flora & Romain has done
-      </p>
+    <div className="container-home">
+      <p className="hello">Hello i'm the homepage</p>
       <button onClick={handleClickK}>Khemis</button>
       <button onClick={handleClickR}>Romain</button>
     </div>
