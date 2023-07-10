@@ -10,27 +10,19 @@ import {
 import { Field, ObjectType, registerEnumType } from "type-graphql";
 import { FilesModels } from "./FilesModels";
 import { UsersModels } from "./UsersModels";
-
-enum IssuesStatus {
-  Open = "open",
-  Pending = "pending",
-  Close = "close",
-}
-
-registerEnumType(IssuesStatus, {
-  name: "IssuesStatus",
-});
+import { IssuesType } from "../enums/IssuesType";
 
 @ObjectType()
 @Entity()
 export class IssuesModels extends BaseEntity {
+  
   @Field()
   @PrimaryGeneratedColumn()
   id: number;
 
   @Field()
-  @Column()
-  issue!: string;
+  @Column({ nullable: true })
+  issue?: string;
 
   @CreateDateColumn()
   createdAt!: Date;
@@ -38,9 +30,9 @@ export class IssuesModels extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @Field((type) => IssuesStatus)
+  @Field(() => IssuesType)
   @Column()
-  status!: IssuesStatus;
+  status!: IssuesType;
 
   @Field(() => [FilesModels])
   @ManyToOne(() => FilesModels, (file) => file.issues)

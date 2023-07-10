@@ -78,7 +78,7 @@ export class SubscriptionResolver {
       id: subscriptionId
     })
     if (subscription === null) {
-      throw new Error("File not found")
+      throw new Error("subscription not found")
     }
 
     return subscription
