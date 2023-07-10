@@ -4,11 +4,12 @@ import { IssuesInput } from "../inputs/issues/IssuesInput";
 import { UpdateIssuesInput } from "../inputs/issues/UpdateIssuesInput";
 import { UsersModels } from "../models/UsersModels";
 import { FilesModels } from "../models/FilesModels";
-
+import { Equal } from "typeorm";
+import { IssuesType } from "../enums/IssuesType";
 
 export class IssuesResolver {
   @Authorized()
-  // Mutation pour ajouter un commentaire
+  // Mutation pour ajouter une issue
   @Mutation(() => IssuesModels)
   async addIssue(
     @Arg("input") { issue, status, userId, fileId }: IssuesInput // On déstructure les propriétés de l'objet IssuesInput
@@ -41,13 +42,14 @@ export class IssuesResolver {
   }
 
   @Authorized()
-  // Mutation pour mettre à jour un commentaire
+  // Mutation pour mettre à jour une issue
   @Mutation(() => IssuesModels)
   async updateIssues(
     @Arg("id") id: number,
-    @Arg("update") { issue, status }: UpdateIssuesInput // On déstructure la propriété "comment" de l'objet UpdateIssuesInput
+    @Arg("update") { issue, status }: UpdateIssuesInput // On déstructure la propriété "issue" de l'objet UpdateIssuesInput
   ): Promise<IssuesModels> {
-    // Recherche du commentaire à mettre à jour en utilisant l'ID fourni
+    // Recherche de l'issue à mettre à jour en utilisant l'ID fourni
+    
     const issueToUpdate = await IssuesModels.findOneBy({
       id,
     });
@@ -56,7 +58,7 @@ export class IssuesResolver {
       throw new Error("Comment not found");
     }
 
-    // Fusion des modifications dans l'objet commentToUpdate
+    // Fusion des modifications dans l'objet issuesToUpdate
     if (issue !== undefined) {
       issueToUpdate.issue = issue;
     }
@@ -65,47 +67,60 @@ export class IssuesResolver {
       issueToUpdate.status = status;
     }
   
-
-    // Sauvegarde du commentaire mis à jour
+    // Sauvegarde de l'issue mis à jour
     const updatedIssue = await issueToUpdate.save();
 
     return updatedIssue;
   }
 
-  // // Query pour obtenir tous les commentaires
-  // @Query(() => [IssuesModels])
-  // async getComments(): Promise<IssuesModels[]> {
-  //   const comments = await IssuesModels.find();
-  //   return comments;
-  // }
+  // Query pour obtenir toutes les issues
+  @Query(() => [IssuesModels])
+  async getIssues(): Promise<IssuesModels[]> {
+    const issues = await IssuesModels.find();
+    return issues;
+  }
 
-  // // Query pour obtenir un commentaire par ID
-  // @Query(() => IssuesModels)
-  // async getCommentsById(@Arg("commentsId") commentsId: number): Promise<IssuesModels> {
-  //   // Recherche du commentaire en utilisant l'ID fourni
-  //   const comments = await IssuesModels.findOne({
-  //     where: { id: commentsId },
-  //   });
-  //   if (comments === null) {
-  //     throw new Error("Comments not found");
-  //   }
-  //   return comments;
-  // }
+  // Query pour obtenir une issue par ID
+  @Query(() => IssuesModels)
+  async getIssueById(@Arg("issueId") issueId: number): Promise<IssuesModels> {
+    // Recherche du commentaire en utilisant l'ID fourni
+    const issue = await IssuesModels.findOne({
+      where: { id: issueId },
+    });
+    if (issue === null) {
+      throw new Error("Issue not found");
+    }
+    return issue;
+  }
 
-  // @Authorized()
-  // // Mutation pour supprimer un commentaire
-  // @Mutation(() => Boolean)
-  // async deleteComments(@Arg("CommentsId") CommentsId: number): Promise<boolean> {
-  //   // Recherche du commentaire à supprimer en utilisant l'ID fourni
-  //   const commentsToDelete = await IssuesModels.findOne({
-  //     where: { id: CommentsId },
-  //   });
-  //   if (!commentsToDelete) {
-  //     throw new Error("Comments not found");
-  //   }
+  @Authorized()
+  // Query pour obtenir plusieurs issues par leur statut
+  @Query(() => [IssuesModels])
+  async getIssuesByStatus(@Arg("issuesStatus") issuesStatus: string): Promise<IssuesModels[]> {
+    // Recherche des issues en utilisant le statut fourni
+    const issues = await IssuesModels.find({
+      where: { status: Equal(issuesStatus as IssuesType) },
+    });
+    if (!issues || issues.length === 0) {
+      throw new Error("Issues not found");
+    }
+    return issues;
+  }
 
-  //   // Suppression du commentaire
-  //   await commentsToDelete.remove();
-  //   return true;
-  // }
+  @Authorized()
+  // Mutation pour supprimer une issue
+  @Mutation(() => Boolean)
+  async deleteIssue(@Arg("issueId") issueId: number): Promise<boolean> {
+    // Recherche de l'issue à supprimer en utilisant l'ID fourni
+    const issueToDelete = await IssuesModels.findOne({
+      where: { id: issueId },
+    });
+    if (!issueToDelete) {
+      throw new Error("Issue not found");
+    }
+
+    // Suppression du commentaire
+    await issueToDelete.remove();
+    return true;
+  }
 }

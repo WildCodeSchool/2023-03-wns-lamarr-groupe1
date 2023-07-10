@@ -14,7 +14,7 @@ import { IssuesType } from "../../enums/IssuesType";
     @IsOptional()
     issue?: string;
   
-    @Field({ nullable: true })
+    @Field(() => IssuesType, { nullable: true }) // Faire de même pour 
     @IsOptional()
     @IsEnum(IssuesType)
     status?: IssuesType;

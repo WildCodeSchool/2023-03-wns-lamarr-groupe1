@@ -14,7 +14,7 @@ import { IssuesType } from "../../enums/IssuesType";
     @Length(1, 100000)
     issue!: string;
 
-    @Field()
+    @Field(() => IssuesType)
     @IsEnum(IssuesType)
     status!: IssuesType;
 

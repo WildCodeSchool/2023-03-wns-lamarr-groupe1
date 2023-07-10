@@ -1,9 +1,9 @@
 import { registerEnumType } from "type-graphql";
 
 export enum IssuesType {
-  Open = "open",
-  Pending = "pending",
-  Close = "close",
+  Open = "Open",
+  Pending = "Pending",
+  Close = "Close",
 }
 
 registerEnumType(IssuesType, {
