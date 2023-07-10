@@ -29,6 +29,7 @@ li {
 }
 
 $breakpoints: (
+  "tabletAndPhone": "(min-width: 0px) and (max-width: 1020px)",
   "tablet": "(min-width: 601px) and (max-width: 1020px)",
   "phone": "(min-width: 0px) and (max-width: 600px)",
   "screen": "(min-width: 1021px) and (max-width: 6000px)",

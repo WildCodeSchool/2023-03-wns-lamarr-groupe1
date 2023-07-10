@@ -10,9 +10,9 @@
     color: #5340a9;
     font-size: 30px;
     font-weight: 600;
-    // @include breakpoint(tablet) {
-    //   display: none;
-    // }
+    @include breakpoint(tabletAndPhone) {
+      display: none;
+    }
   }
   .container-description {
     width: 80%;
@@ -21,26 +21,29 @@
       font-size: 25px;
       margin: 0;
       padding: 0;
-      // @include breakpoint(tablet) {
-      //   margin-bottom: 30px;
-      //   text-align: center;
-      // }
+      @include breakpoint(tabletAndPhone) {
+        margin-bottom: 30px;
+        text-align: center;
+      }
     }
     .content-description-title {
       margin-bottom: 30px;
     }
 
-    // @include breakpoint(tablet) {
-    //   width: 100%;
-    // }
-  }
-  .content-1 {
-    text-align: right !important;
+    .content-1 {
+      text-align: right !important;
 
-    // @include breakpoint(tablet) {
-    //   flex-direction: column-reverse;
-    // }
+      @include breakpoint(tabletAndPhone) {
+        flex-direction: column-reverse;
+        text-align: center !important;
+      }
+    }
+
+    @include breakpoint(tabletAndPhone) {
+      width: 100%;
+    }
   }
+
   .container-description-2 {
     margin-top: 35px;
   }
@@ -57,61 +60,23 @@
         width: 100%;
       }
 
-      // @include breakpoint(phone) {
-      //   width: 300px;
-      // }
+      @include breakpoint(phone) {
+        width: 280px;
+      }
     }
     p {
       max-width: 500px;
       margin: 0;
       padding: 0;
-      // @include breakpoint(tablet) {
-      //   margin-bottom: 20px;
-      // }
-    }
-
-    // @include breakpoint(tablet) {
-    //   display: flex;
-    //   flex-direction: column;
-    //   text-align: center !important;
-    // }
-  }
-}
-
-@media (max-width: 1000px) {
-  .container-about-us {
-    .title {
-      display: none;
-    }
-    .container-description {
-      h6 {
-        margin-bottom: 30px;
-        text-align: center;
-      }
-
-      .content-img-text {
-        display: flex;
-        flex-direction: column;
-        text-align: center !important;
-        p {
-          margin-bottom: 20px;
-        }
-      }
-      .content-1 {
-        flex-direction: column-reverse;
+      @include breakpoint(tabletAndPhone) {
+        margin-bottom: 20px;
       }
     }
-  }
-}
 
-@media (max-width: 600px) {
-  .container-about-us {
-    .container-description {
-      .content-img-text {
-        .img {
-          width: 300px;
-        }
-      }
+    @include breakpoint(tabletAndPhone) {
+      display: flex;
+      flex-direction: column;
+      text-align: center !important;
     }
   }
 }

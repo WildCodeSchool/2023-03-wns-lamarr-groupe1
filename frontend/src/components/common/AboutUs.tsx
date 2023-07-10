@@ -10,7 +10,7 @@ const AboutUs = () => {
 
         <div className="content-img-text content-1">
           <div className="img">
-            <img src={OurProject} alt="" />
+            <img src={OurProject} alt="photos avec les membres de l'équipe" />
           </div>
 
           <p>
@@ -35,7 +35,7 @@ const AboutUs = () => {
             commodi quia ipsum tempore laboriosam quos architecto odit non ipsam
           </p>
           <div className="img">
-            <img src={OurTeam} alt="" />
+            <img src={OurTeam} alt="photos avec les membres de l'équipe" />
           </div>
         </div>
       </div>
