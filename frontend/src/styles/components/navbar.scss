@@ -1,4 +1,4 @@
-@import "../../../mixins.scss";
+@import "../../mixins.scss";
 
 nav {
   display: flex;
@@ -9,6 +9,7 @@ nav {
   font-weight: 500;
   width: auto;
   height: auto;
+  box-sizing: border-box;
   padding: 15px 0;
 
   ul {
@@ -116,5 +117,9 @@ nav {
         }
       }
     }
+  }
+
+  @include breakpoint("<screen") {
+    background-color: orange;
   }
 }
