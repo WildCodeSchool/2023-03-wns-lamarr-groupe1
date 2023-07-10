@@ -9,6 +9,9 @@ body {
   margin: 0;
   padding: 0 5vh;
   font-family: Arial, Helvetica, sans-serif;
+  background: url("./assets/img/Vector\ 256.png") bottom no-repeat;
+  background-size: 100%;
+  object-fit: cover;
 }
 
 main {

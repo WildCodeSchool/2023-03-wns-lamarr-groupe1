@@ -14,13 +14,15 @@ const Home = () => {
   };
 
   return (
-    <Layout>
-      <div className="container-home">
-        <p className="hello">Hello i'm the homepage</p>
-        <button onClick={handleClickK}>Khemis</button>
-        <button onClick={handleClickR}>Romain</button>
-      </div>
-    </Layout>
+    <>
+      <Layout>
+        <div className="container-home">
+          <p className="hello">Hello i'm the homepage</p>
+          <button onClick={handleClickK}>Khemis</button>
+          <button onClick={handleClickR}>Romain</button>
+        </div>
+      </Layout>
+    </>
   );
 };
 
