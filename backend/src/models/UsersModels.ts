@@ -1,13 +1,13 @@
 import {
   BaseEntity,
-  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  BeforeInsert,
 } from "typeorm"
 import { IsInt } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
@@ -70,6 +70,7 @@ export class UsersModels extends BaseEntity {
   setDefaultExecutedCode(): void {
     this.executedcode = 0
   }
+
 
   @CreateDateColumn()
   createdAt!: Date
