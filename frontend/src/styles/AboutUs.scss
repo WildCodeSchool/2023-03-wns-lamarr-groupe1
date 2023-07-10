@@ -10,7 +10,7 @@
     color: #5340a9;
     font-size: 30px;
     font-weight: 600;
-    @include breakpoint(tabletAndPhone) {
+    @include breakpoint("<screen") {
       display: none;
     }
   }
@@ -21,7 +21,7 @@
       font-size: 25px;
       margin: 0;
       padding: 0;
-      @include breakpoint(tabletAndPhone) {
+      @include breakpoint("<screen") {
         margin-bottom: 30px;
         text-align: center;
       }
@@ -33,13 +33,13 @@
     .content-1 {
       text-align: right !important;
 
-      @include breakpoint(tabletAndPhone) {
+      @include breakpoint("<screen") {
         flex-direction: column-reverse;
         text-align: center !important;
       }
     }
 
-    @include breakpoint(tabletAndPhone) {
+    @include breakpoint("<screen") {
       width: 100%;
     }
   }
@@ -68,12 +68,12 @@
       max-width: 500px;
       margin: 0;
       padding: 0;
-      @include breakpoint(tabletAndPhone) {
+      @include breakpoint("<screen") {
         margin-bottom: 20px;
       }
     }
 
-    @include breakpoint(tabletAndPhone) {
+    @include breakpoint("<screen") {
       display: flex;
       flex-direction: column;
       text-align: center !important;
