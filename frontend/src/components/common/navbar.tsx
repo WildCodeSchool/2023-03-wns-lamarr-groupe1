@@ -14,21 +14,21 @@ export default function navbar() {
           />
         </li>
         <li>
-          <Link to={"#Accueil"}>Accueil</Link>
+          <Link to={"/#Accueil"}>Accueil</Link>
         </li>
         <li>
-          <Link to={"#aboutUs"}>A propos de nous</Link>
+          <Link to={"/#aboutUs"}>A propos de nous</Link>
         </li>
         <li>
-          <Link to={"#contact"}>Contact</Link>
+          <Link to={"/#contact"}>Contact</Link>
         </li>
       </ul>
       <div>
         <span>
-          <Link to={"/sign-in"}>S'inscrire</Link>
+          <Link to={"/sign-up"}>S'inscrire</Link>
         </span>
         <div className="button">
-          <Link to={"/sign-up"}>Connexion</Link>
+          <Link to={"/sign-in"}>Connexion</Link>
         </div>
       </div>
     </nav>
