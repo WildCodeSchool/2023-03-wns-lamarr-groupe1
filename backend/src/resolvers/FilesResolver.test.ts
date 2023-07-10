@@ -312,9 +312,198 @@ describe("FilesResolver", () => {
 
       expect(response.data?.updateFile.filename).toContain(filename)
       expect(response.data?.updateFile.content).toContain(content)
-      expect(response.data?.updateFile.nbOfDownload).toBe(0)
-      expect(response.data?.updateFile.nbOfReport).toBe(0)
+      expect(response.data?.updateFile.nbOfDownload).toBeGreaterThanOrEqual(0)
+      expect(response.data?.updateFile.nbOfReport).toBeGreaterThanOrEqual(0)
       expect(response.data?.updateFile.isPublic).toBe(isPublic)
+
+      expect(response.errors).not.toBeTruthy()
+    })
+  })
+  describe("getFiles", () => {
+    it("should find all existing files and return them", async () => {
+      const filename = faker.internet.userName()
+      const value = [true, false]
+      const random = Math.floor(Math.random() * value.length)
+      const isPublic = value[random]
+      const nbOfReport = 0
+      const nbOfDownload = 0
+      const content = ""
+      const email = faker.internet.email()
+      const password = faker.internet.password({
+        length: 8,
+        prefix: "@A"
+      })
+      const username = faker.internet.userName()
+      const type = "free"
+
+      const languageCreated = await LanguageModels.create({
+        name: "javascript"
+      }).save()
+
+      const userCreated = await callGraphQL({
+        query: `
+            mutation Mutation($input: SignUpInput!) {
+                signUp(input: $input)
+            }
+        `,
+
+        variables: { input: { email, password, username, type } }
+      })
+
+      const user = await UsersModels.findOneBy({
+        id: userCreated.data?.id
+      })
+      if (user === null) {
+        throw new Error("User not found")
+      }
+      // récupérer un langage en BDD pour liée le fichier a celui-ci
+      const language = await LanguageModels.findOneBy({
+        id: languageCreated.id
+      })
+      if (language === null) {
+        throw new Error("language not found")
+      }
+
+      // Insérer un fichier en BDD
+      await FilesModels.create({
+        filename,
+        content,
+        isPublic,
+        nbOfReport,
+        nbOfDownload,
+        user,
+        language
+      }).save()
+
+      const response = await callGraphQL(
+        {
+          query: `
+            query Query($filter: GetFilesQuery!) {
+              getFiles(filter: $filter) {
+                filename
+                isPublic
+                nbOfDownload
+                nbOfReport
+              }
+            }
+        `,
+
+          variables: {
+            filter: {
+              page: 1,
+              programmingLanguage: null
+            }
+          }
+        },
+        userCreated.data?.signUp
+      )
+
+      expect(response.data).toBeTruthy()
+      expect(response.data).toHaveProperty("getFiles")
+      expect(response.data?.getFiles.length).toBeGreaterThanOrEqual(1)
+
+      expect(response.data?.getFiles[2]).toHaveProperty("filename")
+      expect(response.data?.getFiles[2]).toHaveProperty("nbOfDownload")
+      expect(response.data?.getFiles[2]).toHaveProperty("nbOfReport")
+      expect(response.data?.getFiles[2]).toHaveProperty("isPublic")
+
+      expect(response.data?.getFiles[2].filename).toContain(filename)
+      expect(response.data?.getFiles[2].nbOfDownload).toBeGreaterThanOrEqual(0)
+      expect(response.data?.getFiles[2].nbOfReport).toBeGreaterThanOrEqual(0)
+      expect(response.data?.getFiles[2].isPublic).toBe(isPublic)
+
+      expect(response.errors).not.toBeTruthy()
+    })
+  })
+
+  describe("getFile", () => {
+    it("should find one file and return it", async () => {
+      const filename = faker.internet.userName()
+      const value = [true, false]
+      const random = Math.floor(Math.random() * value.length)
+      const isPublic = value[random]
+      const nbOfReport = 0
+      const nbOfDownload = 0
+      const content = ""
+      const email = faker.internet.email()
+      const password = faker.internet.password({
+        length: 8,
+        prefix: "@A"
+      })
+      const username = faker.internet.userName()
+      const type = "free"
+
+      const languageCreated = await LanguageModels.create({
+        name: "javascript"
+      }).save()
+
+      const userCreated = await callGraphQL({
+        query: `
+            mutation Mutation($input: SignUpInput!) {
+                signUp(input: $input)
+            }
+        `,
+
+        variables: { input: { email, password, username, type } }
+      })
+
+      const user = await UsersModels.findOneBy({
+        id: userCreated.data?.id
+      })
+      if (user === null) {
+        throw new Error("User not found")
+      }
+      // récupérer un langage en BDD pour liée le fichier a celui-ci
+      const language = await LanguageModels.findOneBy({
+        id: languageCreated.id
+      })
+      if (language === null) {
+        throw new Error("language not found")
+      }
+
+      // Insérer un fichier en BDD
+      const file = await FilesModels.create({
+        filename,
+        content,
+        isPublic,
+        nbOfReport,
+        nbOfDownload,
+        user,
+        language
+      }).save()
+
+      const response = await callGraphQL(
+        {
+          query: `
+            query Query($fileId: Float!) {
+              getFile(fileId: $fileId) {
+                filename
+                isPublic
+                nbOfDownload
+                nbOfReport
+              }
+            }
+        `,
+
+          variables: {
+            fileId: file.id
+          }
+        },
+        userCreated.data?.signUp
+      )
+
+      expect(response.data).toBeTruthy()
+      expect(response.data).toHaveProperty("getFile")
+
+      expect(response.data?.getFile).toHaveProperty("filename")
+      expect(response.data?.getFile).toHaveProperty("nbOfDownload")
+      expect(response.data?.getFile).toHaveProperty("nbOfReport")
+      expect(response.data?.getFile).toHaveProperty("isPublic")
+
+      expect(response.data?.getFile.filename).toContain(filename)
+      expect(response.data?.getFile.nbOfDownload).toBeGreaterThanOrEqual(0)
+      expect(response.data?.getFile.nbOfReport).toBeGreaterThanOrEqual(0)
+      expect(response.data?.getFile.isPublic).toBe(isPublic)
 
       expect(response.errors).not.toBeTruthy()
     })

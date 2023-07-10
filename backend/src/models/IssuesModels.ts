@@ -42,11 +42,11 @@ export class IssuesModels extends BaseEntity {
   @Column()
   status!: IssuesStatus;
 
-  @Field(() => [FilesModels])
+  @Field(() => FilesModels)
   @ManyToOne(() => FilesModels, (file) => file.issues)
   file: FilesModels;
 
-  @Field(() => [UsersModels])
+  @Field(() => UsersModels)
   @ManyToOne(() => UsersModels, (user) => user.issues)
   user: UsersModels;
 }

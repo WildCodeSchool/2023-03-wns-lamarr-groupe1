@@ -30,11 +30,11 @@ export class CommentsModels extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @Field(() => [FilesModels])
+  @Field(() => FilesModels)
   @ManyToOne(() => FilesModels, (file) => file.comments)
   file: FilesModels;
 
-  @Field(() => [UsersModels])
+  @Field(() => UsersModels)
   @ManyToOne(() => UsersModels, (user) => user.comments)
   user: UsersModels;
 }
