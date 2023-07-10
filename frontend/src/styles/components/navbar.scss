@@ -9,6 +9,7 @@ nav {
   font-weight: 500;
   width: auto;
   height: auto;
+  box-sizing: border-box;
   padding: 15px 0;
 
   @include breakpoint(phone) {
