@@ -11,6 +11,17 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+root {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 ul,
 li {
   margin: 0;
@@ -18,9 +29,9 @@ li {
 }
 
 $breakpoints: (
-  "tablet": "(min-width: 601px) and (max-width: 1000px)",
-  "phone": "max-width: 600px",
-  "screen": "min-width: 1001px",
+  "tablet": "(min-width: 601px) and (max-width: 1020px)",
+  "phone": "(min-width: 0px) and (max-width: 600px)",
+  "screen": "(min-width: 1021px) and (max-width: 6000px)",
 );
 
 @mixin breakpoint($user-value) {
@@ -33,3 +44,8 @@ $breakpoints: (
     @error "oops pb !";
   }
 }
+//pour l'utiliser pour une tablette (bien penser à importer la mixin dans la page de style (@import "../(etc)/mixins.scss";):
+//
+//@include breakpoint(tablet) {
+//  background-color: orange;
+//    }

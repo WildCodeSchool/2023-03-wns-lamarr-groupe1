@@ -1,4 +1,4 @@
-@import "../../../mixins.scss";
+@import "../../mixins.scss";
 
 nav {
   display: flex;
@@ -10,6 +10,10 @@ nav {
   width: auto;
   height: auto;
   padding: 15px 0;
+
+  @include breakpoint(phone) {
+    background-color: aqua;
+  }
 
   ul {
     display: flex;
