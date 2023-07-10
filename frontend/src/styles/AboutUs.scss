@@ -1,0 +1,44 @@
+.container-about-us {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .title {
+    color: #5340a9;
+    font-size: 30px;
+    font-weight: 600;
+  }
+  .container-description {
+    background-color: blue;
+    width: 80%;
+    margin: 15px 0px;
+    h6 {
+      font-size: 25px;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .content-1 {
+    text-align: right !important;
+  }
+  .content-img-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    .img {
+      width: 400px;
+      border-radius: 5px;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+    }
+    p {
+      max-width: 500px;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

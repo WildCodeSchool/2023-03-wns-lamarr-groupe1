@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import AboutUs from "../components/common/AboutUs";
+import "../styles/AboutUs.scss";
 const Home = () => {
   const navigate = useNavigate();
 
@@ -20,6 +21,8 @@ const Home = () => {
       </p>
       <button onClick={handleClickK}>Khemis</button>
       <button onClick={handleClickR}>Romain</button>
+
+      <AboutUs />
     </div>
   );
 };
