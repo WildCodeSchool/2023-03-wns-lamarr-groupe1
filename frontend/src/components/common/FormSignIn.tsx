@@ -2,31 +2,30 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGN_IN_QUERY } from "../../graphql/queries/SIGN_IN_QUERY";
 import { useLazyQuery } from "@apollo/client";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface IuserSignIn {
   email: string;
   password: string;
 }
+
 const FormSignIn = () => {
-  const navigate = useNavigate();
-
   const [credantials, setCredantials] = useState(false);
-  // state user
-  const [form, setForm] = useState<IuserSignIn>({
-    email: "",
-    password: "",
-  });
+  const navigate = useNavigate();
   const [userSignIn, { loading }] = useLazyQuery(SIGN_IN_QUERY);
-  console.log(form);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IuserSignIn>();
+  const onSubmit: SubmitHandler<IuserSignIn> = async (data) => {
     try {
-      // ajout firstname, email, password... à la query SIGN_IN_QUERY
+      console.log("data", data);
       const result = await userSignIn({
-        variables: form,
+        variables: data,
       });
-      //récupère et stock le token dans le localStorage
+      console.log("result", result);
       const token = result.data.signIn;
       localStorage.setItem("token", token);
       setCredantials(false);
@@ -36,9 +35,10 @@ const FormSignIn = () => {
       setCredantials(true);
     }
   };
+
   return (
     <div className="container-card-form">
-      <h2>CONNECTEZ-VOUS</h2>
+      <h2>Connectez-vous</h2>
       <p className="details-text">
         Bonjour ! Renseigner vos coordonnées pour vous connecter
       </p>
@@ -48,33 +48,42 @@ const FormSignIn = () => {
         </div>
       ) : null}
 
-      <form action="" onSubmit={handleSubmit}>
+      <form action="" onSubmit={handleSubmit(onSubmit)}>
         <input
           type="email"
-          name="email"
           id="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={(e) => {
-            setForm({
-              ...form,
-              email: e.target.value,
-            });
-          }}
+          placeholder="Email*"
+          {...register("email", {
+            required: "Ce champ est requis !",
+            // pattern: {
+            //   value: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/,
+            //   message: "Veuillez inclure un '@' dans votre adress email",
+            // },
+          })}
         />
+        {errors.email ? (
+          <p className="error-input"> {errors.email.message}</p>
+        ) : null}
         <input
           type="password"
-          name="password"
           id="password"
-          placeholder="Mot de passe"
-          value={form.password}
-          onChange={(e) => {
-            setForm({
-              ...form,
-              password: e.target.value,
-            });
-          }}
+          placeholder="Mot de passe*"
+          {...register("password", {
+            required: "Ce champ est requis !",
+            minLength: {
+              value: 8,
+              message: "Le mot de passe doit contenir au moins 8 caractères",
+            },
+            pattern: {
+              value: /^(?=.*[A-Z])(?=.*[!@#$%^&*])/,
+              message:
+                "Le mot de passe doit contenir une lettres majuscules et minuscules, un chiffres et un caractères spécial",
+            },
+          })}
         />
+        {errors.password ? (
+          <p className="error-input"> {errors.password.message}</p>
+        ) : null}
         <button type="submit" className="button-form-signIn">
           Se connecter
         </button>
