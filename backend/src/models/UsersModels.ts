@@ -76,32 +76,47 @@ export class UsersModels extends BaseEntity {
   createdAt!: Date
 
   @Field(() => [IssuesModels])
-  @OneToMany(() => IssuesModels, (issue) => issue.user)
+  @OneToMany(() => IssuesModels, (issue) => issue.user, {
+    eager: true,
+  })
   issues: IssuesModels[]
 
   @Field(() => [ContactModels])
-  @OneToMany(() => ContactModels, (contact) => contact.user)
+  @OneToMany(() => ContactModels, (contact) => contact.user, {
+    eager: true,
+  })
   contacts: ContactModels[]
 
   @Field(() => [CommentsModels])
-  @OneToMany(() => CommentsModels, (comment) => comment.user)
+  @OneToMany(() => CommentsModels, (comment) => comment.user, {
+    eager: true,
+  })
   comments: CommentsModels[]
 
   @Field(() => [ReportsModels])
-  @OneToMany(() => ReportsModels, (report) => report.user)
+  @OneToMany(() => ReportsModels, (report) => report.user, {
+    eager: true,
+  })
   reports: ReportsModels[]
 
   @Field(() => [InteractionsModels])
-  @OneToMany(() => InteractionsModels, (interaction) => interaction.user)
+  @OneToMany(() => InteractionsModels, (interaction) => interaction.user, {
+    eager: true,
+  })
   interactions: InteractionsModels[]
 
   @Field(() => [FilesModels])
-  @OneToMany(() => FilesModels, (file) => file.user)
+  @OneToMany(() => FilesModels, (file) => file.user, {
+    eager: true,
+  })
   files: FilesModels[]
+  
 
   @OneToOne(() => SubscriptionModels, {
     eager: true,
   })
   @JoinColumn()
   subscription: SubscriptionModels
+
+
 }
