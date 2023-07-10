@@ -3,16 +3,11 @@ import {
     IsEnum,
   } from "class-validator";
 import { Field, InputType } from "type-graphql";
-
-  
-enum InteractionType {
-  Like = "like",
-  Dislike = "dislike",
-}
+import { InteractionType } from "../../enums/InteractionType";
 
   @InputType()
   export class InteractionsInput {
-    @Field()
+    @Field(() => InteractionType)
     @IsEnum(InteractionType)
     type!: InteractionType;
 
