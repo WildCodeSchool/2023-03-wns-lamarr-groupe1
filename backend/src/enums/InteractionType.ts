@@ -1,8 +1,8 @@
 import { registerEnumType } from "type-graphql";
 
 export enum InteractionType {
-    Like = "like",
-    Dislike = "dislike",
+    Like = "Like",
+    Dislike = "Dislike",
   }
   
   registerEnumType(InteractionType, {
