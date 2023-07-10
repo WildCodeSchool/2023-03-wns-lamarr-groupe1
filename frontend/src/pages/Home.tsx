@@ -23,9 +23,8 @@ const Home = () => {
         </p>
         <button onClick={handleClickK}>Khemis</button>
         <button onClick={handleClickR}>Romain</button>
+        <AboutUs />
       </Layout>
-
-      <AboutUs />
     </div>
   );
 };

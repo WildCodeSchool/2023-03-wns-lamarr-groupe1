@@ -3,10 +3,10 @@ import OurProject from "../../assets/img/our_project.png";
 import OurTeam from "../../assets/img/our_team.png";
 const AboutUs = () => {
   return (
-    <div className="container-about-us">
+    <div id="Accueil" className="container-about-us">
       <h4 className="title">About us</h4>
       <div className="container-description">
-        <h6>Our Project</h6>
+        <h6 className="content-description-title">Our Project</h6>
 
         <div className="content-img-text content-1">
           <div className="img">
@@ -23,7 +23,7 @@ const AboutUs = () => {
           </p>
         </div>
       </div>
-      <div className="container-description">
+      <div className="container-description container-description-2">
         <h6>Our Project</h6>
         <div className="content-img-text content-2">
           <p>
