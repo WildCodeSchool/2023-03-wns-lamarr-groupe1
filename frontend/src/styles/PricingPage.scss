@@ -1,274 +1,404 @@
-/// Variables
-$mainColor: #5340a9;
-$secondaryColor: #849bce;
-$textColorWhite: #ffffff;
-$textColorBlack: #000000;
+@import "../mixins.scss";
 
-p {
-  margin: auto;
-}
-
-h3 {
-  font-size: 2em;
-  margin: auto;
-}
-
-.button-card-expert {
-  background-color: $mainColor;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: $textColorWhite;
-  font-weight: 900;
-  padding: 1.5em 1.5em;
-  border-radius: 1em;
-  margin-top: 35px;
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-}
-.button-card-basic {
-  background-color: $secondaryColor;
-  border: none;
-  display: flex;
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-  justify-content: center;
-  align-items: center;
-  color: $textColorWhite;
-  font-weight: 900;
-  padding: 1.5em 1.5em;
-  border-radius: 1em;
-  margin-top: 35px;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-}
-
-.container-price {
-  display: flex;
-  margin-top: 35px;
-}
-
-.euro {
-  margin-bottom: 32px;
-}
-.container-part-1-basic {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.container-part-1-expert {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.container-part-2-expert {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 35px;
-  border-top: solid 3px $mainColor;
-}
-.container-part-2-basic {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 35px;
-  border-top: solid 3px $secondaryColor;
-}
-
-.container-part-2 p {
-  margin-left: 15px;
-}
-
-.container-pricing-cards {
-  display: flex;
-  width: 100vw;
+.container-pricingPage-card {
+  @include flexCenterRow;
   justify-content: space-evenly;
-}
-
-.container-pricing-page {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: url("../assets/images/Vector\ 256.png") bottom no-repeat;
-  background-size: 100%;
-}
-
-.container-expert-price-card {
-  border: solid 1px;
-  height: 50vh;
-  padding: 2em 4em;
-  border-radius: 2em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  background: linear-gradient(to top, $textColorWhite 95%, $mainColor 5%);
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-.container-basic-price-card {
-  border: solid 1px;
-  height: 50vh;
-  padding: 2em 4em;
-  border-radius: 2em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  background-color: $textColorWhite;
-  background: linear-gradient(to top, $textColorWhite 95%, $secondaryColor 5%);
-
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-
-.executions-code {
-  display: flex;
-  margin-top: 35px;
-}
-
-.executions-code p {
-  margin-left: 15px;
-}
-
-.price-card {
-  font-size: 2.5em;
-  font-weight: 900;
-  margin: auto;
-}
-
-.purpleWave {
-  z-index: -1;
-  height: 30em;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-/* Media queries tablets */
-@media screen and (max-width: 1024px) {
-  h3 {
-    font-size: 40px;
-  }
-
-  .executions-code {
-    margin-top: 25px;
-  }
-  .executions-code p {
-    font-size: 20px;
-  }
-  .button-card {
-    font-size: 20px;
-    margin-top: 35px;
-  }
-  .container-pricing-cards {
-    width: 100vw;
+  .container-background-pricingPage {
+    position: absolute;
+    width: 100%;
     height: 100vh;
-    flex-direction: column;
-    align-items: center;
-  }
-  .container-pricing-page {
-    display: block;
-  }
-
-  .container-part-2-expert {
-    font-size: 25px;
-    margin-top: 25px;
-  }
-  .container-part-2-basic {
-    font-size: 25px;
-    margin-top: 25px;
-  }
-
-  .container-basic-price-card {
-    padding: 0;
-    width: 65vw;
-    height: 45vh;
-  }
-  .container-expert-price-card {
-    padding: 0;
-    width: 65vw;
-    height: 45vh;
-  }
-}
-
-/* Media queries smartphone */
-@media screen and (max-width: 480px) {
-  h3 {
-    font-size: 30px;
-  }
-
-  .executions-code {
-    margin-top: 14px;
-  }
-  .executions-code p {
-    font-size: 15px;
-  }
-  .button-card-basic {
-    font-size: 12px;
-    margin-top: 18px;
-    padding: 1em 1em;
-  }
-  .button-card-expert {
-    font-size: 12px;
-    margin-top: 18px;
-    padding: 1em 1em;
-  }
-
-  .container-price {
-    margin-top: 18px;
-  }
-  .container-pricing-cards {
-    width: 100vw;
-    height: 100vh;
-    flex-direction: column;
-    align-items: center;
-  }
-  .container-pricing-page {
-    display: block;
-  }
-
-  .container-part-2-expert {
-    margin-top: 0;
-    & p,
-    svg {
-      font-size: 14px;
-      margin-top: 20px;
+    background: url("../assets/img/Vector\ 256.png") bottom no-repeat;
+    z-index: -1;
+    background-size: 100%;
+    object-fit: cover;
+    bottom: 0;
+    @include breakpoint("<screen") {
+      background: none;
     }
   }
-  .container-part-2-basic {
-    margin-top: 0;
-    & p,
-    svg {
-      font-size: 14px;
-      margin-top: 20px;
+  .container-card:first-child {
+    .border-top {
+      width: 100%;
+      height: 20px;
+      background-color: $grey;
+    }
+
+    hr {
+      background-color: $grey !important;
+      width: 80%;
+      height: 1px;
+    }
+
+    a {
+      color: $white;
+      background-color: $grey;
+      border: 1px solid $white;
+
+      &:hover {
+        color: $grey;
+        background-color: $white;
+        border: 1px solid $grey;
+      }
     }
   }
+  .container-card {
+    background-color: #fff;
+    transform: translateY(50%);
+    overflow: hidden;
+    margin: 0px 10px;
+    padding: 20px 25px;
+    border-radius: 15px;
+    border: 1px solid #000;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    @include flexCenterColumn;
+    position: relative;
+    width: 300px;
 
-  .container-basic-price-card {
-    padding: 0;
-    width: 65vw;
-    height: 45vh;
+    .border-top {
+      width: 100%;
+      height: 20px;
+      background-color: $primary;
+      position: absolute;
+      top: 0px;
+    }
+    .title {
+      margin-top: 20px !important;
+      font-size: 30px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 0;
+
+      @include breakpoint(phone) {
+        font-size: 25px;
+      }
+    }
+
+    .container-pricing {
+      .price {
+        font-weight: 900;
+        font-size: 35px;
+        .devise {
+          position: relative;
+          top: -12px;
+          right: -2px;
+          font-weight: 500;
+          font-size: 20px;
+        }
+
+        span {
+          font-weight: 500;
+          font-size: 20px;
+        }
+
+        @include breakpoint(phone) {
+          font-size: 30px;
+        }
+      }
+    }
+
+    hr {
+      background-color: $primary !important;
+      width: 80%;
+      height: 1px;
+      margin: 30px 0px 20px 0px;
+    }
+
+    a {
+      color: $white;
+      background-color: $primary;
+      border: 1px solid $white;
+      padding: 12px 15px;
+      border-radius: 15px;
+      text-decoration: none;
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary;
+        background-color: $white;
+        border: 1px solid $primary;
+      }
+    }
+
+    .container-info {
+      .content-info {
+        @include flexCenterRow;
+        p {
+          padding-left: 10px;
+
+          @include breakpoint(phone) {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+    @include breakpoint("<screen") {
+      transform: translateY(0%);
+      width: 320px;
+      margin: 30px;
+    }
+
+    @include breakpoint(phone) {
+      transform: translateY(0%);
+      width: 90%;
+      margin: 30px 0px;
+    }
   }
-  .container-expert-price-card {
-    padding: 0;
-    width: 65vw;
-    height: 45vh;
+  @include breakpoint("<screen") {
+    @include flexCenterColumn;
+    margin-top: 30px;
   }
 }
+
+// p {
+//   margin: auto;
+// }
+
+// h3 {
+//   font-size: 2em;
+//   margin: auto;
+// }
+
+// .button-card-expert {
+//   background-color: $mainColor;
+//   border: none;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   color: $textColorWhite;
+//   font-weight: 900;
+//   padding: 1.5em 1.5em;
+//   border-radius: 1em;
+//   margin-top: 35px;
+//   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+//   cursor: pointer;
+//   transition: transform 0.2s ease-in-out;
+
+//   &:hover {
+//     transform: scale(1.05);
+//   }
+// }
+// .button-card-basic {
+//   background-color: $secondaryColor;
+//   border: none;
+//   display: flex;
+//   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+//   justify-content: center;
+//   align-items: center;
+//   color: $textColorWhite;
+//   font-weight: 900;
+//   padding: 1.5em 1.5em;
+//   border-radius: 1em;
+//   margin-top: 35px;
+//   cursor: pointer;
+//   transition: transform 0.2s ease-in-out;
+
+//   &:hover {
+//     transform: scale(1.05);
+//   }
+// }
+
+// .container-price {
+//   display: flex;
+//   margin-top: 35px;
+// }
+
+// .container-pricing-cards {
+//   display: flex;
+//   justify-content: space-evenly;
+// }
+
+// .euro {
+//   margin-bottom: 32px;
+// }
+// .container-part-1-basic {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// }
+// .container-part-1-expert {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// }
+// .container-part-2-expert {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 35px;
+//   border-top: solid 3px $mainColor;
+// }
+// .container-part-2-basic {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 35px;
+//   border-top: solid 3px $secondaryColor;
+// }
+
+// .container-part-2 p {
+//   margin-left: 15px;
+// }
+
+// .container-pricing-card {
+//   border: solid 1px;
+//   height: 50vh;
+//   padding: 2em 4em;
+//   border-radius: 2em;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: space-evenly;
+//   background: linear-gradient(to top, $textColorWhite 95%, $mainColor 5%);
+//   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+// }
+// .container-basic-price-card {
+//   border: solid 1px;
+//   height: 50vh;
+//   padding: 2em 4em;
+//   border-radius: 2em;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: space-evenly;
+//   background-color: $textColorWhite;
+//   background: linear-gradient(to top, $textColorWhite 95%, $secondaryColor 5%);
+
+//   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+// }
+
+// .executions-code {
+//   display: flex;
+//   margin-top: 35px;
+// }
+
+// .executions-code p {
+//   margin-left: 15px;
+// }
+
+// .price-card {
+//   font-size: 2.5em;
+//   font-weight: 900;
+//   margin: auto;
+// }
+
+// .purpleWave {
+//   z-index: -1;
+//   height: 30em;
+//   width: 100%;
+//   position: absolute;
+//   bottom: 0;
+//   width: 100%;
+// }
+
+// /* Media queries tablets */
+// @media screen and (max-width: 1024px) {
+//   h3 {
+//     font-size: 40px;
+//   }
+
+//   .executions-code {
+//     margin-top: 25px;
+//   }
+//   .executions-code p {
+//     font-size: 20px;
+//   }
+//   .button-card {
+//     font-size: 20px;
+//     margin-top: 35px;
+//   }
+//   .container-pricing-cards {
+//     flex-direction: column;
+//     align-items: center;
+//   }
+//   .container-pricing-page {
+//     display: block;
+//   }
+
+//   .container-part-2-expert {
+//     font-size: 25px;
+//     margin-top: 25px;
+//   }
+//   .container-part-2-basic {
+//     font-size: 25px;
+//     margin-top: 25px;
+//   }
+
+//   .container-basic-price-card {
+//     padding: 0;
+//     width: 65vw;
+//     height: 45vh;
+//   }
+//   .container-expert-price-card {
+//     padding: 0;
+//     width: 65vw;
+//     height: 45vh;
+//   }
+// }
+
+// /* Media queries smartphone */
+// @media screen and (max-width: 480px) {
+//   h3 {
+//     font-size: 30px;
+//   }
+
+//   .executions-code {
+//     margin-top: 14px;
+//   }
+//   .executions-code p {
+//     font-size: 15px;
+//   }
+//   .button-card-basic {
+//     font-size: 12px;
+//     margin-top: 18px;
+//     padding: 1em 1em;
+//   }
+//   .button-card-expert {
+//     font-size: 12px;
+//     margin-top: 18px;
+//     padding: 1em 1em;
+//   }
+
+//   .container-price {
+//     margin-top: 18px;
+//   }
+//   .container-pricing-cards {
+//     width: 100vw;
+//     height: 100vh;
+//     flex-direction: column;
+//     align-items: center;
+//   }
+//   .container-pricing-page {
+//     display: block;
+//   }
+
+//   .container-part-2-expert {
+//     margin-top: 0;
+//     & p,
+//     svg {
+//       font-size: 14px;
+//     }
+//   }
+//   .container-part-2-basic {
+//     margin-top: 0;
+//     & p,
+//     svg {
+//       font-size: 14px;
+//     }
+//   }
+
+//   .container-basic-price-card {
+//     padding: 0 1em;
+//     width: 65vw;
+//     height: 45vh;
+//   }
+//   .container-expert-price-card {
+//     padding: 0 1em;
+//     width: 65vw;
+//     height: 45vh;
+//   }
+// }
