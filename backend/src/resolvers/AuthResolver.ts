@@ -99,11 +99,7 @@ export class AuthResolver {
       const status = "Active"
       const duration = "Monthly"
       const type = "Expert"
-      const subscriptionEndedAt = calculateEndedAt(
-        duration,
-        status,
-        date
-      )
+      const subscriptionEndedAt = calculateEndedAt(duration, status, date)
       await SubscriptionModels.merge(userFoundByEmail.subscription, {
         duration,
         status,

@@ -3,7 +3,7 @@ import OurProject from "../../assets/img/our_project.png";
 import OurTeam from "../../assets/img/our_team.png";
 const AboutUs = () => {
   return (
-    <div id="Accueil" className="container-about-us">
+    <div id="aboutUs" className="container-about-us">
       <h4 className="title">About us</h4>
       <div className="container-description">
         <h6 className="content-description-title">Our Project</h6>
@@ -40,7 +40,7 @@ const AboutUs = () => {
         </div>
       </div>
     </div>
-  );
+  )
 };
 
 export default AboutUs;

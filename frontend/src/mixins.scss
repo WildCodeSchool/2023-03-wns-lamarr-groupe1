@@ -2,12 +2,43 @@ $primary: #5340a9;
 $white: white;
 $black: black;
 $grey: #d9d9d9;
+$rounded-sm: 5px;
+$rounded-md: 15px;
+$rounded-full: 9999px;
+
+body {
+  min-height: 100vh;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0 5vh;
+  font-family: Arial, Helvetica, sans-serif;
+
+  main {
+    flex: 1;
+  }
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
 $breakpoints: (
-  "tablet": "(min-width: 481px) and (max-width: 1024px)",
   "phone": "(min-width: 0px) and (max-width: 480px)",
-  "screen": "(min-width: 1025px) and (max-width: 3400px)",
-  "<screen": "(min-width: 0px) and (max-width:1020px)",
-);
+  "tablet": "(min-width: 480px) and (max-width: 976px)",
+  "large-tablet": "(min-width: 976px) and (max-width: 1024px)",
+  "screen": "(min-width: 1024px) and (max-width: 1240px)",
+  "<screen": "(min-width: 0px) and (max-width:1024px)",
+  "large-screen": "(min-width: 1240px) and (max-width: 3400px)",
 );
 
 @mixin breakpoint($user-value) {
