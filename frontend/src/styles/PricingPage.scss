@@ -1,6 +1,6 @@
 @import "../mixins.scss";
 
-.container-pricing-card {
+.container-pricingPage-card {
   @include flexCenterRow;
   justify-content: space-evenly;
   .container-card:first-child {

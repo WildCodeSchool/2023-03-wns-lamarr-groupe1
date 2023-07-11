@@ -8,7 +8,7 @@ const PricingPage = () => {
   return (
     <>
       <Layout>
-        <div className="container-pricing-card">
+        <div className="container-pricingPage-card">
           {dataCard.map((info, index) => (
             <Card
               title={info.title}
