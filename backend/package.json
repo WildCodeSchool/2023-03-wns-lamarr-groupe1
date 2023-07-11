@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --watch",
     "start": "ts-node-dev src/index.ts",
-    "dev": "ts-node-dev --respawn src/index.ts"
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "seed": "ts-node-dev src/seed.ts"
   },
   "author": "",
   "license": "ISC",
@@ -14,12 +15,14 @@
     "@types/argon2": "^0.15.0",
     "apollo-server": "^3.12.0",
     "argon2": "^0.30.3",
+    "class-validator": "^0.14.0",
     "dotenv": "^16.1.4",
     "graphql": "^15.8.0",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.10.0",
     "type-graphql": "^1.1.1",
-    "typeorm": "^0.3.12"
+    "typeorm": "^0.3.12",
+    "typeorm-extension": "^2.8.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
