@@ -129,9 +129,9 @@ export class AuthResolver {
   }
 
   @Authorized()
-  @Query(() => String)
-  async getProfile(@Ctx() context: any): Promise<string> {
+  @Query(() => UsersModels)
+  async getProfile(@Ctx() context: any): Promise<UsersModels> {
     console.log("user", context.user)
-    return context.user?.email
+    return context.user
   }
 }
