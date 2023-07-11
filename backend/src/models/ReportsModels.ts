@@ -25,11 +25,11 @@ export class ReportsModels extends BaseEntity {
   @CreateDateColumn()
   createdAt!: Date;
 
-  @Field(() => [FilesModels])
+  @Field(() => FilesModels)
   @ManyToOne(() => FilesModels, (file) => file.reports)
   file: FilesModels;
 
-  @Field(() => [UsersModels])
+  @Field(() => UsersModels)
   @ManyToOne(() => UsersModels, (user) => user.reports)
   user: UsersModels;
 }

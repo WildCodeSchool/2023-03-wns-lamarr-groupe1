@@ -1,6 +1,9 @@
 $primary: #5340a9;
 $white: white;
 $black: black;
+$rounded-sm: 5px;
+$rounded-md: 15px;
+$rounded-full: 9999px;
 
 body {
   min-height: 100vh;
@@ -29,10 +32,12 @@ li {
 }
 
 $breakpoints: (
-  "tablet": "(min-width: 481px) and (max-width: 1024px)",
   "phone": "(min-width: 0px) and (max-width: 480px)",
-  "screen": "(min-width: 1025px) and (max-width: 3400px)",
-  "<screen": "(min-width: 0px) and (max-width:1020px)",
+  "tablet": "(min-width: 480px) and (max-width: 976px)",
+  "large-tablet": "(min-width: 976px) and (max-width: 1024px)",
+  "screen": "(min-width: 1024px) and (max-width: 1240px)",
+  "<screen": "(min-width: 0px) and (max-width:1024px)",
+  "large-screen": "(min-width: 1240px) and (max-width: 3400px)",
 );
 
 @mixin breakpoint($user-value) {

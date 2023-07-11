@@ -1,24 +1,24 @@
 import {
   BaseEntity,
-  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  BeforeInsert,
 } from "typeorm"
-import { IsInt } from "class-validator";
-import { Field, ObjectType } from "type-graphql";
-import { IssuesModels } from "./IssuesModels";
-import { ContactModels } from "./ContactModels";
-import { CommentsModels } from "./CommentsModels";
-import { ReportsModels } from "./ReportsModels";
-import { InteractionsModels } from "./InteractionsModels";
-import { FilesModels } from "./FilesModels";
-import { IsUnique } from "../inputs/IsUniqueValidator";
-import {SubscriptionModels} from "./SubscriptionModels"
+import { IsInt } from "class-validator"
+import { Field, ObjectType } from "type-graphql"
+import { IssuesModels } from "./IssuesModels"
+import { ContactModels } from "./ContactModels"
+import { CommentsModels } from "./CommentsModels"
+import { ReportsModels } from "./ReportsModels"
+import { InteractionsModels } from "./InteractionsModels"
+import { FilesModels } from "./FilesModels"
+import { IsUnique } from "../inputs/IsUniqueValidator"
+import { SubscriptionModels } from "./SubscriptionModels"
 
 @ObjectType()
 @Entity()
@@ -71,36 +71,52 @@ export class UsersModels extends BaseEntity {
     this.executedcode = 0
   }
 
+
   @CreateDateColumn()
   createdAt!: Date
 
   @Field(() => [IssuesModels])
-  @OneToMany(() => IssuesModels, (issue) => issue.user)
+  @OneToMany(() => IssuesModels, (issue) => issue.user, {
+    eager: true,
+  })
   issues: IssuesModels[]
 
   @Field(() => [ContactModels])
-  @OneToMany(() => ContactModels, (contact) => contact.user)
+  @OneToMany(() => ContactModels, (contact) => contact.user, {
+    eager: true,
+  })
   contacts: ContactModels[]
 
   @Field(() => [CommentsModels])
-  @OneToMany(() => CommentsModels, (comment) => comment.user)
+  @OneToMany(() => CommentsModels, (comment) => comment.user, {
+    eager: true,
+  })
   comments: CommentsModels[]
 
   @Field(() => [ReportsModels])
-  @OneToMany(() => ReportsModels, (report) => report.user)
+  @OneToMany(() => ReportsModels, (report) => report.user, {
+    eager: true,
+  })
   reports: ReportsModels[]
 
   @Field(() => [InteractionsModels])
-  @OneToMany(() => InteractionsModels, (interaction) => interaction.user)
+  @OneToMany(() => InteractionsModels, (interaction) => interaction.user, {
+    eager: true,
+  })
   interactions: InteractionsModels[]
 
   @Field(() => [FilesModels])
-  @OneToMany(() => FilesModels, (file) => file.user)
+  @OneToMany(() => FilesModels, (file) => file.user, {
+    eager: true,
+  })
   files: FilesModels[]
+  
 
   @OneToOne(() => SubscriptionModels, {
-    eager: true,
+    eager: true
   })
   @JoinColumn()
   subscription: SubscriptionModels
+
+
 }

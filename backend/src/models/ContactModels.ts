@@ -27,7 +27,7 @@ export class ContactModels extends BaseEntity {
   @Column()
   content!: string;
 
-  @Field(() => [UsersModels])
+  @Field(() => UsersModels)
   @ManyToOne(() => UsersModels, (user) => user.contacts)
   user: UsersModels;
 }

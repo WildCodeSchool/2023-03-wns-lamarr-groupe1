@@ -11,7 +11,7 @@ export class SubscriptionResolver {
     { type }: UpdateSubscriptionInput
   ): Promise<SubscriptionModels> {
     // passe la 1ère lettre ne majuscule
-    type = type.charAt(0).toUpperCase() + type.substring(1).toLowerCase()
+    type = `${type.charAt(0).toUpperCase()}${type.substring(1).toLowerCase()}`
     let status = ""
     let duration = ""
 

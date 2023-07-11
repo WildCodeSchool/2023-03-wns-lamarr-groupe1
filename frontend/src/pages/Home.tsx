@@ -1,32 +1,19 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Layout from "../components/common/layouts/Layout";
-import AboutUs from "../components/common/AboutUs";
-import "../styles/AboutUs.scss";
+import React from "react"
+import Layout from "../components/common/layouts/Layout"
+import HomePage from "../components/common/HomePage"
+import AboutUs from "../components/common/AboutUs"
+import "../styles/AboutUs.scss"
+import "../styles/components/Pricing.scss"
+import Pricing from "../components/common/Pricing"
+
 const Home = () => {
-  const navigate = useNavigate();
-
-  const handleClickR = () => {
-    navigate("/subscribe");
-  };
-  const handleClickK = () => {
-    navigate("/sign-in");
-  };
-
   return (
-    <div>
-      <Layout>
-        <p>
-          Hello i'm the homepage ! I'll make my muscle grow up and i'll be back
-          <br></br>
-          Click beyond to see what Khemis, Flora & Romain has done
-        </p>
-        <button onClick={handleClickK}>Khemis</button>
-        <button onClick={handleClickR}>Romain</button>
-        <AboutUs />
-      </Layout>
-    </div>
-  );
-};
+    <Layout>
+      <HomePage />
+      <Pricing />
+      <AboutUs />
+    </Layout>
+  )
+}
 
-export default Home;
+export default Home
