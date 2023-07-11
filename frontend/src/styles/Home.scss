@@ -1,103 +1,167 @@
 @import "../mixins.scss";
-
-.home {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 30px;
-  height: 100%;
-  .img-container {
-    min-width: 40%;
-    img {
-      max-width: 100%;
-    }
+.home-main-container {
+  h1 {
+    text-align: center;
+    color: $primary;
+    font-weight: 900;
+    font-size: 64px;
   }
-  .container {
+  .home {
     display: flex;
-    justify-content: center;
-    min-width: 40%;
-    .content-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 50%;
-      h2 {
-        width: 100%;
-        color: $primary;
-        font-weight: 500;
-        font-size: 64px;
-        margin-top: 100px;
-        padding: 0px 5px 0px 5px;
-      }
-      p {
-        margin: 5vh 0vh 0vh 0vh;
-        padding: 0px 5px 0px 5px;
-        font-size: 20px;
-      }
-      .link-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        margin-top: 10vh;
-        padding: 0px 5px 0px 5px;
-        button {
-          width: 200px;
-          text-align: center;
-          padding: 12px 12px;
-          font-size: 14px;
-          border-radius: $rounded-full;
-          border: 1px solid $primary;
-          background-color: $primary;
-          color: $white;
-          font-weight: 500;
-          transition: 0.3s ease-in-out;
-          cursor: pointer;
-
-          &:hover {
-            background-color: $white;
-            color: $primary;
-            border: 1px solid $primary;
-          }
-        }
-        .learn-more {
-          text-decoration: underline;
-          color: $black;
-          font-size: 14px;
-          &:hover {
-            text-decoration: underline;
-            color: $primary;
-          }
-        }
-      }
-    }
-  }
-  @include breakpoint("tablet") {
+    justify-content: space-around;
+    margin-top: 30px;
+    height: 100%;
+    border-bottom: 1px solid $primary;
+    margin-bottom: 3vh;
+    padding-bottom: 3vh;
     .img-container {
+      min-width: 40%;
       display: flex;
       align-items: center;
+      img {
+        max-width: 100%;
+      }
     }
     .container {
+      display: flex;
+      justify-content: center;
+      min-width: 40%;
       .content-container {
-        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        justify-content: center;
+        h2 {
+          width: 100%;
+          color: $primary;
+          font-weight: 500;
+          font-size: 48px;
+          padding: 0px 5px 0px 5px;
+        }
+        p {
+          margin: 5vh 0vh 0vh 0vh;
+          padding: 0px 5px 0px 5px;
+          font-size: 16px;
+        }
+        .link-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          margin-top: 10vh;
+          padding: 0px 5px 0px 5px;
+          button {
+            width: 200px;
+            text-align: center;
+            padding: 12px 12px;
+            font-size: 14px;
+            border-radius: $rounded-full;
+            border: 1px solid $primary;
+            background-color: $primary;
+            color: $white;
+            font-weight: 500;
+            transition: 0.3s ease-in-out;
+            cursor: pointer;
+
+            &:hover {
+              background-color: $white;
+              color: $primary;
+              border: 1px solid $primary;
+            }
+          }
+          .learn-more {
+            text-decoration: underline;
+            color: $black;
+            font-size: 14px;
+            &:hover {
+              text-decoration: underline;
+              color: $primary;
+            }
+          }
+        }
+      }
+    }
+  }
+  @include breakpoint("screen") {
+    .home {
+      .container {
+        .content-container {
+          width: 100%;
+          p {
+            margin-top: 1vh;
+          }
+          .link-container {
+            margin-top: 5vh;
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint("<screen") {
+    .home {
+      .img-container {
+        display: none;
+      }
+      .container {
+        margin-bottom: 30px;
+        .content-container {
+          h2 {
+            margin-top: 20px;
+            text-align: center;
+          }
+          p {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 1vh;
+          }
+          .link-container {
+            flex-direction: column;
+            margin-top: 5vh;
+            .learn-more {
+              margin-top: 5vh;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint("large-tablet") {
+    .home {
+      .container {
+        .content-container {
+          width: 50%;
+        }
+      }
+    }
+  }
+
+  @include breakpoint("tablet") {
+    .home {
+      .container {
+        .content-container {
+          width: 100%;
+          h2 {
+            font-size: 48px;
+          }
+        }
       }
     }
   }
 
   @include breakpoint("phone") {
-    .img-container {
-      display: none;
+    h1 {
+      font-weight: 900;
+      font-size: 48px;
     }
-    .container {
-      .content-container {
-        width: 100%;
-        h2 {
-          text-align: center;
-          font-size: 64px;
-        }
-        .link-container {
-          flex-direction: column;
-          .learn-more {
-            margin-top: 3vh;
+    .home {
+      .container {
+        .content-container {
+          width: 100%;
+          h2 {
+            font-size: 48px;
           }
         }
       }
