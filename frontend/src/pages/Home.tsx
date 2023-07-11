@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../components/common/layouts/Layout";
 import AboutUs from "../components/common/AboutUs";
 import "../styles/AboutUs.scss";
+import "../styles/components/Pricing.scss";
+import Pricing from "../components/common/Pricing";
 const Home = () => {
   const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ const Home = () => {
         </p>
         <button onClick={handleClickK}>Khemis</button>
         <button onClick={handleClickR}>Romain</button>
+        <Pricing />
         <AboutUs />
       </Layout>
     </div>
