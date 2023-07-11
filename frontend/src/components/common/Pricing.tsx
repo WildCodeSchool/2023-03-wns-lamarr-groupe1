@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 
 const Pricing = () => {
   return (
-    <div className="container-pricing">
-      <h4 id="Pricing" className="title">Pricing</h4>
+    <div className="container-pricing-home">
+      <h4 id="Pricing" className="title">
+        Pricing
+      </h4>
       <div className="container-card-hexagon">
         <div className="container-pricing-card-border">
           <div className="container-pricing-card">

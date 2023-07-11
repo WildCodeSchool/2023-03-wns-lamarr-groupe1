@@ -1,6 +1,7 @@
 $primary: #5340a9;
 $white: white;
 $black: black;
+$grey: #d9d9d9;
 $rounded-sm: 5px;
 $rounded-md: 15px;
 $rounded-full: 9999px;
@@ -29,7 +30,6 @@ $breakpoints: (
 //@include breakpoint(tablet) {
 //  background-color: orange;
 //    }
-
 body {
   min-height: 100vh;
   box-sizing: border-box;
@@ -45,6 +45,9 @@ body {
   @include breakpoint(phone) {
     padding: 10px;
   }
+  @include breakpoint("<screen") {
+    background: none;
+  }
 }
 
 #root {
@@ -58,4 +61,16 @@ ul,
 li {
   margin: 0;
   padding: 0;
+}
+@mixin flexCenterColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flexCenterRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
