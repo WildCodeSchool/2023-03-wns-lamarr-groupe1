@@ -2,14 +2,15 @@ import { ContextFunction } from "apollo-server-core";
 import { JwtPayload, verify } from "jsonwebtoken";
 import { UsersModels } from "../models/UsersModels";
 
-export const apolloContext: ContextFunction = async ({ req }) => {
-  if (req.headers.authorization === null) {
-    return {};
-  }
-
+export const apolloContext: ContextFunction = async ({ req, }) => {
+  
   // "authorization": `Bearer ${token}`
   try {
-    const bearer = req.headers.authorization?.split("Bearer ")[1];
+    if (req?.headers?.authorization === null) {
+      return {};
+    }
+
+    const bearer = req?.headers?.authorization?.split("Bearer ")[1];
     if (bearer?.length === 0) {
       return {};
     }
