@@ -1,6 +1,6 @@
 import React from "react";
-import BasicPriceCard from "../components/common/BasicPriceCard";
-import ExpertPriceCard from "../components/common/ExpertPriceCard";
+import Card from "../components/common/Card";
+import { dataCard } from "../utils/dataCard";
 import "../styles/PricingPage.scss";
 import Layout from "../components/common/layouts/Layout";
 
@@ -8,9 +8,15 @@ const PricingPage = () => {
   return (
     <>
       <Layout>
-        <div className="container-pricing-cards">
-          <BasicPriceCard />
-          <ExpertPriceCard />
+        <div className="container-pricing-card">
+          {dataCard.map((info, index) => (
+            <Card
+              title={info.title}
+              price={info.price}
+              btn={info.btn}
+              services={info.infoServices}
+            />
+          ))}
         </div>
       </Layout>
     </>
