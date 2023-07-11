@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { SIGN_UP_MUTATION } from "../../graphql/mutations/SIGN_UP_MUTATION";
+import { SIGN_UP_MUTATION } from "@/graphql/mutations/SIGN_UP_MUTATION";
 import { useMutation } from "@apollo/client";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { extractValidationsErrors } from "../../utils/extractValidationsErrors";
+import { extractValidationsErrors } from "@/utils/extractValidationsErrors";
 import { useSearchParams } from "react-router-dom";
 
 interface IuserSignUp {
