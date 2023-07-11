@@ -1,9 +1,12 @@
 $primary: #5340a9;
 $white: white;
 $black: black;
+$rounded-sm: 5px;
+$rounded-md: 15px;
+$rounded-full: 9999px;
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   width: 100%;
   margin: 0;
@@ -11,7 +14,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-root {
+#root {
   height: 100%;
   width: 100%;
 }
@@ -29,7 +32,7 @@ li {
 }
 
 $breakpoints: (
-  "tablet": "(min-width: 601px) and (max-width: 1020px)",
+  "tablet": "(min-width: 601px) and (max-width: 1024px)",
   "phone": "(min-width: 0px) and (max-width: 600px)",
   "screen": "(min-width: 1021px) and (max-width: 6000px)",
 );

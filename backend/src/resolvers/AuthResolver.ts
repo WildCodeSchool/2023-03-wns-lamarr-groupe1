@@ -99,11 +99,7 @@ export class AuthResolver {
       const status = "Active"
       const duration = "Monthly"
       const type = "Expert"
-      const subscriptionEndedAt = calculateEndedAt(
-        duration,
-        status,
-        date
-      )
+      const subscriptionEndedAt = calculateEndedAt(duration, status, date)
       await SubscriptionModels.merge(userFoundByEmail.subscription, {
         duration,
         status,
@@ -129,9 +125,9 @@ export class AuthResolver {
   }
 
   @Authorized()
-  @Query(() => String)
+  @Query(() => UsersModels)
   async getProfile(@Ctx() context: any): Promise<string> {
     console.log("user", context.user)
-    return context.user?.email
+    return context.user
   }
 }
