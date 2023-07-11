@@ -17,6 +17,7 @@ const PricingPage = () => {
               services={info.infoServices}
             />
           ))}
+          <div className="container-background-pricingPage"></div>
         </div>
       </Layout>
     </>

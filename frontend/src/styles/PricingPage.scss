@@ -3,6 +3,19 @@
 .container-pricingPage-card {
   @include flexCenterRow;
   justify-content: space-evenly;
+  .container-background-pricingPage {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background: url("../assets/img/Vector\ 256.png") bottom no-repeat;
+    z-index: -1;
+    background-size: 100%;
+    object-fit: cover;
+    bottom: 0;
+    @include breakpoint("<screen") {
+      background: none;
+    }
+  }
   .container-card:first-child {
     .border-top {
       width: 100%;
