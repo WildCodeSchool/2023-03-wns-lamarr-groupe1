@@ -17,7 +17,7 @@ export class AuthResolver {
     const hashedPassword = await argon2.hash(password)
     const subscribedAt = new Date()
     let subscription: SubscriptionModels
-    type = `${type.charAt(0).toUpperCase()} ${type.substring(1).toLowerCase()}`
+    type = `${type.charAt(0).toUpperCase()}${type.substring(1).toLowerCase()}`
 
     if (type === "Expert") {
       const status = "Active"
@@ -126,7 +126,7 @@ export class AuthResolver {
 
   @Authorized()
   @Query(() => UsersModels)
-  async getProfile(@Ctx() context: any): Promise<string> {
+  async getProfile(@Ctx() context: any): Promise<UsersModels> {
     console.log("user", context.user)
     return context.user
   }

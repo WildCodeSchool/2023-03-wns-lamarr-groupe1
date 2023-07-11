@@ -4,6 +4,7 @@ import { testDataSource } from "../Utils/testDataSource";
 import { callGraphQL } from "../Utils/callGraphQL";
 import { config } from "dotenv";
 import * as argon2 from 'argon2'
+import { SubscriptionModels } from "../models/SubscriptionModels"
 
 config();
 
@@ -20,6 +21,7 @@ describe("AuthResolver", () => {
         prefix: '@A'
       });      
       const username = faker.internet.userName();
+      const type = "free"
 
       await UsersModels.create({
         username,
@@ -34,8 +36,8 @@ describe("AuthResolver", () => {
             }
         `,
 
-        variables: { input: { username: name, email, password } },
-      });
+        variables: { input: { username: name, email, password, type } }
+      })
 
       expect(response.errors).toBeTruthy();
       expect(response.errors?.length).toBeGreaterThanOrEqual(1);
@@ -55,6 +57,7 @@ describe("AuthResolver", () => {
         prefix: '@A'
       });      
       const username = faker.internet.userName();
+      const type = "free"
 
       await UsersModels.create({
         username,
@@ -69,8 +72,8 @@ describe("AuthResolver", () => {
             }
         `,
 
-        variables: { input: { username, email: mail, password } },
-      });
+        variables: { input: { username, email: mail, password, type } }
+      })
 
       expect(response.errors).toBeTruthy();
       expect(response.errors?.length).toBeGreaterThanOrEqual(1);
@@ -90,6 +93,7 @@ describe("AuthResolver", () => {
         prefix: '@A'
       });
       const username = faker.internet.userName();
+      const type = "free"
       const response = await callGraphQL({
         query: `
             mutation Mutation($input: SignUpInput!) {
@@ -97,8 +101,8 @@ describe("AuthResolver", () => {
             }
         `,
 
-        variables: { input: { email, password, username } },
-      });
+        variables: { input: { email, password, username, type } }
+      })
 
       expect(response.errors).not.toBeTruthy();
       expect(response.data).toBeTruthy();
@@ -118,6 +122,7 @@ describe("AuthResolver", () => {
       const username = faker.internet.userName();
       const firstname = faker.person.firstName();
       const lastname = faker.person.lastName();
+      const type = "free"
       const response = await callGraphQL({
         query: `
             mutation Mutation($input: SignUpInput!) {
@@ -125,8 +130,10 @@ describe("AuthResolver", () => {
             }
         `,
 
-        variables: { input: { email, password, username, firstname, lastname } },
-      });
+        variables: {
+          input: { email, password, username, firstname, lastname, type }
+        }
+      })
 
       expect(response.errors).not.toBeTruthy();
       expect(response.data).toBeTruthy();
@@ -152,7 +159,15 @@ describe("AuthResolver", () => {
       }); 
       const username = faker.internet.userName();
 
-      await UsersModels.create({ email, password, username }).save();
+      const subscription = await SubscriptionModels.create({
+        type: "expert",
+        duration: "Monthly",
+        status: "Active",
+        subscribedAt: new Date(),
+        subscriptionEndedAt: new Date()
+      }).save()
+
+      await UsersModels.create({ email, password, username, subscription }).save();
 
       const response = await callGraphQL({
         query: `
@@ -176,7 +191,20 @@ describe("AuthResolver", () => {
       const password = await argon2.hash(pass);
       const username = faker.internet.userName();
 
-      await UsersModels.create({ email, password, username }).save();
+      const subscription = await SubscriptionModels.create({
+        type: "expert",
+        duration: "Monthly",
+        status: "Active",
+        subscribedAt: new Date(),
+        subscriptionEndedAt: new Date()
+      }).save()
+
+      await UsersModels.create({
+        email,
+        password,
+        username,
+        subscription
+      }).save()
 
       const response = await callGraphQL({
         query: `

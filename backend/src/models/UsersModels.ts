@@ -1,13 +1,13 @@
 import {
   BaseEntity,
-  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  BeforeInsert,
 } from "typeorm"
 import { IsInt } from "class-validator"
 import { Field, ObjectType } from "type-graphql"
@@ -71,48 +71,52 @@ export class UsersModels extends BaseEntity {
     this.executedcode = 0
   }
 
+
   @CreateDateColumn()
   createdAt!: Date
 
   @Field(() => [IssuesModels])
   @OneToMany(() => IssuesModels, (issue) => issue.user, {
-    eager: true
+    eager: true,
   })
   issues: IssuesModels[]
 
   @Field(() => [ContactModels])
   @OneToMany(() => ContactModels, (contact) => contact.user, {
-    eager: true
+    eager: true,
   })
   contacts: ContactModels[]
 
   @Field(() => [CommentsModels])
   @OneToMany(() => CommentsModels, (comment) => comment.user, {
-    eager: true
+    eager: true,
   })
   comments: CommentsModels[]
 
   @Field(() => [ReportsModels])
   @OneToMany(() => ReportsModels, (report) => report.user, {
-    eager: true
+    eager: true,
   })
   reports: ReportsModels[]
 
   @Field(() => [InteractionsModels])
   @OneToMany(() => InteractionsModels, (interaction) => interaction.user, {
-    eager: true
+    eager: true,
   })
   interactions: InteractionsModels[]
 
   @Field(() => [FilesModels])
   @OneToMany(() => FilesModels, (file) => file.user, {
-    eager: true
+    eager: true,
   })
   files: FilesModels[]
+  
 
   @OneToOne(() => SubscriptionModels, {
     eager: true
   })
   @JoinColumn()
   subscription: SubscriptionModels
+
+
 }

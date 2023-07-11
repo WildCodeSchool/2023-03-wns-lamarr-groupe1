@@ -12,17 +12,17 @@ body {
   margin: 0;
   padding: 0 5vh;
   font-family: Arial, Helvetica, sans-serif;
+
+  main {
+    flex: 1;
+  }
 }
 
 #root {
-  height: 100%;
-  width: 100%;
-}
-
-main {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 ul,
@@ -32,9 +32,10 @@ li {
 }
 
 $breakpoints: (
-  "tablet": "(min-width: 601px) and (max-width: 1024px)",
-  "phone": "(min-width: 0px) and (max-width: 600px)",
-  "screen": "(min-width: 1021px) and (max-width: 6000px)",
+  "tablet": "(min-width: 481px) and (max-width: 1024px)",
+  "phone": "(min-width: 0px) and (max-width: 480px)",
+  "screen": "(min-width: 1025px) and (max-width: 3400px)",
+  "<screen": "(min-width: 0px) and (max-width:1020px)",
 );
 
 @mixin breakpoint($user-value) {
