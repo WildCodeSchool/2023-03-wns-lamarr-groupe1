@@ -1,6 +1,5 @@
 import { Faker } from "@faker-js/faker";
 import { setSeederFactory } from "typeorm-extension";
-import * as argon2 from "argon2"
 import { ReportsModels } from "../models/ReportsModels";
 import { UsersModels } from "../models/UsersModels";
 import { FilesModels } from "../models/FilesModels";
