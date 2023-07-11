@@ -1,6 +1,6 @@
 @import "../../mixins.scss";
 
-nav {
+.main-nav {
   display: flex;
   justify-content: space-between;
   background-color: white;
@@ -120,9 +120,39 @@ nav {
   }
 
   @include breakpoint("<screen") {
-    background-color: orange;
+    display: none;
+  }
+}
+
+.nav-burger {
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+
+  .nav-burger-burger {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    margin: 5px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+
+    &:hover {
+      border: 1px solid $primary;
+      border-radius: $rounded-md;
+      cursor: pointer;
+    }
+
+    .nav-burger-burger-span {
+      width: 25px;
+      border-radius: $rounded-md;
+      height: 2px;
+      background-color: $primary;
+    }
   }
   @include breakpoint("screen") {
-    background-color: green;
+    display: none;
   }
 }
