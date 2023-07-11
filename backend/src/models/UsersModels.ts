@@ -9,16 +9,16 @@ import {
   JoinColumn,
   BeforeInsert,
 } from "typeorm"
-import { IsInt } from "class-validator";
-import { Field, ObjectType } from "type-graphql";
-import { IssuesModels } from "./IssuesModels";
-import { ContactModels } from "./ContactModels";
-import { CommentsModels } from "./CommentsModels";
-import { ReportsModels } from "./ReportsModels";
-import { InteractionsModels } from "./InteractionsModels";
-import { FilesModels } from "./FilesModels";
-import { IsUnique } from "../inputs/IsUniqueValidator";
-import {SubscriptionModels} from "./SubscriptionModels"
+import { IsInt } from "class-validator"
+import { Field, ObjectType } from "type-graphql"
+import { IssuesModels } from "./IssuesModels"
+import { ContactModels } from "./ContactModels"
+import { CommentsModels } from "./CommentsModels"
+import { ReportsModels } from "./ReportsModels"
+import { InteractionsModels } from "./InteractionsModels"
+import { FilesModels } from "./FilesModels"
+import { IsUnique } from "../inputs/IsUniqueValidator"
+import { SubscriptionModels } from "./SubscriptionModels"
 
 @ObjectType()
 @Entity()
@@ -113,7 +113,7 @@ export class UsersModels extends BaseEntity {
   
 
   @OneToOne(() => SubscriptionModels, {
-    eager: true,
+    eager: true
   })
   @JoinColumn()
   subscription: SubscriptionModels

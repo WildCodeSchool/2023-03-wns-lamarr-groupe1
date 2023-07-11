@@ -122,4 +122,7 @@ nav {
   @include breakpoint("<screen") {
     background-color: orange;
   }
+  @include breakpoint("screen") {
+    background-color: green;
+  }
 }
