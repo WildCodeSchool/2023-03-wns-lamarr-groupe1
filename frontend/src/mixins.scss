@@ -8,6 +8,8 @@ $breakpoints: (
   "screen": "(min-width: 1025px) and (max-width: 3400px)",
   "<screen": "(min-width: 0px) and (max-width:1020px)",
 );
+);
+
 @mixin breakpoint($user-value) {
   $my-map: map-get($breakpoints, $user-value);
   @if $my-map {

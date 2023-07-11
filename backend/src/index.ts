@@ -8,6 +8,7 @@ config();
 
 const start = async (): Promise<void> => {
   await dataSource.initialize();
+
   const schema = await createApolloSchema();
   const server = new ApolloServer({
     schema,
