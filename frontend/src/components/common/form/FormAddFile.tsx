@@ -6,6 +6,9 @@ import { fileContext } from "utils/context/FileContext"
 import { NEW_FILE_MUTATION } from "graphql/mutations/NEW_FILE_MUTATION"
 import { useMutation } from "@apollo/client"
 import { ILanguageProps } from "utils/interface/ILanguage"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faClose } from "@fortawesome/free-solid-svg-icons"
+
 
 interface INewFile {
   filename: string
@@ -24,12 +27,11 @@ const AddNewFile = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors }
   } = useForm<INewFile>({ mode: "onBlur" })
   const onSubmit: SubmitHandler<INewFile> = async (data) => {
     try {
-      const result = await addFile({
+      await addFile({
         variables: {
           inputFile: {
             filename: data.filename,
@@ -47,7 +49,9 @@ const AddNewFile = () => {
   return (
     <div className="container-card-form">
       <h2>Créer un nouveau fichier</h2>
-      <span onClick={handleCloseModal}>X</span>
+      <span onClick={handleCloseModal}>
+        <FontAwesomeIcon className="icon" icon={faClose} size="lg" />
+      </span>
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="container-input">
           <label htmlFor="filename"> Nom du fichier</label>

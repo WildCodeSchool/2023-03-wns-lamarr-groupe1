@@ -7,25 +7,27 @@
   background: #adadad6a;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100%;
   color: $white;
   .modal {
     background: white;
-    min-height: 20vh;
-    max-height: 80vh;
     border-radius: $rounded-md;
     box-shadow: 0px 0px 10px 0px;
+    width: 35%;
+    height: 40%;
     .modalBody {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
+      height: 100%;
       .container-card-form {
-        width: 450px;
+        width: 100%;
+        height: 100%;
         background-color: $primary;
         border-radius: $rounded-md;
-        padding: 25px 20px;
+        padding: 35px 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -38,9 +40,9 @@
           text-transform: uppercase;
         }
         span {
-          position:absolute;
-          top: 25px;
-          right: 20px;
+          position: absolute;
+          top: 35px;
+          right: 30px;
 
           &:hover {
             cursor: pointer;
@@ -130,6 +132,13 @@
           }
         }
       }
+    }
+  }
+  @include breakpoint("<screen") {
+    align-items: start;
+    padding-top: 250px;
+    .modal {
+      max-width: 70%;
     }
   }
 }
