@@ -1,67 +1,67 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { SIGN_UP_MUTATION } from "../../graphql/mutations/SIGN_UP_MUTATION";
-import { useMutation } from "@apollo/client";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { extractValidationsErrors } from "../../utils/extractValidationsErrors";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { SIGN_UP_MUTATION } from "graphql/mutations/SIGN_UP_MUTATION"
+import { useMutation } from "@apollo/client"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { extractValidationsErrors } from "utils/extractValidationsErrors"
+import { useSearchParams } from "react-router-dom"
 
 interface IuserSignUp {
-  firstname?: string;
-  lastname?: string;
-  username: string;
-  email: string;
-  password: string;
+  firstname?: string
+  lastname?: string
+  username: string
+  email: string
+  password: string
 }
 const FormSignUp = () => {
-  const [searchParams] = useSearchParams();
-  const queryType = searchParams.get("type");
-  console.log(queryType);
+  const [searchParams] = useSearchParams()
+  const queryType = searchParams.get("type")
+  console.log(queryType)
 
-  const navigate = useNavigate();
-  const [addUser, { loading }] = useMutation(SIGN_UP_MUTATION);
+  const navigate = useNavigate()
+  const [addUser, { loading }] = useMutation(SIGN_UP_MUTATION)
 
   const {
     register,
     handleSubmit,
     setError,
-    formState: { errors },
-  } = useForm<IuserSignUp>();
-  console.log(errors.password?.message);
+    formState: { errors }
+  } = useForm<IuserSignUp>({ mode: "onBlur" })
+  console.log(errors.password?.message)
   const onSubmit: SubmitHandler<IuserSignUp> = async (data) => {
     const input = {
       ...data,
-      type: queryType || "free",
-    };
+      type: queryType || "free"
+    }
 
     try {
-      const formData = new FormData();
-      console.log(formData);
+      const formData = new FormData()
+      console.log(formData)
 
       const result = await addUser({
         variables: { input },
 
         onError: (error) => {
           const validationErrors: Record<string, string[]> =
-            extractValidationsErrors(error.graphQLErrors);
+            extractValidationsErrors(error.graphQLErrors)
           for (const fieldKey of Object.keys(validationErrors)) {
-            console.log(fieldKey); // chaîne de caractères (email, password, firstName, lastName)
+            console.log(fieldKey) // chaîne de caractères (email, password, firstName, lastName)
             for (const message of validationErrors[fieldKey]) {
               const testError = setError(fieldKey as keyof IuserSignUp, {
                 type: "manual",
-                message: message,
-              });
-              console.log(testError);
+                message: message
+              })
+              console.log(testError)
             }
           }
-        },
-      });
-      console.log(data);
-      const token = result.data.signUp;
-      localStorage.setItem("token", token);
-      input.type === "free" ? navigate("/") : navigate("/");
+        }
+      })
+      console.log(data)
+      const token = result.data.signUp
+      localStorage.setItem("token", `Bearer ${token}`)
+      input.type === "free" ? navigate("/") : navigate("/")
     } catch (error: any) {}
-  };
+  }
   return (
     <div className="container-card-form container-card-form-signup">
       <h2>Inscrivez-vous</h2>
@@ -89,7 +89,7 @@ const FormSignUp = () => {
           placeholder="Pseudo*"
           {...register("username", {
             required: "Ce champ est requis !",
-            minLength: 1,
+            minLength: 1
           })}
         />
         {errors.username ? (
@@ -112,13 +112,13 @@ const FormSignUp = () => {
             required: "Ce champ est requis !",
             minLength: {
               value: 8,
-              message: "Le mot de passe doit contenir au moins 8 caractères",
+              message: "Le mot de passe doit contenir au moins 8 caractères"
             },
             pattern: {
               value: /^(?=.*[A-Z])(?=.*[!@#$%^&*])/,
               message:
-                "Le mot de passe doit contenir une lettres majuscules et minuscules, un chiffres et un caractères spécial",
-            },
+                "Le mot de passe doit contenir une lettres majuscules et minuscules, un chiffres et un caractères spécial"
+            }
           })}
         />
         {errors.password ? (
@@ -131,7 +131,7 @@ const FormSignUp = () => {
         déjà un compte ? <Link to={"/sign-in"}>Connectez-vous !</Link>
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default FormSignUp;
+export default FormSignUp

@@ -1,8 +1,8 @@
 import React from "react";
-import Card from "../components/common/Card";
-import { dataCard } from "../utils/dataCard";
-import "../styles/PricingPage.scss";
-import Layout from "../components/common/layouts/Layout";
+import Card from "components/common/Card";
+import { dataCard } from "utils/dataCard";
+import "styles/PricingPage.scss";
+import Layout from "components/common/layouts/Layout";
 
 const PricingPage = () => {
   return (
