@@ -1,35 +1,49 @@
-
-import "../styles/PricingPage.scss";
-import Layout from "../components/common/layouts/Layout";
-import Editor from '@monaco-editor/react';
-import React, { useRef } from 'react';
-import ReactDOM from 'react-dom';
-
-
+import React, { useRef, useState } from 'react';
+import Editor, { OnChange } from '@monaco-editor/react';
 
 const CodingPage = () => {
+  const [code, setCode] = useState<string>('');
+  const [result, setResult] = useState<string>('');
 
-  const editorRef = useRef(null);
+  const editorRef = useRef<any>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
 
   function handleEditorDidMount(editor: any, monaco: any) {
-    // here is the editor instance
-    // you can store it in `useRef` for further usage
     editorRef.current = editor;
   }
 
-    return (
-      <>
-        <Layout>
-        <Editor
-      height="80vh"
-      defaultLanguage="javascript"
-      defaultValue="// some comment"
-      onMount={handleEditorDidMount}
-    />
-        </Layout>
-      </>
-    );
-  };
-  
-  export default CodingPage;
-  
+  function handleCodeChange(value: string | undefined) {
+    setCode(value || '');
+  }
+
+  function handleRunCode() {
+    try {
+      const evalResult = eval(code);
+      if (resultRef.current) {
+        resultRef.current.innerHTML = evalResult.toString();
+      }
+    } catch (error: any) {
+      if (resultRef.current) {
+        resultRef.current.innerHTML = error.toString();
+      }
+    }
+  }
+
+  return (
+    <>
+      <Editor
+        height="80vh"
+        defaultLanguage="javascript"
+        defaultValue="// Write a code"
+        onMount={handleEditorDidMount}
+        onChange={handleCodeChange as OnChange}
+      />
+      <div>
+        <button onClick={handleRunCode}>Run</button>
+        <div ref={resultRef}>Result: </div>
+      </div>
+    </>
+  );
+};
+
+export default CodingPage;
