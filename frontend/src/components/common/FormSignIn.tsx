@@ -21,17 +21,14 @@ const FormSignIn = () => {
   } = useForm<IuserSignIn>();
   const onSubmit: SubmitHandler<IuserSignIn> = async (data) => {
     try {
-      console.log("data", data);
       const result = await userSignIn({
         variables: data,
       });
-      console.log("result", result);
       const token = result.data.signIn;
       localStorage.setItem("token", token);
       setCredantials(false);
       navigate("/");
     } catch (error) {
-      console.log("error", error);
       setCredantials(true);
     }
   };

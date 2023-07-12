@@ -16,7 +16,6 @@ interface IuserSignUp {
 const FormSignUp = () => {
   const [searchParams] = useSearchParams();
   const queryType = searchParams.get("type");
-  console.log(queryType);
 
   const navigate = useNavigate();
   const [addUser, { loading }] = useMutation(SIGN_UP_MUTATION);
@@ -27,7 +26,6 @@ const FormSignUp = () => {
     setError,
     formState: { errors },
   } = useForm<IuserSignUp>();
-  console.log(errors.password?.message);
   const onSubmit: SubmitHandler<IuserSignUp> = async (data) => {
     const input = {
       ...data,
@@ -36,7 +34,6 @@ const FormSignUp = () => {
 
     try {
       const formData = new FormData();
-      console.log(formData);
 
       const result = await addUser({
         variables: { input },
@@ -45,18 +42,15 @@ const FormSignUp = () => {
           const validationErrors: Record<string, string[]> =
             extractValidationsErrors(error.graphQLErrors);
           for (const fieldKey of Object.keys(validationErrors)) {
-            console.log(fieldKey); // chaîne de caractères (email, password, firstName, lastName)
             for (const message of validationErrors[fieldKey]) {
               const testError = setError(fieldKey as keyof IuserSignUp, {
                 type: "manual",
                 message: message,
               });
-              console.log(testError);
             }
           }
         },
       });
-      console.log(data);
       const token = result.data.signUp;
       localStorage.setItem("token", token);
       input.type === "free" ? navigate("/") : navigate("/");
