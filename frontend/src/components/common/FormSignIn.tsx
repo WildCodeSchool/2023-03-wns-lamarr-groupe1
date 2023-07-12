@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SIGN_IN_QUERY } from "@/graphql/queries/SIGN_IN_QUERY";
+import { SIGN_IN_QUERY } from "graphql/queries/SIGN_IN_QUERY";
 import { useLazyQuery } from "@apollo/client";
 import { useForm, SubmitHandler } from "react-hook-form";
 

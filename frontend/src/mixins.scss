@@ -7,26 +7,27 @@ $rounded-md: 15px;
 $rounded-full: 9999px;
 
 $breakpoints: (
-  "phone": "(min-width: 0px) and (max-width: 480px)",
-  "tablet": "(min-width: 480px) and (max-width: 976px)",
-  "large-tablet": "(min-width: 976px) and (max-width: 1024px)",
+  "phone": "(min-width: 0px) and (max-width: 479px)",
+  "tablet": "(min-width: 480px) and (max-width: 975px)",
+  "large-tablet": "(min-width: 976px) and (max-width: 1023px)",
   "screen": "(min-width: 1024px) and (max-width: 1240px)",
-  "<screen": "(min-width: 0px) and (max-width:1024px)",
-  "large-screen": "(min-width: 1240px) and (max-width: 3400px)",
+  "<screen": "(min-width: 0px) and (max-width:1023px)",
+  "large-screen": "(min-width: 1241px) and (max-width: 3400px)",
 );
 
 @mixin breakpoint($user-value) {
-  $my-map: map-get($breakpoints, $user-value);
-  @if $my-map {
-    @media #{$my-map} {
-      @content;
+  @each $value in $user-value {
+    $my-map: map-get($breakpoints, $user-value);
+    @if $my-map {
+      @media #{$my-map} {
+        @content;
+      }
+    } @else {
+      @error "oops pb !";
     }
-  } @else {
-    @error "oops pb !";
   }
 }
-//pour l'utiliser pour une tablette (bien penser à importer la mixin dans la page de style (@import "../(etc)/mixins.scss";):
-//
+
 //@include breakpoint(tablet) {
 //  background-color: orange;
 //    }
@@ -42,11 +43,12 @@ body {
     flex: 1;
   }
 
-  @include breakpoint(phone) {
-    padding: 10px;
-  }
   @include breakpoint("<screen") {
     background: none;
+  }
+
+  @include breakpoint("phone") {
+    padding: 0;
   }
 }
 
