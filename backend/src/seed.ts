@@ -17,6 +17,8 @@ import { FilesFactory } from "./factories/FilesFactory";
 import { InteractionsFactory } from "./factories/InteractionsFactory";
 import { ReportsFactory } from "./factories/ReportsFactory";
 import { IssuesFactory } from "./factories/IssuesFactory";
+// import { SubscriptionModels } from "./models/SubscriptionModels";
+// import { SubscriptionFactory } from "./factories/SubscriptionFactory";
 
 export default class MySeeder implements Seeder {
   public async run(
