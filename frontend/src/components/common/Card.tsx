@@ -7,6 +7,7 @@ interface ICardInfo {
   title: string;
   price: string;
   btn: string;
+  type: string;
   services: string[];
 }
 const Card = (info: ICardInfo) => {
@@ -21,7 +22,7 @@ const Card = (info: ICardInfo) => {
           <span> / mois</span>
         </p>
       </div>
-      <Link to={"/sign-up?type=free"}>{info.btn}</Link>
+      <Link to={`/sign-up?type=${info.type}`}>{info.btn}</Link>
       <hr />
       <div className="container-info">
         {info.services.map((info, index) => (
