@@ -3,10 +3,11 @@ export const dataCard = [
     title: "Basic",
     price: "0",
     btn: "S'inscrire",
+    type: "free",
     infoServices: [
-      "50 utilisation par jour",
-      "51 utilisation par jour",
-      "53 utilisation par jour",
+      "50 utilisations par jour",
+      "51 utilisations par jour",
+      "53 utilisations par jour",
     ],
   },
 
@@ -14,10 +15,12 @@ export const dataCard = [
     title: "Expert",
     price: "9,99",
     btn: "Profiter de l'offre",
+    type: "expert",
+
     infoServices: [
-      "500 utilisation par jour",
-      "501 utilisation par jour",
-      "503 utilisation par jour",
+      "500 utilisations par jour",
+      "501 utilisations par jour",
+      "503 utilisations par jour",
     ],
   },
 ];
