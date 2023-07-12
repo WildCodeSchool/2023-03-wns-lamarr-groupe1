@@ -22,18 +22,15 @@ const FormSignIn = () => {
   } = useForm<IuserSignIn>({ mode: "onBlur" })
   const onSubmit: SubmitHandler<IuserSignIn> = async (data) => {
     try {
-      console.log("data", data)
       const result = await userSignIn({
-        variables: data
-      })
-      console.log("result", result)
-      const token = result.data.signIn
+        variables: data,
+      });
+      const token = result.data.signIn;
       localStorage.setItem("token", `Bearer ${token}`)
-      setCredantials(false)
-      navigate("/")
+      setCredantials(false);
+      navigate("/");
     } catch (error) {
-      console.log("error", error)
-      setCredantials(true)
+      setCredantials(true);
     }
   }
 
