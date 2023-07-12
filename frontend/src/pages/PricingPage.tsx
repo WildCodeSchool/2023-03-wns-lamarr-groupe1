@@ -14,6 +14,7 @@ const PricingPage = () => {
               title={info.title}
               price={info.price}
               btn={info.btn}
+              type={info.type}
               services={info.infoServices}
             />
           ))}

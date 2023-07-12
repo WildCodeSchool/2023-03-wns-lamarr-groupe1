@@ -5,11 +5,9 @@ import { LanguageInput } from "../inputs/LanguageInput";
 export class LanguageResolver {
   @Authorized()
   @Mutation(() => LanguageModels)
-  async addLanguage(
-    @Arg("name") name: string
-  ): Promise<LanguageModels> {
+  async addLanguage(@Arg("name") name: string): Promise<LanguageModels> {
     const language = await LanguageModels.create({
-      name
+      name,
     }).save();
     return language;
   }
@@ -33,7 +31,7 @@ export class LanguageResolver {
 
     return language;
   }
-  
+
   @Query(() => [LanguageModels])
   async getLanguages(): Promise<LanguageModels[]> {
     const languages = await LanguageModels.find();
@@ -41,7 +39,9 @@ export class LanguageResolver {
   }
 
   @Query(() => LanguageModels)
-  async getLanguageById(@Arg("languageId") languageId: number): Promise<LanguageModels> {
+  async getLanguageById(
+    @Arg("languageId") languageId: number
+  ): Promise<LanguageModels> {
     const language = await LanguageModels.findOne({
       where: { id: languageId },
     });
@@ -53,7 +53,9 @@ export class LanguageResolver {
 
   @Authorized()
   @Mutation(() => Boolean)
-  async deleteLanguage(@Arg("languageId") languageId: number): Promise<boolean> {
+  async deleteLanguage(
+    @Arg("languageId") languageId: number
+  ): Promise<boolean> {
     const languageToDelete = await LanguageModels.findOne({
       where: { id: languageId },
     });
