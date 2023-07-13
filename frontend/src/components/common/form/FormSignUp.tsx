@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { extractValidationsErrors } from "utils/extractValidationsErrors"
 import { useSearchParams } from "react-router-dom"
+import { ErrorMessage } from "@hookform/error-message"
 
 interface IuserSignUp {
   firstname?: string
@@ -87,18 +88,27 @@ const FormSignUp = () => {
             minLength: 1
           })}
         />
-        {errors.username ? (
-          <p className="error-input"> {errors.username.message}</p>
-        ) : null}
+        <ErrorMessage
+          errors={errors}
+          name="username"
+          render={({ message }) => <p className="error-input"> {message}</p>}
+        />
         <input
           type="email"
           id="email"
           placeholder="Email*"
-          {...register("email", { required: "Ce champ est requis !" })}
+          {...register("email", {
+            required: "Ce champ est requis !",
+            pattern: {
+              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+              message: "Format d'email invalide"
+            } })}
         />
-        {errors.email ? (
-          <p className="error-input"> {errors.email.message}</p>
-        ) : null}
+        <ErrorMessage
+          errors={errors}
+          name="email"
+          render={({ message }) => <p className="error-input"> {message}</p>}
+        />
         <input
           type="password"
           id="password"
@@ -116,9 +126,11 @@ const FormSignUp = () => {
             }
           })}
         />
-        {errors.password ? (
-          <p className="error-input"> {errors.password.message}</p>
-        ) : null}
+        <ErrorMessage
+          errors={errors}
+          name="password"
+          render={({ message }) => <p className="error-input"> {message}</p>}
+        />
         <button className="button-form-signIn">S'inscrire</button>
       </form>
 

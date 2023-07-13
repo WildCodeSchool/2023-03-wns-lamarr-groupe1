@@ -26,7 +26,7 @@ const FormSignIn = () => {
         variables: data,
       });
       const token = result.data.signIn;
-      localStorage.setItem("token", `Bearer ${token}`)
+      localStorage.setItem("token", token)
       setCredantials(false);
       navigate("/");
     } catch (error) {
@@ -54,7 +54,7 @@ const FormSignIn = () => {
           {...register("email", {
             required: "Ce champ est requis !",
             pattern: {
-              value: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/,
+              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
               message: "Format d'email invalide"
             }
           })}
@@ -81,9 +81,11 @@ const FormSignIn = () => {
             }
           })}
         />
-        {errors.password ? (
-          <p className="error-input"> {errors.password.message}</p>
-        ) : null}
+        <ErrorMessage
+          errors={errors}
+          name="password"
+          render={({ message }) => <p className="error-input"> {message}</p>}
+        />
         <button type="submit" className="button-form-signIn">
           Se connecter
         </button>
