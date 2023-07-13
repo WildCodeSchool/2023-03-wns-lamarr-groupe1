@@ -25,9 +25,6 @@ export default function navbar() {
       </ul>
       <div>
         <span>
-          <Link to={"/new-file"}>New File</Link>
-        </span>
-        <span>
           <Link to={"/sign-up"}>S'inscrire</Link>
         </span>
         <div className="button">
