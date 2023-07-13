@@ -6,6 +6,17 @@ $rounded-sm: 5px;
 $rounded-md: 15px;
 $rounded-full: 9999px;
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
 $breakpoints: (
   "phone": "(min-width: 0px) and (max-width: 479px)",
   "tablet": "(min-width: 480px) and (max-width: 975px)",
