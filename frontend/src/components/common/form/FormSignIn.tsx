@@ -1,37 +1,38 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { SIGN_IN_QUERY } from "graphql/queries/SIGN_IN_QUERY";
-import { useLazyQuery } from "@apollo/client";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { SIGN_IN_QUERY } from "graphql/queries/SIGN_IN_QUERY"
+import { useLazyQuery } from "@apollo/client"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { ErrorMessage } from "@hookform/error-message"
 
 interface IuserSignIn {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 const FormSignIn = () => {
-  const [credantials, setCredantials] = useState(false);
-  const navigate = useNavigate();
-  const [userSignIn, { loading }] = useLazyQuery(SIGN_IN_QUERY);
+  const [credantials, setCredantials] = useState(false)
+  const navigate = useNavigate()
+  const [userSignIn, { loading }] = useLazyQuery(SIGN_IN_QUERY)
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<IuserSignIn>();
+    formState: { errors }
+  } = useForm<IuserSignIn>({ mode: "onBlur" })
   const onSubmit: SubmitHandler<IuserSignIn> = async (data) => {
     try {
       const result = await userSignIn({
         variables: data,
       });
       const token = result.data.signIn;
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", token)
       setCredantials(false);
       navigate("/");
     } catch (error) {
       setCredantials(true);
     }
-  };
+  }
 
   return (
     <div className="container-card-form">
@@ -52,15 +53,17 @@ const FormSignIn = () => {
           placeholder="Email*"
           {...register("email", {
             required: "Ce champ est requis !",
-            // pattern: {
-            //   value: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/,
-            //   message: "Veuillez inclure un '@' dans votre adress email",
-            // },
+            pattern: {
+              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+              message: "Format d'email invalide"
+            }
           })}
         />
-        {errors.email ? (
-          <p className="error-input"> {errors.email.message}</p>
-        ) : null}
+        <ErrorMessage
+          errors={errors}
+          name="email"
+          render={({ message }) => <p className="error-input"> {message}</p>}
+        />
         <input
           type="password"
           id="password"
@@ -69,19 +72,21 @@ const FormSignIn = () => {
             required: "Ce champ est requis !",
             minLength: {
               value: 8,
-              message: "Le mot de passe doit contenir au moins 8 caractères",
+              message: "Le mot de passe doit contenir au moins 8 caractères"
             },
             pattern: {
               value: /^(?=.*[A-Z])(?=.*[!@#$%^&*])/,
               message:
-                "Le mot de passe doit contenir une lettres majuscules et minuscules, un chiffres et un caractères spécial",
-            },
+                "Le mot de passe doit contenir une lettres majuscules et minuscules, un chiffres et un caractères spécial"
+            }
           })}
         />
-        {errors.password ? (
-          <p className="error-input"> {errors.password.message}</p>
-        ) : null}
-        <button type="submit" className="button-form-signIn">
+        <ErrorMessage
+          errors={errors}
+          name="password"
+          render={({ message }) => <p className="error-input"> {message}</p>}
+        />
+        <button type="submit" className="button-form-signIn" disabled={loading}>
           Se connecter
         </button>
       </form>
@@ -95,7 +100,7 @@ const FormSignIn = () => {
         Pas encore de compte ? <Link to={"/sign-up"}>Inscrivez-vous !</Link>
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default FormSignIn;
+export default FormSignIn
