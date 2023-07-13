@@ -1,6 +1,6 @@
 import React from "react"
-import img from "../../../src/assets/img/illustration-home.png"
-import "../../styles/Home.scss"
+import img from "assets/img/illustration-home.png"
+import "styles/Home.scss"
 import { Link } from "react-router-dom"
 
 const HomePage = () => {

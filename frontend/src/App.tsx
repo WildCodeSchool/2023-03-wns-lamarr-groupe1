@@ -6,8 +6,10 @@ import {
   SignIn,
   SignUpPage,
   PricingPage,
+  UserFilesPage,
   FilePage,
 } from "./pages/ExportPages";
+import { FileProvider } from "./utils/context/FileContext";
 
 const App = () => {
   const { pathname, hash, key } = useLocation();
@@ -28,13 +30,16 @@ const App = () => {
     }
   }, [pathname, hash, key]);
   return (
-    <Routes>
-      <Route path="/*" element={<Home />} />
-      <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/sign-up" element={<SignUpPage />} />
-      <Route path="/subscribe" element={<PricingPage />} />
-      <Route path="/file" element={<FilePage />} />
-    </Routes>
+    <FileProvider>
+      <Routes>
+        <Route path="/*" element={<Home />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/subscribe" element={<PricingPage />} />
+        <Route path="/new-file" element={<UserFilesPage />} />
+        <Route path="/file" element={<FilePage />} />
+      </Routes>
+    </FileProvider>
   );
 };
 
