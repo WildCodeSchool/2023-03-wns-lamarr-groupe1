@@ -11,6 +11,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { INewFileProps } from "utils/interface/INewFile";
 
 const AddNewFile = () => {
+  const [language, setLanguage] = useState<number>(0);
   const { Languages, handleCloseModal } = useContext(fileContext);
   const [addFile, { loading }] = useMutation(NEW_FILE_MUTATION);
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const AddNewFile = () => {
             filename: data.filename,
             isPublic: data.isPublic,
           },
-          languageId: data.languageId,
+          languageId: language,
         },
       });
       handleCloseModal();
@@ -72,6 +73,9 @@ const AddNewFile = () => {
             {...register("languageId", {
               required: "Ce champ est requis !",
             })}
+            onChange={(e) => {
+              setLanguage(parseInt(e.target.value));
+            }}
           >
             <option value="">--Choisir un langage--</option>
             {Languages.map((language: ILanguageProps) => {
