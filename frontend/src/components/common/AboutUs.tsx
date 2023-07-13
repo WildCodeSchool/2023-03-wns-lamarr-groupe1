@@ -1,6 +1,6 @@
 import React from "react";
-import OurProject from "../../assets/img/our_project.png";
-import OurTeam from "../../assets/img/our_team.png";
+import OurProject from "assets/img/our_project.png";
+import OurTeam from "assets/img/our_team.png";
 const AboutUs = () => {
   return (
     <div id="aboutUs" className="container-about-us">

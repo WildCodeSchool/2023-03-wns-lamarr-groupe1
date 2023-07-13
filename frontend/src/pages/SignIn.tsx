@@ -1,6 +1,6 @@
-import FormSignIn from "../components/common/FormSignIn";
-import "../styles/SignInUp.scss";
-import Layout from "../components/common/layouts/Layout";
+import FormSignIn from "components/common/form/FormSignIn"
+import "styles/SignInUp.scss"
+import Layout from "components/common/layouts/Layout"
 
 const SignIn = () => {
   return (
@@ -11,7 +11,7 @@ const SignIn = () => {
         </div>
       </Layout>
     </>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn

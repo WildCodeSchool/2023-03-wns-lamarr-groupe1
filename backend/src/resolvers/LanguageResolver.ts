@@ -7,9 +7,9 @@ export class LanguageResolver {
   @Mutation(() => LanguageModels)
   async addLanguage(@Arg("name") name: string): Promise<LanguageModels> {
     const language = await LanguageModels.create({
-      name,
-    }).save();
-    return language;
+      name
+    }).save()
+    return language
   }
 
   @Authorized()
@@ -20,35 +20,37 @@ export class LanguageResolver {
     { name }: LanguageInput
   ): Promise<LanguageModels> {
     const languageToUpdate = await LanguageModels.findOneBy({
-      id,
-    });
+      id
+    })
     if (languageToUpdate === null) {
-      throw new Error("Language not found");
+      throw new Error("Language not found")
     }
     const language = await LanguageModels.merge(languageToUpdate, {
-      name,
-    }).save();
+      name
+    }).save()
 
-    return language;
+    return language
   }
 
+  @Authorized()
   @Query(() => [LanguageModels])
   async getLanguages(): Promise<LanguageModels[]> {
-    const languages = await LanguageModels.find();
-    return languages;
+    const languages = await LanguageModels.find()
+    return languages
   }
 
+  @Authorized()
   @Query(() => LanguageModels)
   async getLanguageById(
     @Arg("languageId") languageId: number
   ): Promise<LanguageModels> {
     const language = await LanguageModels.findOne({
-      where: { id: languageId },
-    });
+      where: { id: languageId }
+    })
     if (language === null) {
-      throw new Error("Language not found");
+      throw new Error("Language not found")
     }
-    return language;
+    return language
   }
 
   @Authorized()
@@ -57,13 +59,13 @@ export class LanguageResolver {
     @Arg("languageId") languageId: number
   ): Promise<boolean> {
     const languageToDelete = await LanguageModels.findOne({
-      where: { id: languageId },
-    });
+      where: { id: languageId }
+    })
     if (!languageToDelete) {
-      throw new Error("Language not found");
+      throw new Error("Language not found")
     }
 
-    await languageToDelete.remove();
-    return true;
+    await languageToDelete.remove()
+    return true
   }
 }

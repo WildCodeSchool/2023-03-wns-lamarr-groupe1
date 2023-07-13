@@ -1,4 +1,4 @@
-import { Arg, Mutation, Authorized, Query } from "type-graphql";
+import { Arg, Mutation, Authorized, Query, Ctx } from "type-graphql";
 import { FilesModels } from "../models/FilesModels";
 import { FileInput } from "../inputs/file/FileInput";
 import { UpdateFileInput } from "../inputs/file/UpdateFileInput";
@@ -11,14 +11,14 @@ export class FileResolver {
   @Authorized()
   @Mutation(() => FilesModels)
   async addFile(
-    @Arg("userId") userId: number,
     @Arg("languageId") languageId: number,
     @Arg("inputFile")
-    { filename, content, isPublic, nbOfReport, nbOfDownload }: FileInput
+    { filename, content, isPublic, nbOfReport, nbOfDownload }: FileInput,
+    @Ctx() context: any
   ): Promise<FilesModels> {
     // récupérer un utilisateur en BDD pour liée le fichier a celui-ci
     const user = await UsersModels.findOneBy({
-      id: userId
+      id: context.user.id
     })
     if (user === null) {
       throw new Error("User not found")

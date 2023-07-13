@@ -1,5 +1,5 @@
-import FormSignUp from "../components/common/FormSignUp";
-import Layout from "../components/common/layouts/Layout";
+import FormSignUp from "components/common/form/FormSignUp"
+import Layout from "components/common/layouts/Layout"
 
 const SignUpPage = () => {
   return (
@@ -10,7 +10,7 @@ const SignUpPage = () => {
         </div>
       </Layout>
     </>
-  );
-};
+  )
+}
 
-export default SignUpPage;
+export default SignUpPage

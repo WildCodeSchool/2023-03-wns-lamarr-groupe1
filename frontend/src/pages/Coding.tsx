@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Editor, { OnChange } from '@monaco-editor/react';
+import Layout from "components/common/layouts/Layout";
 
 const CodingPage = () => {
   const [code, setCode] = useState<string>('');
@@ -31,6 +32,7 @@ const CodingPage = () => {
 
   return (
     <>
+    <Layout>
       <Editor
         height="80vh"
         defaultLanguage="javascript"
@@ -42,6 +44,7 @@ const CodingPage = () => {
         <button onClick={handleRunCode}>Run</button>
         <div ref={resultRef}>Result: </div>
       </div>
+      </Layout>
     </>
   );
 };
