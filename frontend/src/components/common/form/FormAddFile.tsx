@@ -8,14 +8,7 @@ import { useMutation } from "@apollo/client"
 import { ILanguageProps } from "utils/interface/ILanguage"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faClose } from "@fortawesome/free-solid-svg-icons"
-
-
-interface INewFile {
-  filename: string
-  isPublic: boolean
-  languageId: number
-}
-
+import { INewFileProps } from "utils/interface/INewFile"
 
 
 const AddNewFile = () => {
@@ -28,10 +21,10 @@ const AddNewFile = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<INewFile>({ mode: "onBlur" })
-  const onSubmit: SubmitHandler<INewFile> = async (data) => {
+  } = useForm<INewFileProps>({ mode: "onBlur" })
+  const onSubmit: SubmitHandler<INewFileProps> = async (data) => {
     try {
-      await addFile({
+      const result = await addFile({
         variables: {
           inputFile: {
             filename: data.filename,
@@ -41,6 +34,7 @@ const AddNewFile = () => {
         }
       })
       handleCloseModal()
+      navigate(`/coding/${result.data.addFile.id}`)
     } catch (error: any) {
       console.log(error)
     }
@@ -75,12 +69,13 @@ const AddNewFile = () => {
           <select
             id="languages"
             {...register("languageId", {
-              required: "Ce champ est requis !"
+              required: "Ce champ est requis !",
             })}
             onChange={(e) => {
               setLanguage(parseInt(e.target.value))
             }}
           >
+            <option value=""></option>
             {Languages.map((language: ILanguageProps) => {
               return (
                 <option value={language.id} key={language.id}>

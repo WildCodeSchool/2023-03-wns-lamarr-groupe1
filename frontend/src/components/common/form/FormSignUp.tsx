@@ -34,8 +34,6 @@ const FormSignUp = () => {
     }
 
     try {
-      const formData = new FormData()
-
       const result = await addUser({
         variables: { input },
 
@@ -131,7 +129,7 @@ const FormSignUp = () => {
           name="password"
           render={({ message }) => <p className="error-input"> {message}</p>}
         />
-        <button className="button-form-signIn">S'inscrire</button>
+        <button className="button-form-signIn" disabled={loading}>S'inscrire</button>
       </form>
 
       <p className="signup-details">
