@@ -1,7 +1,7 @@
 import React from "react";
-import "../../styles/components/navbar.scss";
+import "styles/components/navbar.scss";
 import { Link } from "react-router-dom";
-import img from "../../../src/assets/img/mainLogo.svg";
+import img from "assets/img/mainLogo.svg";
 
 export default function navbar() {
   return (
@@ -32,5 +32,5 @@ export default function navbar() {
         </div>
       </div>
     </nav>
-  );
+  )
 }

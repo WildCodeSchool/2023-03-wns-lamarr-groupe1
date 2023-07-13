@@ -6,7 +6,6 @@ import { FilesModels } from "../models/FilesModels";
 import { InteractionType } from "../enums/InteractionType";
 
 export class InteractionsResolver {
-
   // Mutation pour ajouter/supprimer/updater une interaction
   @Mutation(() => InteractionsModels)
   async interaction(
@@ -68,15 +67,15 @@ export class InteractionsResolver {
     return count;
   }
 
-    // Query pour compter le nombre de dislikes pour un fichier
-    @Query(() => Number)
-    async getDislike(@Arg("fileId") fileId: number): Promise<number> {
-      const count = await InteractionsModels.count({
-        where: {
-          type: "dislike" as InteractionType,
-          file: { id: fileId },
-        },
-      });
-      return count;
-    }
+  // Query pour compter le nombre de dislikes pour un fichier
+  @Query(() => Number)
+  async getDislike(@Arg("fileId") fileId: number): Promise<number> {
+    const count = await InteractionsModels.count({
+      where: {
+        type: "dislike" as InteractionType,
+        file: { id: fileId },
+      },
+    });
+    return count;
+  }
 }
