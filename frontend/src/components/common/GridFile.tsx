@@ -1,6 +1,5 @@
 import React from "react";
 import CarouselFile from "./CarouselFile";
-import { dataFile } from "../../utils/dataFile";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -54,12 +53,6 @@ const GridFile = ({ title, files }: GridFileProps) => {
       },
     ],
   };
-
-  // Array.map() -> MDN
-  // La fonction map, permet de transformer une liste.
-  //
-  // const prenoms = ['Alexis', 'Khemis', 'Flora', 'Christopher']
-  // prenoms.map((pr))
 
   return (
     <div className="container-title-carousel">

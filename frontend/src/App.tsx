@@ -6,7 +6,6 @@ import {
   SignIn,
   SignUpPage,
   PricingPage,
-  UserFilesPage,
   FilePage,
 } from "./pages/ExportPages";
 import { FileProvider } from "./utils/context/FileContext";
@@ -36,7 +35,6 @@ const App = () => {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/subscribe" element={<PricingPage />} />
-        <Route path="/new-file" element={<UserFilesPage />} />
         <Route path="/file" element={<FilePage />} />
       </Routes>
     </FileProvider>

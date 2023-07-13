@@ -1,5 +1,5 @@
 import React from "react";
-import ImageCode from "../../assets/img/our_project.png";
+import ImageCode from "assets/img/our_project.png";
 
 interface IFileData {
   id?: number;
