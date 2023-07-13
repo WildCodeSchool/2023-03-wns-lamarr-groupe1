@@ -1,14 +1,7 @@
 import { createContext, useState } from "react"
 import { GET_LANGUAGES_QUERY } from "graphql/queries/GET_LANGUAGES_QUERY"
 import { useQuery } from "@apollo/client"
-import { ILanguageProps } from "utils/interface/ILanguage"
-
-interface IFileContextProps {
-  Languages: ILanguageProps[]
-  isShow: boolean
-  handleOpenModal: () => void
-  handleCloseModal: () => void
-}
+import { IFileContextProps } from "utils/interface/IFileContext"
 
 // on défini un nouveau context
 export const fileContext = createContext<IFileContextProps>({

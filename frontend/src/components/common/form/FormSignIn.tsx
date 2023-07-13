@@ -86,7 +86,7 @@ const FormSignIn = () => {
           name="password"
           render={({ message }) => <p className="error-input"> {message}</p>}
         />
-        <button type="submit" className="button-form-signIn">
+        <button type="submit" className="button-form-signIn" disabled={loading}>
           Se connecter
         </button>
       </form>
