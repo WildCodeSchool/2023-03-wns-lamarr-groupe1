@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
 import "./App.scss";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Home, SignIn, SignUpPage, PricingPage, CodingPage } from "./pages/ExportPages";
-
+import {
+  Home,
+  SignIn,
+  SignUpPage,
+  PricingPage,
+  FilePage,
+  CodingPage
+} from "./pages/ExportPages";
+import { FileProvider } from "./utils/context/FileContext";
 
 const App = () => {
   const { pathname, hash, key } = useLocation();
@@ -23,13 +30,16 @@ const App = () => {
     }
   }, [pathname, hash, key]);
   return (
-    <Routes>
-      <Route path="/*" element={<Home />} />
-      <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/sign-up" element={<SignUpPage />} />
-      <Route path="/subscribe" element={<PricingPage />} />
-      <Route path="/coding" element={<CodingPage />} />
-    </Routes>
+    <FileProvider>
+      <Routes>
+        <Route path="/*" element={<Home />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/subscribe" element={<PricingPage />} />
+    <Route path="/coding" element={<CodingPage />} />
+        <Route path="/file" element={<FilePage />} />
+      </Routes>
+    </FileProvider>
   );
 };
 
