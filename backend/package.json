@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
-    "test-ci": "jest --forceExit",
+    "test": "jest --watchAll --no-watchAll",
     "start": "ts-node-dev src/index.ts",
     "dev": "ts-node-dev --respawn src/index.ts",
     "seed": "ts-node-dev src/seed.ts"
