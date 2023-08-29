@@ -9,4 +9,4 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Goto backend and run tests
-        run: cd backend && npm i && npm test && npm test-ci
+        run: cd backend && npm i && npm test --detectOpenHandles
