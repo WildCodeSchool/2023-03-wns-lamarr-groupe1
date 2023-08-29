@@ -17,19 +17,19 @@ export class ReportsModels extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
-  @Column()
-  comment!: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  comment?: string;
 
   @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
-  @Field(() => [FilesModels])
+  @Field(() => FilesModels)
   @ManyToOne(() => FilesModels, (file) => file.reports)
   file: FilesModels;
 
-  @Field(() => [UsersModels])
+  @Field(() => UsersModels)
   @ManyToOne(() => UsersModels, (user) => user.reports)
   user: UsersModels;
 }

@@ -1,0 +1,128 @@
+@import "mixins.scss";
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  color: $primary;
+  font-size: 18px;
+  font-weight: 500;
+  width: auto;
+  height: auto;
+  box-sizing: border-box;
+  padding: 15px 0;
+
+  ul {
+    display: flex;
+    width: auto;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 65px;
+    list-style: none;
+
+    li {
+      a {
+        text-decoration: none;
+        color: $primary;
+        position: relative;
+
+        &:hover {
+          opacity: 0.9;
+        }
+
+        &:after {
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 0.6s ease;
+          content: "";
+          position: absolute;
+          display: inline-block;
+          width: 100%;
+          height: 1px;
+          background-color: rgba(83, 64, 169, 0.9);
+          opacity: 0.9;
+          bottom: -2px;
+          left: 0;
+        }
+
+        &:hover:after {
+          transform: scaleX(1);
+          transform-origin: left;
+        }
+      }
+    }
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 65px;
+    text-decoration: none;
+
+    span {
+      position: relative;
+
+      &:active {
+        color: $primary;
+      }
+
+      a {
+        text-decoration: none;
+        color: $primary;
+        text-align: center;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      &:after {
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.6s ease;
+        content: "";
+        position: absolute;
+        display: inline-block;
+        width: 100%;
+        height: 1px;
+        background-color: rgba(83, 64, 169, 0.9);
+        bottom: -2px;
+        left: 0;
+      }
+
+      &:hover:after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+    }
+
+    .button {
+      a {
+        color: white;
+        border: solid 1px $primary;
+        background-color: $primary;
+        border-radius: 5px;
+        font-weight: 500;
+        font-size: 18px;
+        padding: 12px 15px;
+        transition: 0.2s;
+        text-decoration: none;
+
+        &:hover {
+          background-color: white;
+          color: $primary;
+          opacity: 0.9;
+          border: solid 1px $primary 0.9;
+        }
+      }
+    }
+  }
+
+  @include breakpoint("<screen") {
+    background-color: orange;
+  }
+  @include breakpoint("screen") {
+    background-color: green;
+  }
+}

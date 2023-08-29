@@ -5,6 +5,7 @@ import {
   BaseEntity,
   ManyToOne,
   CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { FilesModels } from "./FilesModels";
@@ -23,17 +24,17 @@ export class CommentsModels extends BaseEntity {
 
   @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
   @Field()
-  @Column({ nullable: true })
-  updated_at: Date;
+  @UpdateDateColumn()
+  updatedAt!: Date;
 
-  @Field(() => [FilesModels])
+  @Field(() => FilesModels)
   @ManyToOne(() => FilesModels, (file) => file.comments)
   file: FilesModels;
 
-  @Field(() => [UsersModels])
+  @Field(() => UsersModels)
   @ManyToOne(() => UsersModels, (user) => user.comments)
   user: UsersModels;
 }

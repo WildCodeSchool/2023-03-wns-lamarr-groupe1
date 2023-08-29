@@ -3,38 +3,34 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  OneToOne,
-  JoinColumn,
-  BeforeInsert,
-} from "typeorm";
+  CreateDateColumn
+} from "typeorm"
 import { Field, ObjectType } from "type-graphql";
-import { UsersModels } from "./UsersModels";
 
 @ObjectType()
 @Entity()
 export class SubscriptionModels extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Field()
   @Column()
-  status!: string;
+  status!: string
 
   @Field()
   @Column()
-  subscribed_at!: Date;
+  type!: string
 
   @Field()
-  @Column()
-  duration!: string;
+  @CreateDateColumn()
+  subscribedAt!: Date
 
-  @OneToOne(() => UsersModels)
-  @JoinColumn()
-  user: UsersModels;
+  @Field()
+  @Column({ nullable: true })
+  subscriptionEndedAt!: Date
 
-  @BeforeInsert()
-  setDefaultStatus(): void {
-    this.status = "inactive";
-  }
+  @Field()
+  @Column({ nullable: true })
+  duration: string
 }

@@ -5,49 +5,40 @@ import {
   ManyToOne,
   BaseEntity,
   CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Field, ObjectType, registerEnumType } from "type-graphql";
 import { FilesModels } from "./FilesModels";
 import { UsersModels } from "./UsersModels";
-
-enum IssuesStatus {
-  Open = "open",
-  Pending = "pending",
-  Close = "close",
-}
-
-registerEnumType(IssuesStatus, {
-  name: "IssuesStatus",
-});
+import { IssuesType } from "../enums/IssuesType";
 
 @ObjectType()
 @Entity()
 export class IssuesModels extends BaseEntity {
+  
   @Field()
   @PrimaryGeneratedColumn()
   id: number;
 
   @Field()
-  @Column()
-  issue!: string;
-
-  @Field()
-  @CreateDateColumn()
-  created_at!: Date;
-
-  @Field()
   @Column({ nullable: true })
-  updated_at: Date;
+  issue?: string;
 
-  @Field((type) => IssuesStatus)
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
+
+  @Field(() => IssuesType)
   @Column()
-  status!: IssuesStatus;
+  status!: IssuesType;
 
-  @Field(() => [FilesModels])
+  @Field(() => FilesModels)
   @ManyToOne(() => FilesModels, (file) => file.issues)
   file: FilesModels;
 
-  @Field(() => [UsersModels])
+  @Field(() => UsersModels)
   @ManyToOne(() => UsersModels, (user) => user.issues)
   user: UsersModels;
 }

@@ -7,86 +7,82 @@ import {
   ManyToOne,
   BeforeInsert,
   CreateDateColumn,
-} from "typeorm";
-import { Field, ObjectType } from "type-graphql";
-import { IssuesModels } from "./IssuesModels";
-import { CommentsModels } from "./CommentsModels";
-import { ReportsModels } from "./ReportsModels";
-import { InteractionsModels } from "./InteractionsModels";
-import { UsersModels } from "./UsersModels";
-import { LanguageModels } from "./LanguageModels";
+  UpdateDateColumn
+} from "typeorm"
+import { Field, ObjectType } from "type-graphql"
+import { IssuesModels } from "./IssuesModels"
+import { CommentsModels } from "./CommentsModels"
+import { ReportsModels } from "./ReportsModels"
+import { InteractionsModels } from "./InteractionsModels"
+import { UsersModels } from "./UsersModels"
+import { LanguageModels } from "./LanguageModels"
 
 @ObjectType()
 @Entity()
 export class FilesModels extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Field()
   @Column()
-  filename!: string;
+  filename!: string
 
   @Field()
   @Column({ nullable: true })
-  content: string;
+  content: string
 
   @Field()
   @Column()
-  is_public!: boolean;
+  isPublic!: boolean
 
-  @BeforeInsert()
-  setDefaultIsPublic(): void {
-    this.is_public = true;
-  }
-
-  @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date
 
-  @Field()
-  @Column({ nullable: true })
-  updated_at: Date;
+  @UpdateDateColumn()
+  updatedAt!: Date
 
   @Field()
   @Column()
-  nb_of_report!: number;
+  nbOfReport: number
 
   @BeforeInsert()
   setDefaultNbOfReport(): void {
-    this.nb_of_report = 0;
+    this.nbOfReport = 0
   }
 
   @Field()
   @Column()
-  nb_of_download!: number;
+  nbOfDownload: number
 
   @BeforeInsert()
   setDefaultNbOfDownload(): void {
-    this.nb_of_download = 0;
+    this.nbOfDownload = 0
   }
 
   @Field(() => [IssuesModels])
   @OneToMany(() => IssuesModels, (issue) => issue.file)
-  issues: IssuesModels[];
+  issues: IssuesModels[]
 
   @Field(() => [CommentsModels])
   @OneToMany(() => CommentsModels, (comment) => comment.file)
-  comments: CommentsModels[];
+  comments: CommentsModels[]
 
   @Field(() => [ReportsModels])
   @OneToMany(() => ReportsModels, (report) => report.file)
-  reports: ReportsModels[];
+  reports: ReportsModels[]
 
   @Field(() => [InteractionsModels])
   @OneToMany(() => InteractionsModels, (interaction) => interaction.file)
-  interactions: InteractionsModels[];
+  interactions: InteractionsModels[]
 
-  @Field(() => [UsersModels])
+  @Field(() => UsersModels)
   @ManyToOne(() => UsersModels, (user) => user.files)
-  user: UsersModels;
+  user: UsersModels
 
-  @Field(() => [LanguageModels])
-  @ManyToOne(() => LanguageModels, (language) => language.files)
-  language: LanguageModels;
+  @Field(() => LanguageModels)
+  @ManyToOne(() => LanguageModels, (language) => language.files, {
+    eager: true
+  })
+  language: LanguageModels
 }

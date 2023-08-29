@@ -1,23 +1,27 @@
 import React from "react";
-import BasicPriceCard from "../components/common/BasicPriceCard";
-import ExpertPriceCard from "../components/common/BasicPriceCard";
-import purpleWave from "../assets/images/Vector 256.png";
-import { useNavigate } from "react-router-dom";
+import Card from "components/common/Card";
+import { dataCard } from "utils/dataCard";
+import "styles/PricingPage.scss";
+import Layout from "components/common/layouts/Layout";
 
 const PricingPage = () => {
-  const navigate = useNavigate();
-
-  const handleClickBack = () => {
-    navigate("/home");
-  };
-
   return (
-    <div className="container-pricing-page">
-      <button onClick={handleClickBack}>backhome</button>
-      <BasicPriceCard />
-      <ExpertPriceCard />
-      <img className="purpleWave" src={purpleWave} alt="purple" />
-    </div>
+    <>
+      <Layout>
+        <div className="container-pricingPage-card">
+          {dataCard.map((info, index) => (
+            <Card
+              title={info.title}
+              price={info.price}
+              btn={info.btn}
+              type={info.type}
+              services={info.infoServices}
+            />
+          ))}
+          <div className="container-background-pricingPage"></div>
+        </div>
+      </Layout>
+    </>
   );
 };
 

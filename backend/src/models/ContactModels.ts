@@ -20,15 +20,14 @@ export class ContactModels extends BaseEntity {
   @Column()
   title!: string;
 
-  @Field()
   @CreateDateColumn()
-  created_at!: Date;
+  createdAt!: Date;
 
   @Field()
   @Column()
   content!: string;
 
-  @Field(() => [UsersModels])
+  @Field(() => UsersModels)
   @ManyToOne(() => UsersModels, (user) => user.contacts)
   user: UsersModels;
 }
