@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "test-ci": "react-scripts test --forceExit",
+    "test-ci": "jest --forceExit",
     "start": "ts-node-dev src/index.ts",
     "dev": "ts-node-dev --respawn src/index.ts",
     "seed": "ts-node-dev src/seed.ts"
