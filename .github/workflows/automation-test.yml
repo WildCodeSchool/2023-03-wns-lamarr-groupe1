@@ -1,6 +1,6 @@
 name: automated test
 
-on: pull_request
+on: push
 
 jobs:
   tests:
@@ -12,10 +12,8 @@ jobs:
         run: cd backend && npm i && npm run test-ci
   docker:
     needs: tests
-
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
