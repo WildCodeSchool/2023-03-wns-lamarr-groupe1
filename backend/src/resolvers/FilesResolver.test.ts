@@ -83,7 +83,6 @@ describe("FilesResolver", () => {
       const language = await LanguageModels.create({
         name: "javascript"
       }).save()
-      console.log(language)
 
       const token = await callGraphQL({
         query: `
