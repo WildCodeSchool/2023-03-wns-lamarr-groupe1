@@ -33,5 +33,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: "{{defaultContext}}:client"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/quete1902:latest
+          context: "{{defaultContext}}:backend"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wild-code-online:latest
