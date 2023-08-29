@@ -14,58 +14,6 @@ describe("FilesResolver", () => {
   })
 
   describe("addFile", () => {
-    it("should throw error, if user is not found", async () => {
-      const userId = 5
-      const languageId = 1
-      const filename = faker.internet.userName()
-      const value = [true, false]
-      const random = Math.floor(Math.random() * value.length)
-      const isPublic = value[random]
-
-      const email = faker.internet.email()
-      const password = faker.internet.password({
-        length: 8,
-        prefix: "@A"
-      })
-      const username = faker.internet.userName()
-      const type = "free"
-
-      await LanguageModels.create({
-        name: "javascript"
-      }).save()
-
-      const token = await callGraphQL({
-        query: `
-            mutation Mutation($input: SignUpInput!) {
-                signUp(input: $input)
-            }
-        `,
-
-        variables: { input: { email, password, username, type } }
-      })
-
-      const response = await callGraphQL(
-        {
-          query: `
-            mutation Mutation($inputFile: FileInput!, $languageId: Float!, $userId: Float!) {
-              addFile(inputFile: $inputFile, languageId: $languageId, userId: $userId) {
-                filename
-              }
-            }
-        `,
-
-          variables: { inputFile: { filename, isPublic }, languageId, userId }
-        },
-        token.data?.signUp
-      )
-
-      expect(response.errors).toBeTruthy()
-      expect(response.errors?.length).toBeGreaterThanOrEqual(1)
-      expect(response.errors?.[0]).toHaveProperty("message")
-      expect(response.errors?.[0].message).toContain("User not found")
-
-      expect(response.data).not.toBeTruthy()
-    })
 
     it("should throw error, if langage is not found", async () => {
       const userId = 1
@@ -96,14 +44,14 @@ describe("FilesResolver", () => {
       const response = await callGraphQL(
         {
           query: `
-            mutation Mutation($inputFile: FileInput!, $languageId: Float!, $userId: Float!) {
-              addFile(inputFile: $inputFile, languageId: $languageId, userId: $userId) {
+            mutation Mutation($inputFile: FileInput!, $languageId: Float!) {
+              addFile(inputFile: $inputFile, languageId: $languageId) {
                 filename
               }
             }
         `,
 
-          variables: { inputFile: { filename, isPublic }, languageId, userId }
+          variables: { inputFile: { filename, isPublic }, languageId }
         },
         token.data?.signUp
       )
@@ -135,7 +83,6 @@ describe("FilesResolver", () => {
       const language = await LanguageModels.create({
         name: "javascript"
       }).save()
-      console.log(language)
 
       const token = await callGraphQL({
         query: `
@@ -150,14 +97,14 @@ describe("FilesResolver", () => {
       const response = await callGraphQL(
         {
           query: `
-            mutation Mutation($inputFile: FileInput!, $languageId: Float!, $userId: Float!) {
-              addFile(inputFile: $inputFile, languageId: $languageId, userId: $userId) {
+            mutation Mutation($inputFile: FileInput!, $languageId: Float!) {
+              addFile(inputFile: $inputFile, languageId: $languageId) {
                 filename
               }
             }
         `,
 
-          variables: { inputFile: { filename, isPublic }, languageId, userId }
+          variables: { inputFile: { filename, isPublic }, languageId }
         },
         token.data?.signUp
       )

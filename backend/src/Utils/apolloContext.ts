@@ -3,9 +3,6 @@ import { JwtPayload, verify } from "jsonwebtoken";
 import { UsersModels } from "../models/UsersModels";
 
 export const apolloContext: ContextFunction = async ({ req }) => {
-  console.log("apolloContext", req?.headers?.authorization);
-
-  // "authorization": `Bearer ${token}`
   try {
     if (req?.headers?.authorization === null) {
       return {};
@@ -28,7 +25,7 @@ export const apolloContext: ContextFunction = async ({ req }) => {
     }
     return {};
   } catch (error) {
-    // console.log("error", error);
+    console.log("error", error)
     return {};
   }
 };

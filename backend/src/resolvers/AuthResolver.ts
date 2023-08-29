@@ -49,10 +49,6 @@ export class AuthResolver {
       subscription
     }).save()
 
-    console.log(
-      "process.env.ACCESS_TOKEN_SECRET",
-      process.env.ACCESS_TOKEN_SECRET
-    )
     const token = sign(
       { userId: createdUser.id },
       process.env.ACCESS_TOKEN_SECRET ?? "test-secret"
