@@ -8,7 +8,5 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: run docker
-        run: docker compose up --build
-      - name: Goto client and run tests
+      - name: Goto backend and run tests
         run: cd backend && npm i && npm test
