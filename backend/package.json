@@ -20,6 +20,7 @@
     "graphql": "^15.8.0",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.10.0",
+    "sqlite3": "^5.1.6",
     "type-graphql": "^1.1.1",
     "typeorm": "^0.3.12",
     "typeorm-extension": "^2.8.1"
