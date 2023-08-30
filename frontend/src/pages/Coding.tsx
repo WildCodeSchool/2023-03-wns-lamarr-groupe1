@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Editor, { OnChange } from '@monaco-editor/react';
+import axios from 'axios';
 
 const CodingPage = () => {
   const [code, setCode] = useState<string>('');
@@ -16,18 +17,20 @@ const CodingPage = () => {
     setCode(value || '');
   }
 
-  function handleRunCode() {
-    try {
-      const evalResult = eval(code);
-      if (resultRef.current) {
-        resultRef.current.innerHTML = evalResult.toString();
-      }
-    } catch (error: any) {
-      if (resultRef.current) {
-        resultRef.current.innerHTML = error.toString();
-      }
-    }
-  }
+
+  
+  // async function handleRunCode() {
+  //   try {
+  //     const response = await axios.post('http://localhost:2000', {
+  //       language: 'html',
+  //       source: code,
+  //     });
+
+  //     setResult(response.data.stdout);
+  //   } catch (error: any) {
+  //     setResult(error.toString());
+  //   }
+  // }
 
   return (
     <>
@@ -39,7 +42,7 @@ const CodingPage = () => {
         onChange={handleCodeChange as OnChange}
       />
       <div>
-        <button onClick={handleRunCode}>Run</button>
+        <button>Run</button>
         <div ref={resultRef}>Result: </div>
       </div>
     </>

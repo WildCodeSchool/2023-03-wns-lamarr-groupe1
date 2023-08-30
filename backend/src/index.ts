@@ -3,11 +3,15 @@ import dataSource from "./Utils/dataSource";
 import { config } from "dotenv";
 import { createApolloSchema } from "./Utils/createApolloSchema";
 import { apolloContext } from "./Utils/apolloContext";
+import { getRuntimes } from "./services/Piston.service";
+
 
 config();
 
 const start = async (): Promise<void> => {
+
   await dataSource.initialize();
+  getRuntimes();
 
   const schema = await createApolloSchema();
   const server = new ApolloServer({
