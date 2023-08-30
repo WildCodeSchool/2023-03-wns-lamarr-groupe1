@@ -54,7 +54,9 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) => {
               <a href="/profile">Mon profil </a>
             </span>
             <div className="button-red">
-              <Link to={"/Logout"}>Déconnexion</Link>
+              <Link to="/" onClick={() => localStorage.removeItem("token")}>
+                Déconnexion
+              </Link>
             </div>
           </div>
         ) : (
@@ -103,7 +105,9 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) => {
                   <Link to={"/profile"}>Mon profil</Link>
                 </li>
                 <li className="button-mobile-red">
-                  <Link to="{/Logout}">Déconnexion</Link>
+                  <Link to="/" onClick={() => localStorage.removeItem("token")}>
+                    Déconnexion
+                  </Link>
                 </li>
               </>
             ) : (

@@ -239,6 +239,7 @@
   .burger-bar.clicked:nth-child(2) {
     transform: scale(0.1);
     transition: ease-out 0.5s;
+    opacity: 0;
   }
 
   .burger-bar.clicked:nth-child(3) {
