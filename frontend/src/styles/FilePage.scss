@@ -62,7 +62,7 @@
 
     .container-carousel {
       .slick-slide div {
-        margin: 5px 30px 10px 0px;
+        margin: 10px;
         @include breakpoint(tablet) {
           margin: 0px 15px 10px 15px;
         }
@@ -77,18 +77,18 @@
         color: $primary;
       }
       .card-carousel {
-        height: 200px;
         height: auto;
         border-radius: 15px;
         background-color: $white;
-        -webkit-box-shadow: 6px 0px 5px 5px rgba(0, 0, 0, 0.11);
-        box-shadow: 8px 1px 10px 5px rgba(0, 0, 0, 0.07);
+        -webkit-box-shadow: 0px 10px 13px -8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 10px 13px -8px rgba(0, 0, 0, 0.2);
         .content-img {
           @include flexCenterRow;
           width: 100%;
           height: 50%;
           overflow: hidden;
           padding: 0px;
+          margin: 0px;
 
           img {
             width: 100%;
@@ -106,8 +106,8 @@
         }
 
         @include breakpoint(phone) {
-          -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.11);
-          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.11);
+          -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.05);
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.05);
         }
       }
     }
