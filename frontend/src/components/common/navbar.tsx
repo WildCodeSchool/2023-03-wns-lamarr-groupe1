@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "styles/components/navbar.scss";
 import { Link } from "react-router-dom";
 import img from "assets/img/mainLogo.svg";
@@ -8,6 +8,23 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) => {
+  // to change burger classes
+  const [burger_class, setBurgerClass] = useState("burger-bar unclicked");
+  const [menu_class, setMenuClass] = useState("menu hidden");
+  const [isMenuClicked, setIsMenuClicked] = useState(false);
+
+  // toggle burger menu change
+  const updateMenu = () => {
+    if (!isMenuClicked) {
+      setBurgerClass("burger-bar clicked");
+      setMenuClass("menu visible");
+    } else {
+      setBurgerClass("burger-bar unclicked");
+      setMenuClass("menu hidden");
+    }
+    setIsMenuClicked(!isMenuClicked);
+  };
+
   return (
     <>
       <nav className="main-nav">
@@ -43,10 +60,10 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) => {
         ) : (
           <div>
             <span>
-              <Link to="{/signup}">S'inscire</Link>
+              <Link to="/sign-up">S'inscrire</Link>
             </span>
             <div className="button">
-              <Link to="{/signin}">Connexion</Link>
+              <Link to="/sign-in">Connexion</Link>
             </div>
           </div>
         )}
@@ -59,19 +76,15 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) => {
             alt="main logo site web composé de cercles de couleur violets"
           />
         </div>
-        <div className="nav-burger-burger" role="navigation" id="menuToggle">
-          <input
-            className="checkbox"
-            type="checkbox"
-            name="Toggle"
-            id="nav-activation"
-          />
-          <div className="burger-lines">
-            <span className="nav-burger-burger-span-1"></span>
-            <span className="nav-burger-burger-span-2"></span>
-            <span className="nav-burger-burger-span-3"></span>
+        <nav>
+          <div className="burger-menu" onClick={updateMenu}>
+            <div className={burger_class}></div>
+            <div className={burger_class}></div>
+            <div className={burger_class}></div>
           </div>
-          {/* <ul className="nav-burger-burger-content">
+        </nav>
+        <div className={menu_class}>
+          <ul className="menu-burger">
             <li>
               <Link to={"/#Accueil"}>Accueil</Link>
             </li>
@@ -95,15 +108,15 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) => {
               </>
             ) : (
               <>
-                <span>
-                  <Link to="/profile">Profile</Link>
-                </span>
-                <div className="button">
-                  <Link to={"/sign-in"}>Connexion</Link>
-                </div>
+                <li>
+                  <Link to="/sign-up">S'inscrire</Link>
+                </li>
+                <li className="button">
+                  <Link to="/sign-in">Connexion</Link>
+                </li>
               </>
             )}
-          </ul> */}
+          </ul>
         </div>
       </div>
     </>
