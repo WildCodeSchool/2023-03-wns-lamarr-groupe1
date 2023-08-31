@@ -1,10 +1,32 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Editor, { OnChange } from '@monaco-editor/react';
-import axios from 'axios';
+import { RAN_CODE } from 'graphql/mutations/RAN_CODE';
+import { GET_FILE_QUERY } from 'graphql/queries/GET_FILE_QUERY';
+import { useMutation, useQuery } from "@apollo/client";
+import { useParams } from 'react-router-dom';
+
+
 
 const CodingPage = () => {
-  const [code, setCode] = useState<string>('');
+  const [content, setCode] = useState<string>('');
   const [result, setResult] = useState<string>('');
+  const [value, setValue] = useState<string>('');
+  const [runCode, { loading }] = useMutation(RAN_CODE);
+  const { id } = useParams()
+  let fileId = null
+  if(id) {
+    fileId = parseInt(id)
+  }
+  const {data, refetch} = useQuery(GET_FILE_QUERY, {variables: {fileId: fileId}})
+  
+  
+  const fetchFile = async () => {
+    await refetch()
+    setValue(data?.getFile.content)
+  }
+  useEffect(() => {
+    fetchFile()
+  });
 
   const editorRef = useRef<any>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -17,33 +39,36 @@ const CodingPage = () => {
     setCode(value || '');
   }
 
-
+  async function handleRunCode() {
+    if(id) {
+      const runCodeId = parseInt(id)
+    try {
+      const response = await runCode( {
+        variables:{
+        content,
+        runCodeId,
+      }
+      });
+      setResult(JSON.parse(response.data.runCode).run.output)
+    } catch (error: any) {
+      setResult(error.toString());
+    }
+  }
   
-  // async function handleRunCode() {
-  //   try {
-  //     const response = await axios.post('http://localhost:2000', {
-  //       language: 'html',
-  //       source: code,
-  //     });
-
-  //     setResult(response.data.stdout);
-  //   } catch (error: any) {
-  //     setResult(error.toString());
-  //   }
-  // }
+  }
 
   return (
     <>
       <Editor
         height="80vh"
         defaultLanguage="javascript"
-        defaultValue="// Write a code"
+        defaultValue={value ? value : "// Write a code"}
         onMount={handleEditorDidMount}
         onChange={handleCodeChange as OnChange}
       />
       <div>
-        <button>Run</button>
-        <div ref={resultRef}>Result: </div>
+        <button onClick={handleRunCode} disabled={loading ? true : false}>{loading ? 'Running...' : 'Run'}</button>
+        <div ref={resultRef}>Resultat: {result} </div>
       </div>
     </>
   );
