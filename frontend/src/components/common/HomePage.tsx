@@ -1,7 +1,7 @@
-import React from "react"
-import img from "assets/img/illustration-home.png"
-import "styles/Home.scss"
-import { Link } from "react-router-dom"
+import React from "react";
+import img from "assets/img/illustration-home.png";
+import "styles/Home.scss";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -13,7 +13,9 @@ const HomePage = () => {
         </div>
         <div className="container">
           <div className="content-container">
-            <h2 className="main-title">Le code a du style avec CreativeCode !</h2>
+            <h2 className="main-title">
+              Le code a du style avec CreativeCode !
+            </h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Vestibulum rhoncus.commodo velit. Vivamus iaculis varius accumsan.
@@ -31,7 +33,7 @@ const HomePage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

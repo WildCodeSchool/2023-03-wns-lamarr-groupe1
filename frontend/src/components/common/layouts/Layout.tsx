@@ -6,9 +6,10 @@ type LayoutProps = {
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const isAuthenticated = localStorage.getItem("token");
   return (
     <>
-      <Navbar />
+      <Navbar isAuthenticated={isAuthenticated} />
       <main>{children}</main>
     </>
   );
