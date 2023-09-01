@@ -13,6 +13,10 @@ export class LanguageModels extends BaseEntity {
   @Column()
   name: string;
 
+  @Field()
+  @Column()
+  version: string;
+
   @Field(() => [FilesModels])
   @OneToMany(() => FilesModels, (file) => file.language)
   files: FilesModels[];
