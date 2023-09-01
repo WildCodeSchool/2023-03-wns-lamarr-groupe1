@@ -1,6 +1,7 @@
 @import "mixins.scss";
 
-nav {
+.main-nav {
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   background-color: white;
@@ -12,13 +13,18 @@ nav {
   box-sizing: border-box;
   padding: 15px 0;
 
+  @include breakpoint("<screen") {
+    display: none;
+    visibility: hidden;
+  }
+
   ul {
     display: flex;
     width: auto;
     height: auto;
     flex-direction: row;
     align-items: center;
-    gap: 65px;
+    gap: 35px;
     list-style: none;
 
     li {
@@ -57,7 +63,7 @@ nav {
   div {
     display: flex;
     align-items: center;
-    gap: 65px;
+    gap: 45px;
     text-decoration: none;
 
     span {
@@ -116,13 +122,141 @@ nav {
           border: solid 1px $primary 0.9;
         }
       }
+
+      &-red {
+        link,
+        a {
+          border: solid 1px red;
+          background-color: red;
+          border-radius: 5px;
+          font-weight: 500;
+          font-size: 18px;
+          padding: 12px 15px;
+          transition: 0.2s;
+          text-decoration: none;
+          color: white;
+
+          &:hover {
+            background-color: white;
+            color: red;
+            opacity: 0.9;
+            border: solid 1px red 0.9;
+          }
+        }
+      }
+    }
+  }
+}
+
+.nav-burger {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  box-shadow: 0 1px 4px rgb(146 161 176 / 15%);
+
+  @include breakpoint("screen") {
+    display: none;
+    visibility: hidden;
+  }
+
+  @include breakpoint("large-screen") {
+    display: none;
+    visibility: hidden;
+  }
+
+  .burger-menu {
+    height: 100%;
+    width: 60px;
+    gap: 3px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .burger-bar {
+    width: 50%;
+    height: 5px;
+    background-color: $primary;
+    border-radius: 0.5em;
+    z-index: 10;
+  }
+
+  .menu {
+    background-color: $white;
+    border-left: 2px solid $primary;
+    border-bottom: 2px solid $primary;
+    border-radius: 0 0 0 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9;
+
+    .menu-burger {
+      display: none;
+      position: absolute;
+      top: 100px;
+      li {
+        list-style: none;
+        padding: 10px 5px 30px 25px;
+        font-size: 20px;
+        a,
+        Link {
+          text-decoration: none;
+          color: $primary;
+          font-weight: 700;
+        }
+      }
     }
   }
 
-  @include breakpoint("<screen") {
-    background-color: orange;
+  /* ------------- sliding menu ------------------ */
+  .hidden {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
   }
-  @include breakpoint("screen") {
-    background-color: green;
+
+  .visible {
+    visibility: visible;
+    width: 50%;
+    height: 70%;
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+
+    .menu-burger {
+      display: block;
+    }
+  }
+
+  /* ----- animations--------- */
+  /* clicked */
+  .burger-bar.clicked:nth-child(1) {
+    transform: rotate(45deg) translate(0.2em, 0.5em);
+    transition: ease-out 0.5s;
+  }
+
+  .burger-bar.clicked:nth-child(2) {
+    transform: scale(0.1);
+    transition: ease-out 0.5s;
+    opacity: 0;
+  }
+
+  .burger-bar.clicked:nth-child(3) {
+    transform: rotate(135deg) translate(-0.2em, 0.5em);
+    transition: ease-out 0.5s;
+  }
+
+  /* unclicked */
+  .burger-bar.unclicked {
+    transform: rotate(0) translate(0);
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
   }
 }
