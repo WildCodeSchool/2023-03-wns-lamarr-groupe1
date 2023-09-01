@@ -84,44 +84,48 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) => {
             <div className={burger_class}></div>
             <div className={burger_class}></div>
           </div>
+
+          <div className={menu_class}>
+            <ul className="menu-burger">
+              <li>
+                <Link to={"/#Accueil"}>Accueil</Link>
+              </li>
+              <li>
+                <Link to={"/#aboutUs"}>A propos de nous</Link>
+              </li>
+              <li>
+                <Link to={"/#contact"}>Contact</Link>
+              </li>
+              {isAuthenticated ? (
+                <>
+                  <li>
+                    <Link to={"/notification"}>Notification</Link>
+                  </li>
+                  <li>
+                    <Link to={"/profile"}>Mon profil</Link>
+                  </li>
+                  <li className="button-mobile-red">
+                    <Link
+                      to="/"
+                      onClick={() => localStorage.removeItem("token")}
+                    >
+                      Déconnexion
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/sign-up">S'inscrire</Link>
+                  </li>
+                  <li className="button">
+                    <Link to="/sign-in">Connexion</Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
         </nav>
-        <div className={menu_class}>
-          <ul className="menu-burger">
-            <li>
-              <Link to={"/#Accueil"}>Accueil</Link>
-            </li>
-            <li>
-              <Link to={"/#aboutUs"}>A propos de nous</Link>
-            </li>
-            <li>
-              <Link to={"/#contact"}>Contact</Link>
-            </li>
-            {isAuthenticated ? (
-              <>
-                <li>
-                  <Link to={"/notification"}>Notification</Link>
-                </li>
-                <li>
-                  <Link to={"/profile"}>Mon profil</Link>
-                </li>
-                <li className="button-mobile-red">
-                  <Link to="/" onClick={() => localStorage.removeItem("token")}>
-                    Déconnexion
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <Link to="/sign-up">S'inscrire</Link>
-                </li>
-                <li className="button">
-                  <Link to="/sign-in">Connexion</Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
       </div>
     </>
   );
