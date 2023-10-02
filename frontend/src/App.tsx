@@ -9,6 +9,7 @@ import {
   FilePage,
 } from "./pages/ExportPages";
 import { FileProvider } from "./utils/context/FileContext";
+import SearchFilePage from "pages/SearchFilePage";
 
 const App = () => {
   const { pathname, hash, key } = useLocation();
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/subscribe" element={<PricingPage />} />
         <Route path="/file" element={<FilePage />} />
+        <Route path="/search-files" element={<SearchFilePage />} />
       </Routes>
     </FileProvider>
   );

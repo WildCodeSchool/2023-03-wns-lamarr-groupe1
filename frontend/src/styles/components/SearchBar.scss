@@ -1,0 +1,45 @@
+@import "mixins.scss";
+
+.content-search-bar {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  input {
+    width: 100%;
+    position: absolute;
+    z-index: 0;
+    padding: 15px 10px;
+    outline: none;
+    border: 1px solid $primary;
+    border-radius: 25px;
+    @include breakpoint("<screen") {
+      padding: 15px 0px;
+    }
+  }
+  .icon-search {
+    position: relative;
+    color: $white;
+    background: $primary;
+    border: 1px solid $primary;
+    border-radius: 25px;
+    overflow: hidden;
+    color: $white;
+    align-items: center;
+    padding: 11px 25px;
+    position: relative;
+    z-index: 10;
+
+    @include breakpoint("phone") {
+      padding: 11px 20px;
+    }
+  }
+}
+
+@media screen and ((min-width: 1001px) and (max-width: 1400px)) {
+  .content-search-bar {
+    .content-filter {
+      width: 35%;
+    }
+  }
+}

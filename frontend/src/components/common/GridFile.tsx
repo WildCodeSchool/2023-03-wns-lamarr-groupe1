@@ -3,20 +3,19 @@ import CarouselFile from "./CarouselFile";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-
+import { handleDate } from "utils/DateFormat";
 export type GridFileProps = {
-  files: Array<{
+  filesCarousel: Array<{
     id: number;
     filename: string;
     content: string;
     createdAt: string;
-    image: string;
     isPublic: boolean;
   }>;
   title: string;
 };
 
-const GridFile = ({ title, files }: GridFileProps) => {
+const GridFile = ({ title, filesCarousel }: GridFileProps) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -58,19 +57,33 @@ const GridFile = ({ title, files }: GridFileProps) => {
       <div className="container-title">
         <h3>{title}</h3>
       </div>
-      <div className="container-carousel">
-        <Slider {...settings}>
-          {files.map((file) => (
+      {filesCarousel.length > 4 ? (
+        <div className="container-carousel">
+          <Slider {...settings}>
+            {filesCarousel.map((file) => (
+              <CarouselFile
+                key={file.id}
+                filename={file.filename}
+                content={file.content}
+                createdAt={handleDate(file.createdAt)}
+                isPublic={file.isPublic}
+              />
+            ))}
+          </Slider>
+        </div>
+      ) : (
+        <div className="container-carousel-no-slider">
+          {filesCarousel.map((file) => (
             <CarouselFile
               key={file.id}
               filename={file.filename}
               content={file.content}
-              createdAt={file.createdAt}
+              createdAt={handleDate(file.createdAt)}
               isPublic={file.isPublic}
             />
           ))}
-        </Slider>
-      </div>
+        </div>
+      )}
     </div>
   );
 };
