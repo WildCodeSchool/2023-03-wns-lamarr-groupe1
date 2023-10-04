@@ -59,8 +59,8 @@ jobs:
 
   send_redeploy_webhook:
     needs:
-  		- docker_front
-  		- docker_back
+      - docker_front
+      - docker_back
   
     runs-on: ubuntu-latest
   
