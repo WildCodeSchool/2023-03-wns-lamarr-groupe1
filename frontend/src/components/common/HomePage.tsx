@@ -17,7 +17,7 @@ const HomePage = () => {
               Le code a du style avec CreativeCode !
             </h2>
             <p>
-              Gautier a tout cassé !
+              Gautier a tout cassé, et sa fille est mécontente !
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Vestibulum rhoncus.commodo velit. Vivamus iaculis varius accumsan.
               Nunc
