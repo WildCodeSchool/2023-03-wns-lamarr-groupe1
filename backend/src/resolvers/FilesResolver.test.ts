@@ -81,7 +81,8 @@ describe("FilesResolver", () => {
       const type = "free"
 
       const language = await LanguageModels.create({
-        name: "javascript"
+        name: "javascript",
+        version: "18.0.15"
       }).save()
 
       const token = await callGraphQL({
@@ -189,7 +190,8 @@ describe("FilesResolver", () => {
       const type = "free"
 
       const languageCreated = await LanguageModels.create({
-        name: "javascript"
+        name: "javascript",
+        version: "18.0.15"
       }).save()
 
       const userCreated = await callGraphQL({
@@ -284,7 +286,8 @@ describe("FilesResolver", () => {
       const type = "free"
 
       const languageCreated = await LanguageModels.create({
-        name: "javascript"
+        name: "javascript",
+        version: "18.0.15"
       }).save()
 
       const userCreated = await callGraphQL({
@@ -381,7 +384,8 @@ describe("FilesResolver", () => {
       const type = "free"
 
       const languageCreated = await LanguageModels.create({
-        name: "javascript"
+        name: "javascript",
+        version: "18.0.15"
       }).save()
 
       const userCreated = await callGraphQL({

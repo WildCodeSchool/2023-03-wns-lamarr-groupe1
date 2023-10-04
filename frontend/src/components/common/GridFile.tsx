@@ -19,11 +19,10 @@ export type GridFileProps = {
 const GridFile = ({ title, files }: GridFileProps) => {
   const settings = {
     dots: true,
-    infinite: false,
-    speed: 400,
+    infinite: true,
+    speed: 600,
     slidesToShow: 4,
     slidesToScroll: 2,
-    initialSlide: 0,
     responsive: [
       {
         breakpoint: 1024,
@@ -40,7 +39,7 @@ const GridFile = ({ title, files }: GridFileProps) => {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
-          dots: false,
+          dots: true,
         },
       },
       {
@@ -48,7 +47,7 @@ const GridFile = ({ title, files }: GridFileProps) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          dots: false,
+          dots: true,
         },
       },
     ],

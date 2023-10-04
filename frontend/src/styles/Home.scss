@@ -25,23 +25,22 @@
     .container {
       display: flex;
       justify-content: center;
-      min-width: 40%;
+      min-width: 60%;
+      padding: 0 20px;
       .content-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 50%;
+        width: 60%;
         justify-content: center;
         h2 {
           width: 100%;
           color: $primary;
           font-weight: 500;
-          font-size: 48px;
-          padding: 0px 5px 0px 5px;
+          font-size: 58px;
+          margin: 20px 0px;
         }
         p {
-          margin: 5vh 0vh 0vh 0vh;
-          padding: 0px 5px 0px 5px;
           font-size: 16px;
         }
         .link-container {
@@ -49,13 +48,12 @@
           align-items: center;
           justify-content: space-between;
           width: 100%;
-          margin-top: 10vh;
-          padding: 0px 5px 0px 5px;
+          margin-top: 3vh;
           button {
             width: 200px;
             text-align: center;
-            padding: 12px 12px;
-            font-size: 14px;
+            padding: 15px 30px;
+            font-size: 20px;
             border-radius: $rounded-full;
             border: 1px solid $primary;
             background-color: $primary;
@@ -73,7 +71,7 @@
           .learn-more {
             text-decoration: underline;
             color: $black;
-            font-size: 14px;
+            font-size: 16px;
             &:hover {
               text-decoration: underline;
               color: $primary;
