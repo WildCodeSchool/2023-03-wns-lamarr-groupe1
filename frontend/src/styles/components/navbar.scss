@@ -166,10 +166,9 @@
   }
 
   .burger-menu {
-    height: auto;
     width: 60px;
     gap: 3px;
-
+    padding-top: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -188,8 +187,8 @@
 
   .menu {
     background-color: $white;
-    border-left: 2px solid $primary;
-    border-bottom: 2px solid $primary;
+    -webkit-box-shadow: -6px 7px 13px -3px rgba(83, 64, 169, 0.51);
+    box-shadow: -6px 7px 13px -3px rgba(83, 64, 169, 0.51);
     border-radius: 0 0 0 20px;
     position: absolute;
     top: 0;
