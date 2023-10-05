@@ -11,8 +11,5 @@ import { Field, InputType } from "type-graphql";
 
     @Field()
     fileId!: number;
-
-    @Field()
-    userId!: number;
   }
   

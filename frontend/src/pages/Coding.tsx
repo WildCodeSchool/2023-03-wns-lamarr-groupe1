@@ -2,9 +2,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import Editor, { OnChange } from '@monaco-editor/react';
 import { RAN_CODE } from 'graphql/mutations/RAN_CODE';
 import { GET_FILE_QUERY } from 'graphql/queries/GET_FILE_QUERY';
-import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from 'react-router-dom';
 import { SAVE_CODE } from 'graphql/mutations/SAVE_CODE';
+import AuthenticatedPage from "utils/hoc/authenticatedPage"
 
 
 const CodingPage = () => {
@@ -91,4 +92,4 @@ const CodingPage = () => {
   );
 };
 
-export default CodingPage;
+export default AuthenticatedPage(CodingPage)

@@ -66,7 +66,9 @@ export class FilesModels extends BaseEntity {
   issues: IssuesModels[];
 
   @Field(() => [CommentsModels])
-  @OneToMany(() => CommentsModels, (comment) => comment.file)
+  @OneToMany(() => CommentsModels, (comment) => comment.file, {
+    eager: true,
+  })
   comments: CommentsModels[];
 
   @Field(() => [ReportsModels])

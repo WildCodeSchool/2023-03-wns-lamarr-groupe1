@@ -105,7 +105,9 @@ export class UsersModels extends BaseEntity {
   interactions: InteractionsModels[];
 
   @Field(() => [FilesModels])
-  @OneToMany(() => FilesModels, (file) => file.user)
+  @OneToMany(() => FilesModels, (file) => file.user, {
+    eager: true,
+  })
   files: FilesModels[];
 
   @OneToOne(() => SubscriptionModels, {

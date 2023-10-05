@@ -8,6 +8,6 @@ export const CommentsFactory = setSeederFactory(CommentsModels, async (faker: Fa
   const comment = new CommentsModels();
   comment.comment = faker.lorem.lines();
   comment.user = { id: faker.number.int({ min: 1, max: 10 }) } as UsersModels;
-  comment.file = { id: faker.number.int({ min: 1, max: 40 }) } as FilesModels;
+  comment.file = { id: faker.number.int({ min: 1, max: 10 }) } as FilesModels;
   return comment
 });
