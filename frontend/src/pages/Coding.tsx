@@ -20,9 +20,23 @@ const CodingPage = () => {
   const { data } = useQuery(GET_FILE_QUERY, {variables: {fileId}})
   
   useEffect(() => {
-    if (!data) return
-    setCode(data.getFile.content)
-  }, [data])
+    function handleWindowResize() {
+      if (editorRef.current) {
+        editorRef.current.layout();
+      }
+    }
+  
+    window.addEventListener('resize', handleWindowResize);
+  
+    if (data) {
+      setCode(data.getFile.content);
+    }
+  
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, [data]);
+  
 
   const editorRef = useRef<any>(null);
   const resultRef = useRef<HTMLDivElement>(null);
