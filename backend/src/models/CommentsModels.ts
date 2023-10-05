@@ -6,35 +6,38 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { Field, ObjectType } from "type-graphql";
-import { FilesModels } from "./FilesModels";
-import { UsersModels } from "./UsersModels";
+  JoinColumn
+} from "typeorm"
+import { Field, ObjectType } from "type-graphql"
+import { FilesModels } from "./FilesModels"
+import { UsersModels } from "./UsersModels"
 
 @ObjectType()
 @Entity()
 export class CommentsModels extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Field()
   @Column()
-  comment!: string;
+  comment!: string
 
   @Field()
   @CreateDateColumn()
-  createdAt!: Date;
+  createdAt!: Date
 
   @Field()
   @UpdateDateColumn()
-  updatedAt!: Date;
+  updatedAt!: Date
 
   @Field(() => FilesModels)
   @ManyToOne(() => FilesModels, (file) => file.comments)
-  file: FilesModels;
+  file: FilesModels
 
   @Field(() => UsersModels)
-  @ManyToOne(() => UsersModels, (user) => user.comments)
-  user: UsersModels;
+  @ManyToOne(() => UsersModels, (user) => user.comments, {
+    eager: true
+  })
+  user: UsersModels
 }

@@ -5,6 +5,8 @@ import { sign } from "jsonwebtoken"
 import { SignUpInput } from "../inputs/SignUpInput"
 import { SubscriptionModels } from "../models/SubscriptionModels"
 import { calculateEndedAt } from "../services/SubcriptionEndedAt.service"
+import { FilesModels } from "../models/FilesModels"
+import { GetProfileQuery } from "../queries/GetProfileQuery"
 
 export class AuthResolver {
   // Mutation signUp -> insérer un utilisateur en BDD (à partir d'identifiants)
@@ -122,8 +124,19 @@ export class AuthResolver {
 
   @Authorized()
   @Query(() => UsersModels)
-  async getProfile(@Ctx() context: any): Promise<UsersModels> {
-    console.log("user", context.user)
-    return context.user
+  async getProfile(
+    @Ctx() context: any,
+    @Arg("filter") { isPublic }: GetProfileQuery
+  ): Promise<UsersModels> {
+    const user: UsersModels = context.user
+    const where: Record<string, any> = { user: { id: user.id } }
+
+    if (isPublic != undefined) {
+      where.isPublic = isPublic
+    }
+
+    user.files = await FilesModels.find({ where })
+
+    return user
   }
 }

@@ -8,6 +8,6 @@ export const ReportsFactory = setSeederFactory(ReportsModels, async (faker: Fake
   const report = new ReportsModels();
   report.comment = faker.lorem.lines();
   report.user = { id: faker.number.int({ min: 1, max: 10 }) } as UsersModels;
-  report.file = { id: faker.number.int({ min: 1, max: 40 }) } as FilesModels;
+  report.file = { id: faker.number.int({ min: 1, max: 10 }) } as FilesModels;
   return report
 });
