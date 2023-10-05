@@ -21,17 +21,34 @@ const SearchFilePage = () => {
   const { data: getFilesData } = useQuery(GET_FILES_QUERY, {
     variables: { filter: { isPublic: false } },
   });
+
   console.log(getFilesData);
   const [value, setValue] = useState<string>("");
+
+  const [filteredTextValue, setFilteredTextValue] = useState(
+    "choisir un language"
+  );
+
+  const OnchangeFilterValue = (filterValue: any) => {
+    setFilteredTextValue(filterValue);
+  };
 
   return (
     <Layout>
       <div className="container-global">
         <div className="container-search">
-          <SearchBar value={value} setValue={setValue} />
+          <SearchBar
+            value={value}
+            setValue={setValue}
+            filterValueSelected={OnchangeFilterValue}
+          />
         </div>
         <div className="container-listing-files">
-          <GridFileSearch files={getFilesData?.getFiles || []} value={value} />
+          <GridFileSearch
+            files={getFilesData?.getFiles || []}
+            value={value}
+            filterValueSelected={OnchangeFilterValue}
+          />
         </div>
       </div>
     </Layout>

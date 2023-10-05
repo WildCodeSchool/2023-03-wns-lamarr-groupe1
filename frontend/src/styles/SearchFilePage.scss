@@ -10,6 +10,7 @@
   .container-search {
     width: 35%;
     margin-bottom: 70px;
+
     @include breakpoint("<screen") {
       width: 80%;
     }

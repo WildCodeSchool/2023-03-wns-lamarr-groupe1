@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "components/common/layouts/Layout";
 import GridFile from "components/common/GridFile";
 import "styles/FilePage.scss";
@@ -22,14 +22,24 @@ type File = {
 };
 
 const FilePage = () => {
-  const { data: publicFilesData } = useQuery(GET_FILES_QUERY, {
-    variables: { filter: { isPublic: false } },
-  });
-  const { data: privateFilesData } = useQuery(GET_FILES_QUERY, {
-    variables: { filter: { isPublic: true } },
-  });
   const { isShow, handleOpenModal, handleCloseModal } = useContext(fileContext);
+  const { refetch: refetchPublic, data: publicFilesData } = useQuery(
+    GET_FILES_QUERY,
+    {
+      variables: { filter: { isPublic: false } },
+    }
+  );
+  const { refetch: refetchPrivate, data: privateFilesData } = useQuery(
+    GET_FILES_QUERY,
+    {
+      variables: { filter: { isPublic: true } },
+    }
+  );
 
+  useEffect(() => {
+    refetchPrivate();
+    refetchPublic();
+  }, []);
   return (
     <Layout>
       <div className="container-file-page">

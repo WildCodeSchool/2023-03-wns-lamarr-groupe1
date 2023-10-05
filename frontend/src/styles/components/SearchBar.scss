@@ -5,6 +5,7 @@
   position: relative;
   display: flex;
   justify-content: flex-end;
+
   input {
     width: 100%;
     position: absolute;
@@ -17,12 +18,28 @@
       padding: 15px 0px;
     }
   }
+  select {
+    z-index: 999;
+    background: $primary;
+    color: $white;
+    border: none;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 96%;
+    background-position-y: 12px;
+    background-color: $primary;
+    padding: 0px 35px 0px 0px;
+    color: $white;
+  }
   .icon-search {
     position: relative;
     color: $white;
     background: $primary;
-    border: 1px solid $primary;
-    border-radius: 25px;
     overflow: hidden;
     color: $white;
     align-items: center;
