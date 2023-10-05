@@ -8,7 +8,7 @@ export const InteractionsFactory = setSeederFactory(InteractionsModels, async (f
   const interactions = new InteractionsModels();
   interactions.type = getRandomInteractionType();
   interactions.user = { id: faker.datatype.number({ min: 1, max: 10 }) } as UsersModels;
-  interactions.file = { id: faker.datatype.number({ min: 1, max: 40 }) } as FilesModels;
+  interactions.file = { id: faker.datatype.number({ min: 1, max: 10 }) } as FilesModels;
   return interactions;
 });
 
