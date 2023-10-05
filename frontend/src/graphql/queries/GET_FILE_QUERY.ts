@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
 export const GET_FILE_QUERY = gql`
 query GetFile($fileId: Float!) {
@@ -6,5 +6,13 @@ query GetFile($fileId: Float!) {
     content
     filename
     id
+    comments {
+      comment
+      updatedAt
+      id
+      user {
+        username
+      }
+    }
   }
-}`;
+}`

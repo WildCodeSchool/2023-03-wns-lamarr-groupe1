@@ -1,0 +1,45 @@
+@import "../../mixins.scss";
+
+.main-comment-container {
+  padding-right: 20px;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  height: 100%;
+  max-width: 30%;
+}
+
+.button-container {
+  position: relative;
+  height: 100%;
+}
+.button {
+  height: 15%;
+  width: 20px;
+  border-top-right-radius: $rounded-full;
+  border-bottom-right-radius: $rounded-full;
+  border: 1px solid rgb(159, 159, 159);
+  border-left: none;
+  background: #dbe2f2;
+  position: absolute;
+  top: 0px;
+  right: -20px;
+  box-shadow: 10px 0px 30px #ecebeb;
+}
+.comment-container {
+  border: 1px solid rgb(159, 159, 159);
+  border-bottom: none;
+  border-top-left-radius: $rounded-md;
+  overflow: auto;
+  max-height: 75%;
+  box-shadow: 10px 4px 30px #ecebeb;
+}
+.comment-form {
+  height: 20%;
+  border: 1px solid rgb(159, 159, 159);
+  background: white;
+  border-bottom-right-radius: $rounded-md;
+  border-bottom-left-radius: $rounded-md;
+  padding: 1rem;
+  box-shadow: 10px 13px 30px #ecebeb;
+}

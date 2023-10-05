@@ -1,0 +1,25 @@
+.card-comment {
+  max-height: 20%;
+
+  .comment-info-even {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: #f1f4fb;
+    
+  }
+  .comment-info-odd {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: #dbe2f2;
+  }
+}
+
+.comment-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
