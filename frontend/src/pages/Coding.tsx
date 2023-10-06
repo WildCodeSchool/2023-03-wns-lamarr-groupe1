@@ -6,7 +6,7 @@ import { useMutation, useQuery } from "@apollo/client"
 import { useParams } from "react-router-dom"
 import { SAVE_CODE } from "graphql/mutations/SAVE_CODE"
 import AuthenticatedPage from "utils/hoc/authenticatedPage"
-import Comments from "../components/comments/CommentsList"
+import Comments from "components/common/comments/CommentsList"
 import "styles/Coding.scss"
 
 const CodingPage = () => {
@@ -20,13 +20,22 @@ const CodingPage = () => {
   if (id) {
     fileId = parseInt(id)
   }
-  const { data } = useQuery(GET_FILE_QUERY, { variables: { fileId } })
+  const { data, refetch } = useQuery(GET_FILE_QUERY, { variables: { fileId } })
 
   useEffect(() => {
     if (!data) return
     setCode(data.getFile.content)
     setComments(data.getFile.comments)
   }, [data])
+
+  async function refecthComments() {
+    await refetch()
+    setComments(data.getFile.comments)
+    setTimeout(() => {
+      const commentContainer = document.getElementById("commentContainer")
+      commentContainer?.scrollTo(0, commentContainer.scrollHeight)
+    }, 20)
+  }
 
   const editorRef = useRef<any>(null)
   const resultRef = useRef<HTMLDivElement>(null)
@@ -85,7 +94,7 @@ const CodingPage = () => {
           onMount={handleEditorDidMount}
           onChange={handleCodeChange as OnChange}
         />
-        <Comments comments={comments} />
+        <Comments comments={comments} refecthComments={refecthComments} />
         <div>
           <button onClick={handleRunCode} disabled={loading ? true : false}>
             {loading ? "Running..." : "Run"}

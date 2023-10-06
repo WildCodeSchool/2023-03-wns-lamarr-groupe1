@@ -1,21 +1,15 @@
 @import "../../mixins.scss";
-
-.main-comment-container {
-  padding-right: 20px;
+.button-container {
+  animation: slidein 0.3s none;
   position: absolute;
   top: 50px;
   left: 0;
   height: 100%;
   max-width: 30%;
 }
-
-.button-container {
-  position: relative;
-  height: 100%;
-}
-.button {
-  height: 15%;
-  width: 20px;
+.button-comment {
+  height: 100px;
+  width: 23px;
   border-top-right-radius: $rounded-full;
   border-bottom-right-radius: $rounded-full;
   border: 1px solid rgb(159, 159, 159);
@@ -23,9 +17,12 @@
   background: #dbe2f2;
   position: absolute;
   top: 0px;
-  right: -20px;
+  right: -23px;
   box-shadow: 10px 0px 30px #ecebeb;
+  cursor: pointer;
+  padding: 1px;
 }
+
 .comment-container {
   border: 1px solid rgb(159, 159, 159);
   border-bottom: none;
@@ -36,10 +33,103 @@
 }
 .comment-form {
   height: 20%;
+  max-height: 20%;
   border: 1px solid rgb(159, 159, 159);
   background: white;
   border-bottom-right-radius: $rounded-md;
   border-bottom-left-radius: $rounded-md;
   padding: 1rem;
   box-shadow: 10px 13px 30px #ecebeb;
+}
+
+.container-comment-form {
+  height: 100%;
+  width: 100%;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .container-input {
+      border: 1px solid #5340a9;
+      border-radius: $rounded-md;
+      padding: 10px;
+      textarea {
+        width: 100%;
+        border: none;
+        resize: none;
+      }
+      textarea:focus {
+        outline: none;
+      }
+    }
+    .button-container-form {
+      width: 100%;
+      display: flex;
+      justify-content: end;
+      .button-form {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// animation
+
+.comment-container-hidden {
+  animation: slideout 0.5s forwards;
+  overflow: auto;
+  border: 1px solid rgb(159, 159, 159);
+  border-bottom: none;
+  border-top-left-radius: $rounded-md;
+  max-height: 75%;
+}
+.comment-form-hidden {
+  animation: slideout 0.5s forwards;
+  height: 20%;
+  max-height: 20%;
+  border: 1px solid rgb(159, 159, 159);
+  background: white;
+  border-bottom-right-radius: $rounded-md;
+  border-bottom-left-radius: $rounded-md;
+  padding: 1rem;
+  box-shadow: 10px 13px 30px #ecebeb;
+}
+
+.button-container-hidden {
+  animation: slideoutButton 0.3s forwards;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  height: 100%;
+  max-width: 30%;
+}
+
+@keyframes slidein {
+  0% {
+    transform: translate(-100%, 0%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+
+@keyframes slideout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0%, 0%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideoutButton {
+  0% {
+    transform: translate(0%, 0%);
+  }
+  100% {
+    transform: translate(-100%, 0%);
+  }
 }
