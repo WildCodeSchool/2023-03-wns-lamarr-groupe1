@@ -55,11 +55,12 @@ const AddNewComment = (refecthComments: refetch) => {
         <div className="button-container-form ">
           <button className="button-form" disabled={loading}>
             <FontAwesomeIcon
+              className="message-icon"
               icon={faMessage}
-              style={{ color: "#5340a9" }}
               flip="horizontal"
-              size="2xl"
+              size="sm"
             />
+            Commenter
           </button>
         </div>
       </form>

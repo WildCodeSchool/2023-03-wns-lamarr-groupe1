@@ -9,22 +9,22 @@
 }
 .button-comment {
   height: 100px;
-  width: 23px;
+  width: 29px;
   border-top-right-radius: $rounded-full;
   border-bottom-right-radius: $rounded-full;
-  border: 1px solid rgb(159, 159, 159);
+  border: 1px solid #5340a9;
   border-left: none;
-  background: #dbe2f2;
+  background: #e7edfa;
   position: absolute;
   top: 0px;
-  right: -23px;
+  right: -29px;
   box-shadow: 10px 0px 30px #ecebeb;
   cursor: pointer;
-  padding: 1px;
+  padding: 4px;
 }
 
 .comment-container {
-  border: 1px solid rgb(159, 159, 159);
+  border: 1px solid #5340a9;
   border-bottom: none;
   border-top-left-radius: $rounded-md;
   overflow: auto;
@@ -32,10 +32,9 @@
   box-shadow: 10px 4px 30px #ecebeb;
 }
 .comment-form {
-  height: 20%;
-  max-height: 20%;
-  border: 1px solid rgb(159, 159, 159);
-  background: white;
+  min-height: 20%;
+  border: 1px solid #5340a9;
+  background: #f1f4fb;
   border-bottom-right-radius: $rounded-md;
   border-bottom-left-radius: $rounded-md;
   padding: 1rem;
@@ -48,11 +47,13 @@
   form {
     display: flex;
     flex-direction: column;
+    height: 100%;
     gap: 10px;
     .container-input {
       border: 1px solid #5340a9;
       border-radius: $rounded-md;
       padding: 10px;
+      background: white;
       textarea {
         width: 100%;
         border: none;
@@ -65,11 +66,27 @@
     .button-container-form {
       width: 100%;
       display: flex;
-      justify-content: end;
+      justify-content: center;
+
       .button-form {
-        background: transparent;
-        border: none;
+        display: flex;
+        align-self: flex-start;
+        align-items: center;
+        padding: 7px 12px;
+        font-size: 16px;
+        border-radius: $rounded-md;
+        border: 1px solid #5340a9;
+        background-color: #fff;
+        color: #5340a9;
+        font-weight: 600;
+        transition: 0.3s ease-in-out;
+        gap: 5px;
         cursor: pointer;
+        &:hover {
+          background-color: #5340a9;
+          color: #fff;
+          border: 1px solid #fff;
+        }
       }
     }
   }
