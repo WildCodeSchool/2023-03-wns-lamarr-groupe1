@@ -3,6 +3,7 @@ import img from "assets/img/illustration-home.png";
 import "styles/Home.scss";
 import { Link } from "react-router-dom";
 
+
 const HomePage = () => {
   return (
     <div className="home-main-container">
