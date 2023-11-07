@@ -5,7 +5,26 @@
   top: 50px;
   left: 0;
   height: 100%;
+  min-width: 30%;
   max-width: 30%;
+}
+
+.button-close {
+  height: 50px;
+  width: 30px;
+  border-top-right-radius: $rounded-lg;
+  border-bottom-right-radius: $rounded-lg;
+  border: 2px solid #5340a9;
+  border-left: none;
+  background: #5340a9;
+  position: absolute;
+  top: 0px;
+  right: -28px;
+  box-shadow: 10px 0px 30px #ecebeb;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 100;
+  color: #fff;
 }
 .button-comment {
   height: 100px;
@@ -16,27 +35,130 @@
   border-left: none;
   background: #e7edfa;
   position: absolute;
-  top: 0px;
+  top: 50px;
   right: -29px;
   box-shadow: 10px 0px 30px #ecebeb;
   cursor: pointer;
   padding: 4px;
+  z-index: 11;
+  color: #5340a9;
+}
+
+.button-comment-active {
+  height: 100px;
+  width: 30px;
+  border-top-right-radius: $rounded-full;
+  border-bottom-right-radius: $rounded-full;
+  border: 2px solid #5340a9;
+  border-left: none;
+  background: #5340a9;
+  position: absolute;
+  top: 50px;
+  right: -28px;
+  box-shadow: 10px 0px 30px #ecebeb;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 100;
+  color: #fff;
+}
+
+.button-issue {
+  height: 100px;
+  width: 29px;
+  border-top-right-radius: $rounded-full;
+  border-bottom-right-radius: $rounded-full;
+  border: 1px solid #5340a9;
+  border-left: none;
+  background: #e7edfa;
+  position: absolute;
+  top: 140px;
+  right: -29px;
+  box-shadow: 10px 0px 30px #ecebeb;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 10;
+  color: #5340a9;
+}
+
+.button-issue-active {
+  height: 100px;
+  width: 30px;
+  border-top-right-radius: $rounded-full;
+  border-bottom-right-radius: $rounded-full;
+  border: 2px solid #5340a9;
+  border-left: none;
+  background: #5340a9;
+  position: absolute;
+  top: 140px;
+  right: -28px;
+  box-shadow: 10px 0px 30px #ecebeb;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 100;
+  color: #fff;
+}
+
+.button-report {
+  height: 100px;
+  width: 29px;
+  border-top-right-radius: $rounded-full;
+  border-bottom-right-radius: $rounded-full;
+  border: 1px solid #5340a9;
+  border-left: none;
+  background: #e7edfa;
+  position: absolute;
+  top: 230px;
+  right: -29px;
+  box-shadow: 10px 0px 30px #ecebeb;
+  cursor: pointer;
+  padding: 4px;
+  color: #5340a9;
+}
+
+.button-report-active {
+  height: 100px;
+  width: 30px;
+  border-top-right-radius: $rounded-full;
+  border-bottom-right-radius: $rounded-full;
+  border: 2px solid #5340a9;
+  border-left: none;
+  background: #5340a9;
+  position: absolute;
+  top: 230px;
+  right: -28px;
+  box-shadow: 10px 0px 30px #ecebeb;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 100;
+  color: #fff;
 }
 
 .comment-container {
-  border: 1px solid #5340a9;
+  border: 2px solid #5340a9;
   border-bottom: none;
-  border-top-left-radius: $rounded-md;
   overflow: auto;
   max-height: 75%;
   box-shadow: 10px 4px 30px #ecebeb;
 }
 .comment-form {
   min-height: 20%;
-  border: 1px solid #5340a9;
+  height: auto;
+  border: 2px solid #5340a9;
+  border-top-width: 1px;
   background: #f1f4fb;
-  border-bottom-right-radius: $rounded-md;
-  border-bottom-left-radius: $rounded-md;
+  padding: 1rem;
+  box-shadow: 10px 13px 30px #ecebeb;
+}
+
+.report-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 40%;
+  height: auto;
+  border: 2px solid #5340a9;
+  border-top-width: 1px;
+  background: #f1f4fb;
   padding: 1rem;
   box-shadow: 10px 13px 30px #ecebeb;
 }
@@ -49,20 +171,22 @@
     flex-direction: column;
     height: 100%;
     gap: 10px;
-    .container-input {
+    #report-title {
       border: 1px solid #5340a9;
       border-radius: $rounded-md;
       padding: 10px;
       background: white;
-      textarea {
-        width: 100%;
-        border: none;
-        resize: none;
-      }
-      textarea:focus {
-        outline: none;
-      }
     }
+
+    textarea {
+      border: none;
+      resize: none;
+      border: 1px solid #5340a9;
+      border-radius: $rounded-md;
+      padding: 10px;
+      background: white;
+    }
+
     .button-container-form {
       width: 100%;
       display: flex;
@@ -102,17 +226,6 @@
   border-top-left-radius: $rounded-md;
   max-height: 75%;
 }
-.comment-form-hidden {
-  animation: slideout 0.5s forwards;
-  height: 20%;
-  max-height: 20%;
-  border: 1px solid rgb(159, 159, 159);
-  background: white;
-  border-bottom-right-radius: $rounded-md;
-  border-bottom-left-radius: $rounded-md;
-  padding: 1rem;
-  box-shadow: 10px 13px 30px #ecebeb;
-}
 
 .button-container-hidden {
   animation: slideoutButton 0.3s forwards;
@@ -148,5 +261,29 @@
   }
   100% {
     transform: translate(-100%, 0%);
+  }
+}
+
+@include breakpoint("screen") {
+  .button-container {
+    max-width: 50%;
+  }
+}
+
+@include breakpoint("large-tablet") {
+  .button-container {
+    max-width: 50%;
+  }
+}
+
+@include breakpoint("tablet") {
+  .button-container {
+    max-width: 70%;
+  }
+}
+
+@include breakpoint("phone") {
+  .button-container {
+    max-width: 90%;
   }
 }

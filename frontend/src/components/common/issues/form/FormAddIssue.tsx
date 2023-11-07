@@ -1,38 +1,37 @@
 import { useForm, SubmitHandler } from "react-hook-form"
-import { NEW_COMMENT_MUTATION } from "graphql/mutations/NEW_COMMENT_MUTATION"
+import { NEW_ISSUE_MUTATION } from "graphql/mutations/NEW_ISSUE_MUTATION"
 import { useMutation } from "@apollo/client"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useParams } from "react-router-dom"
-import { INewCommentProps } from "utils/interface/INewComment"
-import { faMessage } from "@fortawesome/free-regular-svg-icons"
+import { INewIssueProps } from "utils/interface/INewIssue"
+import { faCircleDot } from "@fortawesome/free-regular-svg-icons"
 
 type refetch = {
-  refecthComments: () => void
+  refecthIssues: () => void
 }
 
-const AddNewComment = (refecthComments: refetch) => {
-  const [addComment, { loading }] = useMutation(NEW_COMMENT_MUTATION)
+const AddNewIssue = (refecthIssues: refetch) => {
+  const [addIssue, { loading }] = useMutation(NEW_ISSUE_MUTATION)
   const { id } = useParams()
   const fileId = id ? parseInt(id) : null
-  const { register, handleSubmit } = useForm<INewCommentProps>({
+  const { register, handleSubmit } = useForm<INewIssueProps>({
     mode: "onBlur"
   })
-  const onSubmit: SubmitHandler<INewCommentProps> = async (data) => {
-    if (data.comment) {
+  const onSubmit: SubmitHandler<INewIssueProps> = async (data) => {
+    if (data.issue) {
       try {
-        await addComment({
+        await addIssue({
           variables: {
             input: {
-              comment: data.comment,
+              issue: data.issue,
+              status: "Open",
               fileId
             }
           }
         })
-        const textarea = document.getElementById(
-          "comment"
-        ) as HTMLTextAreaElement
+        const textarea = document.getElementById("issue") as HTMLTextAreaElement
         textarea.value = ""
-        refecthComments.refecthComments()
+        refecthIssues.refecthIssues()
       } catch (error: any) {
         console.log(error)
       }
@@ -43,22 +42,22 @@ const AddNewComment = (refecthComments: refetch) => {
     <div className="comment-form">
       <div className="container-comment-form">
         <form action="" onSubmit={handleSubmit(onSubmit)}>
-            <textarea
-              id="comment"
-              placeholder="Ecrivez votre commentaire ..."
-              rows={7}
-              {...register("comment")}
-            ></textarea>
-          
+          <textarea
+            id="issue"
+            placeholder="Ecrivez votre commentaire ..."
+            rows={7}
+            {...register("issue")}
+          ></textarea>
+
           <div className="button-container-form ">
             <button className="button-form" disabled={loading}>
               <FontAwesomeIcon
                 className="message-icon"
-                icon={faMessage}
+                icon={faCircleDot}
                 flip="horizontal"
                 size="sm"
               />
-              Commenter
+              Soumettre
             </button>
           </div>
         </form>
@@ -67,4 +66,4 @@ const AddNewComment = (refecthComments: refetch) => {
   )
 }
 
-export default AddNewComment
+export default AddNewIssue

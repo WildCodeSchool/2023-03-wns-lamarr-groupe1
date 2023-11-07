@@ -1,3 +1,4 @@
+@import "../../mixins.scss";
 .card-comment {
   max-height: 20%;
 
@@ -7,7 +8,6 @@
     gap: 1.5rem;
     padding: 1rem;
     background: #f1f4fb;
-    
   }
   .comment-info-odd {
     display: flex;
@@ -16,10 +16,39 @@
     padding: 1rem;
     background: #e7edfa;
   }
+  .Open {
+    background-color: rgba(3, 187, 3, 0.5);
+    border-radius: $rounded-sm;
+    padding: 3px;
+    margin-right: 10px;
+  }
+
+  .Pending {
+    background-color: rgba(255, 166, 0, 0.5);
+    border-radius: $rounded-sm;
+    padding: 3px;
+    margin-right: 10px;
+  }
+  .Close {
+    background-color: rgba(232, 0, 0, 0.606);
+    border-radius: $rounded-sm;
+    padding: 3px;
+    margin-right: 10px;
+  }
 }
 
 .comment-header {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: start;
+  font-weight: 600;
+  font-size: small;
+}
+
+.comment-header :first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }

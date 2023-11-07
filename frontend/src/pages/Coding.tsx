@@ -15,6 +15,7 @@ const CodingPage = () => {
   const [runCode, { loading }] = useMutation(RAN_CODE)
   const [saveCode] = useMutation(SAVE_CODE)
   const [comments, setComments] = useState([])
+  const [issues, setIssues] = useState([])
   const { id } = useParams()
   let fileId = null
   if (id) {
@@ -26,11 +27,13 @@ const CodingPage = () => {
     if (!data) return
     setCode(data.getFile.content)
     setComments(data.getFile.comments)
+    setIssues(data.getFile.issues)
   }, [data])
 
-  async function refecthComments() {
+  async function refecthData() {
     await refetch()
     setComments(data.getFile.comments)
+    setIssues(data.getFile.issues)
     setTimeout(() => {
       const commentContainer = document.getElementById("commentContainer")
       commentContainer?.scrollTo(0, commentContainer.scrollHeight)
@@ -94,7 +97,11 @@ const CodingPage = () => {
           onMount={handleEditorDidMount}
           onChange={handleCodeChange as OnChange}
         />
-        <Comments comments={comments} refecthComments={refecthComments} />
+        <Comments
+          comments={comments}
+          issues={issues}
+          refecthData={refecthData}
+        />
         <div>
           <button onClick={handleRunCode} disabled={loading ? true : false}>
             {loading ? "Running..." : "Run"}

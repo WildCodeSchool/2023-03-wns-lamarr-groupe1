@@ -1,51 +1,117 @@
 import { useState } from "react"
-import CommentCard from "./CommentCard"
+import CommentCard from "../comments/CommentCard"
+import IssuesCard from "../issues/IssuesCard"
 import "styles/components/comment.scss"
 import FormAddComment from "./form/FormAddComment"
+import FormAddIssue from "../issues/form/FormAddIssue"
+import FormAddReport from "../form/FomAddReport"
 import { ICommentsProps } from "utils/interface/ICommentProps"
-import { faMessage } from "@fortawesome/free-regular-svg-icons"
+import { IIssuesProps } from "utils/interface/IIssuesProps"
+import {
+  faMessage,
+  faCircleDot,
+  faRectangleXmark
+} from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 type commentsList = {
   comments: ICommentsProps[]
-  refecthComments: () => void
+  issues: IIssuesProps[]
+  refecthData: () => void
 }
 const Comments = (props: commentsList) => {
   const [isShow, setIsShow] = useState<boolean>(false)
+  const [type, setType] = useState<string>("")
 
-  const handleCommentModal = () => {
+  const handleModal = (contentType: string) => {
+    if (!isShow) {
+      setIsShow(true)
+      setType(contentType)
+    }
+    if (isShow) {
+      if (!contentType) {
+        setIsShow(false)
+        setTimeout(() => {
+          setType("")
+        }, 100)
+      } else {
+        setType(contentType)
+      }
+    }
     const commentContainer = document.getElementById("commentContainer")
-    commentContainer?.scrollTo(0, commentContainer.scrollHeight)
-    setIsShow(!isShow)
+    setTimeout(() => {
+      commentContainer?.scrollTo(0, commentContainer.scrollHeight)
+    }, 20)
   }
 
   return (
     <>
       <div className={isShow ? "button-container" : "button-container-hidden"}>
-        <button className="button-comment" onClick={handleCommentModal}>
-          <FontAwesomeIcon
-            icon={faMessage}
-            style={{ color: "#5340a9" }}
-            size="xl"
-          />
+        {type ? (
+          <button
+            className={type ? "button-close" : ""}
+            onClick={() => handleModal("")}
+          >
+            <FontAwesomeIcon icon={faRectangleXmark} size="xl" />
+          </button>
+        ) : null}
+        <button
+          className={
+            type === "comment" ? "button-comment-active" : "button-comment"
+          }
+          onClick={() => handleModal("comment")}
+        >
+          <FontAwesomeIcon icon={faMessage} size="xl" />
+        </button>
+        <button
+          className={type === "issue" ? "button-issue-active" : "button-issue"}
+          onClick={() => handleModal("issue")}
+        >
+          <FontAwesomeIcon icon={faCircleDot} size="xl" />
+        </button>
+        <button
+          className={
+            type === "report" ? "button-report-active" : "button-report"
+          }
+          onClick={() => handleModal("report")}
+        >
+          <FontAwesomeIcon icon={faCircleDot} size="xl" />
         </button>
         <div
           id="commentContainer"
           className={isShow ? "comment-container" : "comment-container-hidden"}
         >
-          {props.comments.map((comment, index) => (
-            <CommentCard
-              index={index}
-              key={comment.id}
-              comment={comment.comment}
-              updatedAt={comment.updatedAt}
-              username={comment.user.username}
-            />
-          ))}
+          {type === "comment"
+            ? props.comments.map((comment, index) => (
+                <CommentCard
+                  index={index}
+                  key={comment.id}
+                  comment={comment.comment}
+                  updatedAt={comment.updatedAt}
+                  username={comment.user.username}
+                />
+              ))
+            : type === "issue"
+            ? props.issues.map((issue, index) => (
+                <IssuesCard
+                  index={index}
+                  key={issue.id}
+                  issue={issue.issue}
+                  updatedAt={issue.updatedAt}
+                  username={issue.user.username}
+                  status={issue.status}
+                />
+              ))
+            : null}
         </div>
-        <div className={isShow ? "comment-form" : "comment-form-hidden"}>
-          <FormAddComment refecthComments={props.refecthComments} />
-        </div>
+
+        {type === "comment" ? (
+          <FormAddComment refecthComments={props.refecthData} />
+        ) : type === "issue" ? (
+          <FormAddIssue refecthIssues={props.refecthData} />
+        ) : type === "report" ? (
+          <FormAddReport />
+        ) : null}
       </div>
     </>
   )
