@@ -13,13 +13,9 @@ export type GridFileProps = {
     };
   }>;
   value: string;
-  filterValueSelected: any;
+  valueFilter: string;
 };
-const GridFileSearch = ({
-  files,
-  value,
-  filterValueSelected,
-}: GridFileProps) => {
+const GridFileSearch = ({ files, value, valueFilter }: GridFileProps) => {
   const handleString = (s: string) => {
     var r = s.toLowerCase();
     r = r.replace(new RegExp(/\s/g), "");
@@ -41,19 +37,27 @@ const GridFileSearch = ({
   return (
     <>
       {files
-        .filter(
-          (element: any) =>
-            handleString(element.filename).includes(handleString(value)) ||
-            handleString(handleDate(element.createdAt)).includes(
-              handleString(value)
-            ) ||
-            handleString(element.language.name).includes(handleString(value)) ||
-            handleString(element.language.name).includes(filterValueSelected)
+        .filter((element: any) =>
+          valueFilter
+            ? (handleString(element.filename).includes(handleString(value)) ||
+                handleString(handleDate(element.createdAt)).includes(
+                  handleString(value)
+                ) ||
+                handleString(element.language.name).includes(
+                  handleString(value)
+                )) &&
+              handleString(element.language.name).includes(
+                handleString(valueFilter)
+              )
+            : handleString(element.filename).includes(handleString(value)) ||
+              handleString(handleDate(element.createdAt)).includes(
+                handleString(value)
+              ) ||
+              handleString(element.language.name).includes(handleString(value))
         )
         .map((file) => (
-          <Link to={`/coding/${file.id}`}>
+          <Link to={`/coding/${file.id}`} key={file.id}>
             <ListingFile
-              key={file.id}
               filename={file.filename}
               content={file.content}
               createdAt={handleDate(file.createdAt)}

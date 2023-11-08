@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "styles/AddFileForm.scss";
 import { useQuery } from "@apollo/client";
-import { GET_FILES_QUERY } from "graphql/queries/GET_FILES_QUERY";
+import { GET_PROFILE_QUERY } from "graphql/queries/GET_PROFILE_QUERY";
 import "styles/FilePage.scss";
 import "styles/AddFileForm.scss";
 import AuthenticatedPage from "utils/hoc/authenticatedPage";
@@ -26,14 +26,15 @@ type File = {
 
 const FilePage = () => {
   const { isShow, handleOpenModal, handleCloseModal } = useContext(fileContext);
+
   const { refetch: refetchPublic, data: publicFilesData } = useQuery(
-    GET_FILES_QUERY,
+    GET_PROFILE_QUERY,
     {
       variables: { filter: { isPublic: false } },
     }
   );
   const { refetch: refetchPrivate, data: privateFilesData } = useQuery(
-    GET_FILES_QUERY,
+    GET_PROFILE_QUERY,
     {
       variables: { filter: { isPublic: true } },
     }
@@ -54,11 +55,11 @@ const FilePage = () => {
         </div>
 
         <GridFile
-          filesCarousel={privateFilesData?.getFiles || []}
+          filesCarousel={privateFilesData?.getProfile.files || []}
           title="Privés"
         />
         <GridFile
-          filesCarousel={publicFilesData?.getFiles || []}
+          filesCarousel={publicFilesData?.getProfile.files || []}
           title="Publics"
         />
       </div>

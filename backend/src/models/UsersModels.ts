@@ -87,9 +87,7 @@ export class UsersModels extends BaseEntity {
   contacts: ContactModels[];
 
   @Field(() => [CommentsModels])
-  @OneToMany(() => CommentsModels, (comment) => comment.user, {
-    eager: true,
-  })
+  @OneToMany(() => CommentsModels, (comment) => comment.user)
   comments: CommentsModels[];
 
   @Field(() => [ReportsModels])
@@ -105,9 +103,7 @@ export class UsersModels extends BaseEntity {
   interactions: InteractionsModels[];
 
   @Field(() => [FilesModels])
-  @OneToMany(() => FilesModels, (file) => file.user, {
-    eager: true,
-  })
+  @OneToMany(() => FilesModels, (file) => file.user)
   files: FilesModels[];
 
   @OneToOne(() => SubscriptionModels, {

@@ -76,7 +76,7 @@ export class FileResolver {
   @Authorized()
   @Query(() => [FilesModels])
   async getFiles(
-    @Arg("filter") { programmingLanguage, page, isPublic }: GetFilesQuery
+    @Arg("filter") { programmingLanguage, page }: GetFilesQuery
   ): Promise<FilesModels[]> {
     const pagination: number = page !== undefined ? page : 1;
     const NUMBER_OF_FILES_PER_PAGE: number = 10;
@@ -84,14 +84,12 @@ export class FileResolver {
     const skip = (pagination - 1) * NUMBER_OF_FILES_PER_PAGE;
 
     const where: Record<string, any> = {};
+
     if (programmingLanguage !== undefined) {
       where.language = { name: programmingLanguage };
     }
-    if (isPublic !== undefined) {
-      where.isPublic = isPublic;
-    }
+
     const files = await FilesModels.find({ where, take, skip });
-    // console.log("files", files);
 
     return files;
   }

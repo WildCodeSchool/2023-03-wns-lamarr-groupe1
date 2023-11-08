@@ -22,16 +22,9 @@ const SearchFilePage = () => {
     variables: { filter: { isPublic: false } },
   });
 
-  console.log(getFilesData);
   const [value, setValue] = useState<string>("");
 
-  const [filteredTextValue, setFilteredTextValue] = useState(
-    "choisir un language"
-  );
-
-  const OnchangeFilterValue = (filterValue: any) => {
-    setFilteredTextValue(filterValue);
-  };
+  const [filteredTextValue, setFilteredTextValue] = useState<string>("");
 
   return (
     <Layout>
@@ -40,14 +33,15 @@ const SearchFilePage = () => {
           <SearchBar
             value={value}
             setValue={setValue}
-            filterValueSelected={OnchangeFilterValue}
+            setFilterValue={setFilteredTextValue}
+            valueFilter={filteredTextValue}
           />
         </div>
         <div className="container-listing-files">
           <GridFileSearch
             files={getFilesData?.getFiles || []}
             value={value}
-            filterValueSelected={OnchangeFilterValue}
+            valueFilter={filteredTextValue}
           />
         </div>
       </div>

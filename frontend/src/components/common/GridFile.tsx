@@ -22,7 +22,7 @@ export type GridFileProps = {
 const GridFile = ({ title, filesCarousel }: GridFileProps) => {
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 600,
     slidesToShow: 4,
     slidesToScroll: 2,
@@ -65,9 +65,8 @@ const GridFile = ({ title, filesCarousel }: GridFileProps) => {
       <div className="container-carousel">
         <Slider {...settings}>
           {filesCarousel.map((file) => (
-            <Link to={`/coding/${file.id}`}>
+            <Link key={file.id} to={`/coding/${file.id}`}>
               <CarouselFile
-                key={file.id}
                 filename={file.filename}
                 content={file.content}
                 createdAt={handleDate(file.createdAt)}
