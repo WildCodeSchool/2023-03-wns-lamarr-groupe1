@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useParams } from "react-router-dom"
 import { INewReportProps } from "utils/interface/INewReport"
-import { faCircleDot } from "@fortawesome/free-regular-svg-icons"
+import { faFileLines } from "@fortawesome/free-regular-svg-icons"
 
 const AddNewReport = () => {
   const [addIssue, { loading }] = useMutation(NEW_REPORT_MUTATION)
@@ -42,6 +42,7 @@ const AddNewReport = () => {
 
   return (
     <div className="report-form">
+      <h4>Signaler ce ficher</h4>
       <div className="container-comment-form">
         <form action="" onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="report-title"> Title</label>
@@ -61,7 +62,7 @@ const AddNewReport = () => {
             <button className="button-form" disabled={loading}>
               <FontAwesomeIcon
                 className="message-icon"
-                icon={faCircleDot}
+                icon={faFileLines}
                 flip="horizontal"
                 size="sm"
               />

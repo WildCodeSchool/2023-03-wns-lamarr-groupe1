@@ -40,11 +40,12 @@ const AddNewIssue = (refecthIssues: refetch) => {
 
   return (
     <div className="comment-form">
+      <h4>Signaler une issue</h4>
       <div className="container-comment-form">
         <form action="" onSubmit={handleSubmit(onSubmit)}>
           <textarea
             id="issue"
-            placeholder="Ecrivez votre commentaire ..."
+            placeholder="Expliquez quel est le bug ..."
             rows={7}
             {...register("issue")}
           ></textarea>

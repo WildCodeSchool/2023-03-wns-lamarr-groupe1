@@ -30,10 +30,6 @@ const App = () => {
     }
   }, [pathname, hash, key])
 
-  // 1. Hook
-  // 2. React Router -> before page load
-  // 3. React HOC Higher Order Component
-
   return (
     <FileProvider>
         <Routes>

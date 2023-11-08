@@ -41,6 +41,7 @@ const AddNewComment = (refecthComments: refetch) => {
 
   return (
     <div className="comment-form">
+      <h4>Laisser un commentaire</h4>
       <div className="container-comment-form">
         <form action="" onSubmit={handleSubmit(onSubmit)}>
             <textarea

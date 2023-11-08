@@ -2,12 +2,15 @@
 .card-comment {
   max-height: 20%;
 
+
   .comment-info-even {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     padding: 1rem;
-    background: #f1f4fb;
+    background: #e7edfa;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: $rounded-md;
   }
   .comment-info-odd {
     display: flex;
@@ -15,6 +18,8 @@
     gap: 1.5rem;
     padding: 1rem;
     background: #e7edfa;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: $rounded-md;
   }
   .Open {
     background-color: rgba(3, 187, 3, 0.5);

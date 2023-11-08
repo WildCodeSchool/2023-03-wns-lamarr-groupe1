@@ -10,7 +10,8 @@ import { IIssuesProps } from "utils/interface/IIssuesProps"
 import {
   faMessage,
   faCircleDot,
-  faRectangleXmark
+  faRectangleXmark,
+  faFileLines
 } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
@@ -21,7 +22,7 @@ type commentsList = {
 }
 const Comments = (props: commentsList) => {
   const [isShow, setIsShow] = useState<boolean>(false)
-  const [type, setType] = useState<string>("")
+  const [type, setType] = useState<string>("closed")
 
   const handleModal = (contentType: string) => {
     if (!isShow) {
@@ -29,10 +30,10 @@ const Comments = (props: commentsList) => {
       setType(contentType)
     }
     if (isShow) {
-      if (!contentType) {
+      if (contentType === "closed") {
         setIsShow(false)
         setTimeout(() => {
-          setType("")
+          setType(contentType)
         }, 100)
       } else {
         setType(contentType)
@@ -47,17 +48,21 @@ const Comments = (props: commentsList) => {
   return (
     <>
       <div className={isShow ? "button-container" : "button-container-hidden"}>
-        {type ? (
+        {type !== "closed" ? (
           <button
-            className={type ? "button-close" : ""}
-            onClick={() => handleModal("")}
+            className={type !== "close" ? "button-close" : ""}
+            onClick={() => handleModal("closed")}
           >
             <FontAwesomeIcon icon={faRectangleXmark} size="xl" />
           </button>
         ) : null}
         <button
           className={
-            type === "comment" ? "button-comment-active" : "button-comment"
+            type === "comment"
+              ? "button-comment-active"
+              : type === "closed"
+              ? "button-comment"
+              : "button-comment-open"
           }
           onClick={() => handleModal("comment")}
         >
@@ -75,11 +80,15 @@ const Comments = (props: commentsList) => {
           }
           onClick={() => handleModal("report")}
         >
-          <FontAwesomeIcon icon={faCircleDot} size="xl" />
+          <FontAwesomeIcon icon={faFileLines} size="xl" />
         </button>
         <div
           id="commentContainer"
-          className={isShow ? "comment-container" : "comment-container-hidden"}
+          className={
+            isShow && type !== "report"
+              ? "comment-container"
+              : "comment-container-hidden"
+          }
         >
           {type === "comment"
             ? props.comments.map((comment, index) => (
