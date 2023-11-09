@@ -62,8 +62,10 @@ export class FilesModels extends BaseEntity {
   }
 
   @Field(() => [IssuesModels])
-  @OneToMany(() => IssuesModels, (issue) => issue.file)
-  issues: IssuesModels[];
+  @OneToMany(() => IssuesModels, (issue) => issue.file, {
+    eager: true
+  })
+  issues: IssuesModels[]
 
   @Field(() => [CommentsModels])
   @OneToMany(() => CommentsModels, (comment) => comment.file, {
@@ -80,8 +82,10 @@ export class FilesModels extends BaseEntity {
   interactions: InteractionsModels[];
 
   @Field(() => UsersModels)
-  @ManyToOne(() => UsersModels, (user) => user.files)
-  user: UsersModels;
+  @ManyToOne(() => UsersModels, (user) => user.files, {
+    eager: true
+  })
+  user: UsersModels
 
   @Field(() => LanguageModels)
   @ManyToOne(() => LanguageModels, (language) => language.files, {

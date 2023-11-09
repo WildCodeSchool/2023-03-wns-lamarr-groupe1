@@ -75,10 +75,8 @@ export class UsersModels extends BaseEntity {
   createdAt!: Date;
 
   @Field(() => [IssuesModels])
-  @OneToMany(() => IssuesModels, (issue) => issue.user, {
-    eager: true,
-  })
-  issues: IssuesModels[];
+  @OneToMany(() => IssuesModels, (issue) => issue.user)
+  issues: IssuesModels[]
 
   @Field(() => [ContactModels])
   @OneToMany(() => ContactModels, (contact) => contact.user, {

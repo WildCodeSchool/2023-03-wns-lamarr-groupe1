@@ -104,6 +104,25 @@ export class FileResolver {
     if (file === null) {
       throw new Error("File not found");
     }
+    file.comments.sort((a, b) => {
+      if (a.updatedAt < b.updatedAt) {
+        return -1
+      }
+      if (a.updatedAt > b.updatedAt) {
+        return 1
+      }
+      return 0
+    })
+
+    file.issues.sort((a, b) => {
+      if (a.updatedAt < b.updatedAt) {
+        return -1
+      }
+      if (a.updatedAt > b.updatedAt) {
+        return 1
+      }
+      return 0
+    })
 
     return file;
   }

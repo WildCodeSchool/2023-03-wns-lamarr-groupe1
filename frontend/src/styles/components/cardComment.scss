@@ -1,0 +1,59 @@
+@import "../../mixins.scss";
+.card-comment {
+  max-height: 20%;
+
+
+  .comment-info-even {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: #e7edfa;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: $rounded-md;
+  }
+  .comment-info-odd {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: #e7edfa;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: $rounded-md;
+  }
+  .Open {
+    background-color: rgba(3, 187, 3, 0.5);
+    border-radius: $rounded-sm;
+    padding: 3px;
+    margin-right: 10px;
+  }
+
+  .Pending {
+    background-color: rgba(255, 166, 0, 0.5);
+    border-radius: $rounded-sm;
+    padding: 3px;
+    margin-right: 10px;
+  }
+  .Close {
+    background-color: rgba(232, 0, 0, 0.606);
+    border-radius: $rounded-sm;
+    padding: 3px;
+    margin-right: 10px;
+  }
+}
+
+.comment-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  font-weight: 600;
+  font-size: small;
+}
+
+.comment-header :first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

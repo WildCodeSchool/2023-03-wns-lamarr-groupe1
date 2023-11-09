@@ -1,4 +1,4 @@
-import { Arg, Mutation, Authorized, Query } from "type-graphql";
+import { Arg, Mutation, Authorized, Query, Ctx } from "type-graphql";
 import { IssuesModels } from "../models/IssuesModels";
 import { IssuesInput } from "../inputs/issues/IssuesInput";
 import { UpdateIssuesInput } from "../inputs/issues/UpdateIssuesInput";
@@ -12,22 +12,22 @@ export class IssuesResolver {
   // Mutation pour ajouter une issue
   @Mutation(() => IssuesModels)
   async addIssue(
-    @Arg("input") { issue, status, userId, fileId }: IssuesInput // On déstructure les propriétés de l'objet IssuesInput
+    @Arg("input") { issue, status, fileId }: IssuesInput, // On déstructure les propriétés de l'objet IssuesInput
+    @Ctx() context: any
   ): Promise<IssuesModels> {
-    // Recherche de l'utilisateur correspondant à l'ID fourni
-    const user = await UsersModels.findOneBy({
-      id: userId,
-    });
-    if (user === null) {
-      throw new Error("User not found");
-    }
-
     // Recherche du fichier correspondant à l'ID fourni
     const file = await FilesModels.findOneBy({
-      id: fileId,
-    });
+      id: fileId
+    })
     if (file === null) {
-      throw new Error("File not found");
+      throw new Error("File not found")
+    }
+    // Recherche de l'utilisateur correspondant à l'ID fourni
+    const user = await UsersModels.findOneBy({
+      id: context.user.id
+    })
+    if (user === null) {
+      throw new Error("User not found")
     }
 
     // Création d'une instance de IssuesModels avec les données fournies
@@ -35,10 +35,10 @@ export class IssuesResolver {
       issue,
       status,
       user,
-      file,
-    }).save();
+      file
+    }).save()
 
-    return issues;
+    return issues
   }
 
   @Authorized()
