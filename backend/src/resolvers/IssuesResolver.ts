@@ -1,11 +1,11 @@
-import { Arg, Mutation, Authorized, Query, Ctx } from "type-graphql";
-import { IssuesModels } from "../models/IssuesModels";
-import { IssuesInput } from "../inputs/issues/IssuesInput";
-import { UpdateIssuesInput } from "../inputs/issues/UpdateIssuesInput";
-import { UsersModels } from "../models/UsersModels";
-import { FilesModels } from "../models/FilesModels";
-import { Equal } from "typeorm";
-import { IssuesType } from "../enums/IssuesType";
+import { Arg, Mutation, Authorized, Query, Ctx } from "type-graphql"
+import { IssuesModels } from "../models/IssuesModels"
+import { IssuesInput } from "../inputs/issues/IssuesInput"
+import { UpdateIssuesInput } from "../inputs/issues/UpdateIssuesInput"
+import { UsersModels } from "../models/UsersModels"
+import { FilesModels } from "../models/FilesModels"
+import { Equal } from "typeorm"
+import { IssuesType } from "../enums/IssuesType"
 
 export class IssuesResolver {
   @Authorized()
@@ -50,26 +50,54 @@ export class IssuesResolver {
     @Ctx() context: any
   ): Promise<IssuesModels> {
     // Recherche de l'issue à mettre à jour en utilisant l'ID fourni
-
-    const issueToUpdate = await IssuesModels.findOneBy({
-      id
+    const issueToUpdate = await IssuesModels.findOne({
+      where: {
+        id
+      },
+      relations: {
+        file: true
+      }
     })
 
     if (issueToUpdate === null) {
       throw new Error("Comment not found")
     }
 
-    if (issueToUpdate.user.id !== context.user.id) {
-      throw new Error("You don't have the rights to modify this file")
+    // on verifie que l'utilisateur courant est le créateur de l'issue
+    if (issueToUpdate.user.id === context.user.id) {
+      // Si oui fusion de toutes les modifications dans l'objet issuesToUpdate
+      if (issue !== undefined) {
+        issueToUpdate.issue = issue
+      }
+
+      if (status !== undefined) {
+        issueToUpdate.status = status
+      }
     }
 
-    // Fusion des modifications dans l'objet issuesToUpdate
-    if (issue !== undefined) {
-      issueToUpdate.issue = issue
-    }
-
-    if (status !== undefined) {
+    if (
+      issueToUpdate.file.user.id === context.user.id &&
+      status !== undefined &&
+      issue === undefined
+    ) {
+      // si l'utlisateur est propriétaire du fichier concerner
+      // on permet uniquement l'édition du statut
       issueToUpdate.status = status
+    } else if (
+      issueToUpdate.file.user.id === context.user.id &&
+      issue !== undefined
+    ) {
+      throw new Error(
+        "You don't have the rights to modify the content of this issue"
+      )
+    }
+
+    if (
+      issueToUpdate.user.id !== context.user.id &&
+      issueToUpdate.file.user.id !== context.user.id
+    ) {
+      // Sinon on lève une exception
+      throw new Error("You don't have the rights to modify this issue")
     }
 
     // Sauvegarde de l'issue mis à jour

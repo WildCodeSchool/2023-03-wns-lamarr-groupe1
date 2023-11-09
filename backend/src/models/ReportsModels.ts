@@ -34,6 +34,8 @@ export class ReportsModels extends BaseEntity {
   file: FilesModels
 
   @Field(() => UsersModels)
-  @ManyToOne(() => UsersModels, (user) => user.reports)
+  @ManyToOne(() => UsersModels, (user) => user.reports, {
+    eager: true
+  })
   user: UsersModels
 }

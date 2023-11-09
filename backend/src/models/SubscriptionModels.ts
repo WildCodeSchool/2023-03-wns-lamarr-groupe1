@@ -3,9 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  CreateDateColumn
+  CreateDateColumn,
+  OneToOne
 } from "typeorm"
 import { Field, ObjectType } from "type-graphql";
+import { UsersModels } from "./UsersModels"
 
 @ObjectType()
 @Entity()
@@ -33,4 +35,8 @@ export class SubscriptionModels extends BaseEntity {
   @Field()
   @Column({ nullable: true })
   duration: string
+
+  @Field(() => UsersModels)
+  @OneToOne(() => UsersModels, (user) => user.subscription)
+  user: UsersModels
 }
