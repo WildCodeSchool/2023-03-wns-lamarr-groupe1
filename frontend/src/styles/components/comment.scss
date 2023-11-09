@@ -1,0 +1,378 @@
+@import "../../mixins.scss";
+.button-container {
+  animation: slidein 0.3s none;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  height: 100%;
+  min-width: 30%;
+  max-width: 30%;
+}
+
+.button-close {
+  height: 50px;
+  width: 30px;
+  border-top-right-radius: $rounded-lg;
+  border: 1px solid #949494;
+  border-left: none;
+  background: #e7edfa;
+  position: absolute;
+  top: 0px;
+  right: -30px;
+  cursor: pointer;
+  padding: 4px;
+  color: #5340a9;
+  &:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(133, 115, 215, 0.85),
+      #6351b4,
+      #5340a9,
+      #6351b4,
+      rgba(133, 115, 215, 0.85)
+    );
+    color: #fff;
+  }
+}
+.button-comment-open {
+  height: 100px;
+  width: 30px;
+  border: 1px solid #949494;
+  border-left: none;
+  background: #e7edfa;
+  position: absolute;
+  top: 49px;
+  right: -30px;
+  cursor: pointer;
+  padding: 4px;
+  color: #5340a9;
+  &:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(133, 115, 215, 0.85),
+      #6351b4,
+      #5340a9,
+      #6351b4,
+      rgba(133, 115, 215, 0.85)
+    );
+    color: #fff;
+  }
+}
+.button-comment {
+  height: 100px;
+  width: 30px;
+  border-top-right-radius: $rounded-full;
+  border: 1px solid #949494;
+  border-left: none;
+  background: #e7edfa;
+  position: absolute;
+  top: 49px;
+  right: -30px;
+  cursor: pointer;
+  padding: 4px;
+  color: #5340a9;
+  &:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(133, 115, 215, 0.85),
+      #6351b4,
+      #5340a9,
+      #6351b4,
+      rgba(133, 115, 215, 0.85)
+    );
+    color: #fff;
+  }
+}
+
+.button-comment-active {
+  height: 100px;
+  width: 30px;
+  border: 1px solid #949494;
+  border-bottom-color: rgba(107, 86, 202, 0.85);
+  background: linear-gradient(
+    to bottom,
+    rgba(133, 115, 215, 0.85),
+    #6351b4,
+    #5340a9,
+    #6351b4,
+    rgba(133, 115, 215, 0.85)
+  );
+  border-left: none;
+  position: absolute;
+  top: 49px;
+  right: -30px;
+  cursor: pointer;
+  padding: 4px;
+  color: #fff;
+}
+
+.button-issue {
+  height: 100px;
+  width: 30px;
+  border: 1px solid #949494;
+  border-left: none;
+  background: #e7edfa;
+  position: absolute;
+  top: 148px;
+  right: -30px;
+  cursor: pointer;
+  padding: 4px;
+  color: #5340a9;
+  &:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(133, 115, 215, 0.85),
+      #6351b4,
+      #5340a9,
+      #6351b4,
+      rgba(133, 115, 215, 0.85)
+    );
+    color: #fff;
+  }
+}
+
+.button-issue-active {
+  height: 100px;
+  width: 30px;
+  border: 1px solid #949494;
+  border-left: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(133, 115, 215, 0.85),
+    #6351b4,
+    #5340a9,
+    #6351b4,
+    rgba(133, 115, 215, 0.85)
+  );
+  position: absolute;
+  top: 148px;
+  right: -30px;
+  cursor: pointer;
+  padding: 4px;
+  color: #fff;
+}
+
+.button-report {
+  height: 100px;
+  width: 30px;
+  border-bottom-right-radius: $rounded-full;
+  border: 1px solid #949494;
+  border-left: none;
+  background: #e7edfa;
+  position: absolute;
+  top: 247px;
+  right: -30px;
+  cursor: pointer;
+  padding: 4px;
+  color: #5340a9;
+  &:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(133, 115, 215, 0.85),
+      #6351b4,
+      #5340a9,
+      #6351b4,
+      rgba(133, 115, 215, 0.85)
+    );
+    color: #fff;
+  }
+}
+
+.button-report-active {
+  height: 100px;
+  width: 30px;
+  border-bottom-right-radius: $rounded-full;
+  border: 1px solid #949494;
+  border-left: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(133, 115, 215, 0.85),
+    #6351b4,
+    #5340a9,
+    #6351b4,
+    rgba(133, 115, 215, 0.85)
+  );
+  position: absolute;
+  top: 247px;
+  right: -30px;
+  cursor: pointer;
+  padding: 4px;
+  color: #fff;
+}
+
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #949494;
+  border-bottom: none;
+  overflow: auto;
+  max-height: 70%;
+  box-shadow: 10px 4px 20px #b0b0b0;
+}
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  border-bottom-right-radius: $rounded-md;
+  min-height: 20%;
+  height: auto;
+  border: 1px solid #949494;
+  border-top-color: #898989;
+  border-top-width: 1px;
+  background: #e7edfa;
+  padding: 1rem;
+  box-shadow: 10px 4px 20px #b0b0b0;
+  gap: 10px;
+  h4 {
+    font-weight: 600;
+    font-size: medium;
+  }
+}
+
+.report-form {
+  display: flex;
+  flex-direction: column;
+  border-bottom-right-radius: $rounded-md;
+  justify-content: start;
+  align-items: center;
+  min-height: 40%;
+  border: 1px solid #949494;
+  background: #e7edfa;
+  padding: 1rem;
+  box-shadow: 10px 4px 20px #b0b0b0;
+  gap: 20px;
+  h4 {
+    font-weight: 600;
+    font-size: larger;
+  }
+}
+
+.container-comment-form {
+  height: 100%;
+  width: 100%;
+  form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 10px;
+    label {
+      font-weight: 600;
+      font-size: medium;
+    }
+    #report-title {
+      border: 1px solid #5340a9;
+      border-radius: $rounded-md;
+      padding: 10px;
+      background: white;
+    }
+    textarea {
+      border: none;
+      resize: none;
+      border: 1px solid #5340a9;
+      border-radius: $rounded-md;
+      padding: 10px;
+      background: white;
+    }
+
+    .button-container-form {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      .button-form {
+        display: flex;
+        align-self: flex-start;
+        align-items: center;
+        padding: 7px 12px;
+        font-size: 16px;
+        border-radius: $rounded-md;
+        border: 1px solid #5340a9;
+        background-color: #fff;
+        color: #5340a9;
+        font-weight: 600;
+        transition: 0.3s ease-in-out;
+        gap: 5px;
+        cursor: pointer;
+        &:hover {
+          background-color: #5340a9;
+          color: #fff;
+          border: 1px solid #fff;
+        }
+      }
+    }
+  }
+}
+
+// animation
+
+.comment-container-hidden {
+  animation: slideout 0.5s forwards;
+  overflow: auto;
+  border-bottom: none;
+  border-top-left-radius: $rounded-md;
+  max-height: 75%;
+}
+
+.button-container-hidden {
+  animation: slideoutButton 0.3s forwards;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  height: 100%;
+  max-width: 30%;
+}
+
+@keyframes slidein {
+  0% {
+    transform: translate(-100%, 0%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+
+@keyframes slideout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0%, 0%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideoutButton {
+  0% {
+    transform: translate(0%, 0%);
+  }
+  100% {
+    transform: translate(-100%, 0%);
+  }
+}
+
+@include breakpoint("screen") {
+  .button-container {
+    max-width: 50%;
+  }
+}
+
+@include breakpoint("large-tablet") {
+  .button-container {
+    max-width: 50%;
+  }
+}
+
+@include breakpoint("tablet") {
+  .button-container {
+    max-width: 70%;
+  }
+}
+
+@include breakpoint("phone") {
+  .button-container {
+    max-width: 90%;
+  }
+}

@@ -19,6 +19,10 @@ export class ReportsModels extends BaseEntity {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
+  title?: string
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   comment?: string
 
   @Field()
@@ -30,8 +34,6 @@ export class ReportsModels extends BaseEntity {
   file: FilesModels
 
   @Field(() => UsersModels)
-  @ManyToOne(() => UsersModels, (user) => user.reports, {
-    eager: true
-  })
+  @ManyToOne(() => UsersModels, (user) => user.reports)
   user: UsersModels
 }

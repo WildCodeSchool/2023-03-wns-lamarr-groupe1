@@ -23,9 +23,11 @@ export class IssuesModels extends BaseEntity {
   @Column({ nullable: true })
   issue?: string
 
+  @Field()
   @CreateDateColumn()
   createdAt!: Date
 
+  @Field()
   @UpdateDateColumn()
   updatedAt!: Date
 

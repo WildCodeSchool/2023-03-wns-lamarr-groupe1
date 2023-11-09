@@ -1,41 +1,42 @@
-import { Arg, Mutation, Authorized, Query } from "type-graphql";
-import { ReportsModels } from "../models/ReportsModels";
-import { ReportsInput } from "../inputs/reports/ReportsInput";
-import { UpdateReportsInput } from "../inputs/reports/UpdateReportsInput";
-import { UsersModels } from "../models/UsersModels";
-import { FilesModels } from "../models/FilesModels";
+import { Arg, Mutation, Authorized, Query, Ctx } from "type-graphql"
+import { ReportsModels } from "../models/ReportsModels"
+import { ReportsInput } from "../inputs/reports/ReportsInput"
+import { UpdateReportsInput } from "../inputs/reports/UpdateReportsInput"
+import { UsersModels } from "../models/UsersModels"
+import { FilesModels } from "../models/FilesModels"
 
 export class ReportsResolver {
-
-      // Mutation pour ajouter un report
-    @Authorized()
+  // Mutation pour ajouter un report
+  @Authorized()
   @Mutation(() => ReportsModels)
   async addReports(
-    @Arg("input") { comment, userId, fileId }: ReportsInput // On déstructure les propriétés de l'objet ReportsInput
+    @Arg("input") { comment, title, fileId }: ReportsInput, // On déstructure les propriétés de l'objet ReportsInput
+    @Ctx() context: any
   ): Promise<ReportsModels> {
     // Recherche de l'utilisateur correspondant à l'ID fourni
-    const user = await UsersModels.findOneBy({ id: userId });
+    const user = await UsersModels.findOneBy({ id: context.user.id })
     if (user === null) {
-      throw new Error("User not found");
+      throw new Error("User not found")
     }
 
     // Recherche du fichier correspondant à l'ID fourni
-    const file = await FilesModels.findOneBy({ id: fileId });
+    const file = await FilesModels.findOneBy({ id: fileId })
     if (file === null) {
-      throw new Error("File not found");
+      throw new Error("File not found")
     }
 
     // Création d'une instance de ReportsModels avec les données fournies
     const report = await ReportsModels.create({
-        comment,
-        user,
-        file,
-      }).save();
-  
-      return report;
+      comment,
+      title,
+      user,
+      file
+    }).save()
+
+    return report
   }
 
-    // Mutation pour mettre à jour un report
+  // Mutation pour mettre à jour un report
   @Authorized()
   @Mutation(() => ReportsModels)
   async updateReport(
@@ -44,58 +45,60 @@ export class ReportsResolver {
   ): Promise<ReportsModels> {
     // Recherche du commentaire à mettre à jour en utilisant l'ID fourni
     const reportToUpdate = await ReportsModels.findOneBy({
-      id,
-    });
+      id
+    })
 
     if (reportToUpdate === null) {
-      throw new Error("Comment not found");
+      throw new Error("Comment not found")
     }
 
     // Fusion des modifications dans l'objet reportToUpdate
-    reportToUpdate.comment = comment;
+    reportToUpdate.comment = comment
 
     // Sauvegarde du commentaire mis à jour
-    const updatedReport = await reportToUpdate.save();
+    const updatedReport = await reportToUpdate.save()
 
-    return updatedReport;
+    return updatedReport
   }
 
   // Query pour obtenir tous les reports
   @Authorized()
   @Query(() => [ReportsModels])
   async getReports(): Promise<ReportsModels[]> {
-    const comments = await ReportsModels.find();
-    return comments;
+    const comments = await ReportsModels.find()
+    return comments
   }
 
   // Query pour obtenir un commentaire par ID
   @Authorized()
   @Query(() => ReportsModels)
-  async getReportbyId(@Arg("commentId") commentId: number): Promise<ReportsModels> {
+  async getReportbyId(
+    @Arg("commentId") commentId: number
+  ): Promise<ReportsModels> {
     // Recherche du commentaire en utilisant l'ID fourni
     const comment = await ReportsModels.findOne({
-      where: { id: commentId },
-    });
+      where: { id: commentId }
+    })
     if (comment === null) {
-      throw new Error("Comments not found");
+      throw new Error("Comments not found")
     }
-    return comment;
+    return comment
   }
 
-    // Mutation pour supprimer un commentaire
+  // Mutation pour supprimer un commentaire
   @Authorized()
   @Mutation(() => Boolean)
   async deleteReports(@Arg("CommentsId") CommentId: number): Promise<boolean> {
     // Recherche du commentaire à supprimer en utilisant l'ID fourni
     const commentToDelete = await ReportsModels.findOne({
-      where: { id: CommentId },
-    });
+      where: { id: CommentId }
+    })
     if (!commentToDelete) {
-      throw new Error("Comments not found");
+      throw new Error("Comments not found")
     }
 
     // Suppression du commentaire
-    await commentToDelete.remove();
-    return true;
+    await commentToDelete.remove()
+    return true
   }
 }
