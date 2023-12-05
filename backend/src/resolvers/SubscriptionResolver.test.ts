@@ -2,6 +2,9 @@ import { testDataSource } from "../Utils/testDataSource"
 import { callGraphQL } from "../Utils/callGraphQL"
 import { config } from "dotenv"
 import { SubscriptionModels } from "../models/SubscriptionModels"
+import { faker } from "@faker-js/faker"
+import { UsersModels } from "../models/UsersModels"
+import * as argon2 from "argon2"
 
 config()
 
@@ -36,18 +39,42 @@ describe("SubscriptionResolver", () => {
     })
 
     it("should update subscription and return it", async () => {
-      const id = 1
       const type = "free"
 
-      await SubscriptionModels.create({
+      const email = faker.internet.email()
+      const pass = faker.internet.password({
+        length: 8,
+        prefix: "@A"
+      })
+      const password = await argon2.hash(pass)
+      const username = faker.internet.userName()
+
+      const subscription = await SubscriptionModels.create({
         type: "expert",
         duration: "Monthly",
         status: "Active",
         subscribedAt: new Date(),
         subscriptionEndedAt: new Date()
       }).save()
-      const response = await callGraphQL({
+
+      await UsersModels.create({
+        email,
+        password,
+        username,
+        subscription
+      }).save()
+
+      const token = await callGraphQL({
         query: `
+          query Query($password: String!, $email: String!) {
+            signIn(password: $password, email: $email)
+          }
+          `,
+        variables: { email, password: pass }
+      })
+      const response = await callGraphQL(
+        {
+          query: `
             mutation Mutation($update: UpdateSubscriptionInput!, $updateSubscriptionId: Float!) {
               updateSubscription(update: $update, id: $updateSubscriptionId) {
                 id
@@ -55,8 +82,10 @@ describe("SubscriptionResolver", () => {
             }
         `,
 
-        variables: { update: { type }, updateSubscriptionId: id }
-      })
+          variables: { update: { type }, updateSubscriptionId: subscription.id }
+        },
+        token?.data?.signIn
+      )
 
       expect(response.errors).not.toBeTruthy()
       expect(response.data).toBeTruthy()
@@ -64,14 +93,13 @@ describe("SubscriptionResolver", () => {
     })
 
     it("Should return subscription", async () => {
-      const id = 2
       const type = "Expert"
       const duration = "Monthly"
       const status = "Active"
       const subscribedAt = new Date()
       const subscriptionEndedAt = new Date()
 
-      await SubscriptionModels.create({
+      const subscription = await SubscriptionModels.create({
         type,
         duration,
         status,
@@ -89,7 +117,7 @@ describe("SubscriptionResolver", () => {
             }
         `,
 
-        variables: { subscriptionId: id }
+        variables: { subscriptionId: subscription.id }
       })
 
       expect(response.errors).not.toBeTruthy()
@@ -105,7 +133,7 @@ describe("SubscriptionResolver", () => {
     })
 
     it("should throw error, if subscription is not found", async () => {
-      const id = 3
+      const id = 36789875
 
       const response = await callGraphQL({
         query: `

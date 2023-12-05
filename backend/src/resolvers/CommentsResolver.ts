@@ -44,7 +44,8 @@ export class CommentsResolver {
   @Mutation(() => CommentsModels)
   async updateComments(
     @Arg("id") id: number,
-    @Arg("update") { comment }: UpdateCommentsInput // On déstructure la propriété "comment" de l'objet UpdateCommentsInput
+    @Arg("update") { comment }: UpdateCommentsInput, // On déstructure la propriété "comment" de l'objet UpdateCommentsInput
+    @Ctx() context: any
   ): Promise<CommentsModels> {
     // Recherche du commentaire à mettre à jour en utilisant l'ID fourni
     const commentToUpdate = await CommentsModels.findOneBy({
@@ -55,8 +56,11 @@ export class CommentsResolver {
       throw new Error("Comment not found")
     }
 
-    // Fusion des modifications dans l'objet commentToUpdate
-    commentToUpdate.comment = comment
+    if (commentToUpdate.user.id !== context.user.id) {
+      throw new Error("You don't have the rights to modify this comment")
+    }
+      // Fusion des modifications dans l'objet commentToUpdate
+      commentToUpdate.comment = comment
 
     // Sauvegarde du commentaire mis à jour
     const updatedComments = await commentToUpdate.save()

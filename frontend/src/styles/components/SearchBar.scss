@@ -8,18 +8,18 @@
 
   input {
     width: 100%;
-    position: absolute;
     z-index: 0;
     padding: 15px 10px;
     outline: none;
     border: 1px solid $primary;
-    border-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px;
     @include breakpoint("<screen") {
       padding: 15px 0px;
     }
   }
   select {
-    z-index: 999;
+    z-index: 1;
     background: $primary;
     color: $white;
     border: none;
@@ -45,7 +45,7 @@
     align-items: center;
     padding: 11px 25px;
     position: relative;
-    z-index: 10;
+    z-index: 1;
 
     @include breakpoint("phone") {
       padding: 11px 20px;

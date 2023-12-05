@@ -1,11 +1,17 @@
-import { Arg, Mutation, Authorized, Query } from "type-graphql";
-import { LanguageModels } from "../models/LanguageModels";
-import { LanguageInput } from "../inputs/LanguageInput";
+import { Arg, Mutation, Authorized, Query, Ctx } from "type-graphql"
+import { LanguageModels } from "../models/LanguageModels"
+import { LanguageInput } from "../inputs/LanguageInput"
 
 export class LanguageResolver {
   @Authorized()
   @Mutation(() => LanguageModels)
-  async addLanguage(@Arg("name") name: string): Promise<LanguageModels> {
+  async addLanguage(
+    @Arg("name") name: string,
+    @Ctx() context: any
+  ): Promise<LanguageModels> {
+    if (context.user.role !== "admin") {
+      throw new Error("You must be admin to add a new language")
+    }
     const language = await LanguageModels.create({
       name
     }).save()
@@ -17,8 +23,12 @@ export class LanguageResolver {
   async updateLanguage(
     @Arg("id") id: number,
     @Arg("name")
-    { name }: LanguageInput
+    { name }: LanguageInput,
+    @Ctx() context: any
   ): Promise<LanguageModels> {
+    if (context.user.role !== "admin") {
+      throw new Error("You must be admin to edit the language")
+    }
     const languageToUpdate = await LanguageModels.findOneBy({
       id
     })
