@@ -43,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) => {
 						/>
 					</li>
 					<li>
-						<Link to={"/#Accueil"}>Accueil</Link>
+						<Link to="/">Accueil</Link>
 					</li>
 					<li>
 						<Link to={"/#aboutUs"}>A propos de nous</Link>
@@ -55,6 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated }) => {
 				{isAuthenticated ? (
 					<div>
 						<div className="account-container">
+              
 							<span>
 								<button onClick={HandleToggleDropdown}>Mon compte </button>
 							</span>
