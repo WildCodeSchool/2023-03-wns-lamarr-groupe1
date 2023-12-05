@@ -12,6 +12,7 @@ export const GET_FILE_QUERY = gql`
         id
         user {
           username
+          id
         }
       }
       issues {
@@ -22,6 +23,9 @@ export const GET_FILE_QUERY = gql`
         user {
           username
         }
+      }
+      user {
+        username
       }
     }
   }

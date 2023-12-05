@@ -131,7 +131,7 @@ export class AuthResolver {
     const user: UsersModels = context.user;
     const where: Record<string, any> = { user: { id: user.id } };
 
-    if (isPublic != undefined) {
+    if (isPublic !== undefined) {
       where.isPublic = isPublic;
     }
 

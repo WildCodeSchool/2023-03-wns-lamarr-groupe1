@@ -15,10 +15,25 @@ import {
 } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
+interface Fileinterface {
+  id: number;
+  filename: string;
+  content: string;
+  createdAt: string;
+  image: string;
+  isPublic: boolean;
+};
+
+interface userinterface {
+  username: string
+  files: Fileinterface[]
+}
+
 type commentsList = {
   comments: ICommentsProps[]
   issues: IIssuesProps[]
   refecthData: () => void
+  user: userinterface
 }
 const Comments = (props: commentsList) => {
   const [isShow, setIsShow] = useState<boolean>(false)
@@ -97,7 +112,11 @@ const Comments = (props: commentsList) => {
                   key={comment.id}
                   comment={comment.comment}
                   updatedAt={comment.updatedAt}
-                  username={comment.user.username}
+                username={comment.user.username}
+                
+                refecthComments={props.refecthData}
+                currentUserName={props.user.username}
+                  id={comment.id}
                 />
               ))
             : type === "issue"
@@ -109,6 +128,9 @@ const Comments = (props: commentsList) => {
                   updatedAt={issue.updatedAt}
                   username={issue.user.username}
                   status={issue.status}
+                  id={issue.id}
+                refecthIssues={props.refecthData}
+                currentUserName={props.user.username}
                 />
               ))
             : null}

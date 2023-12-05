@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom"
 import { SAVE_CODE } from "graphql/mutations/SAVE_CODE"
 import AuthenticatedPage from "utils/hoc/authenticatedPage"
 import Comments from "components/common/comments/CommentsList"
+import {useGetProfile} from "utils/hook/getProfile";
 import "styles/Coding.scss"
 
 const CodingPage = () => {
@@ -22,6 +23,7 @@ const CodingPage = () => {
     fileId = parseInt(id)
   }
   const { data, refetch } = useQuery(GET_FILE_QUERY, { variables: { fileId } })
+  const profile = useGetProfile()
 
   useEffect(() => {
     if (!data) return
@@ -101,6 +103,7 @@ const CodingPage = () => {
           comments={comments}
           issues={issues}
           refecthData={refecthData}
+          user={profile}
         />
         <div>
           <button onClick={handleRunCode} disabled={loading ? true : false}>

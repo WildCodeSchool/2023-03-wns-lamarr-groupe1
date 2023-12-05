@@ -23,6 +23,7 @@ import { SubscriptionModels } from "./SubscriptionModels";
 @ObjectType()
 @Entity()
 export class UsersModels extends BaseEntity {
+  @Field()
   @PrimaryGeneratedColumn()
   id!: number;
 

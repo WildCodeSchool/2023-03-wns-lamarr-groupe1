@@ -4,5 +4,6 @@ export interface ICommentsProps {
   updatedAt: string
   user: {
     username: string
+    id: Number
   }
 }
