@@ -13,8 +13,5 @@ import { InteractionType } from "../../enums/InteractionType";
 
     @Field()
     fileId!: number;
-
-    @Field()
-    userId!: number;
   }
   

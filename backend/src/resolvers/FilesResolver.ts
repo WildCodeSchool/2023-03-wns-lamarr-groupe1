@@ -50,7 +50,8 @@ export class FileResolver {
   async updateFile(
     @Arg("id") id: number,
     @Arg("update")
-    { filename, content, isPublic, nbOfReport, nbOfDownload }: UpdateFileInput
+    { filename, content, isPublic, nbOfReport, nbOfDownload }: UpdateFileInput,
+    @Ctx() context: any
   ): Promise<FilesModels> {
     // récupérer le fichier a update
     const fileToUpdate = await FilesModels.findOneBy({
@@ -58,6 +59,10 @@ export class FileResolver {
     });
     if (fileToUpdate === null) {
       throw new Error("File not found");
+    }
+
+    if (fileToUpdate.user.id !== context.user.id) {
+      throw new Error("You don't have the rights to modify this file")
     }
 
     // update les data envoyer
