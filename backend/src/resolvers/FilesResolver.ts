@@ -73,7 +73,6 @@ export class FileResolver {
   }
 
   // Query pour recuperer tous les fichier
-  @Authorized()
   @Query(() => [FilesModels])
   async getFiles(
     @Arg("filter") { programmingLanguage, page }: GetFilesQuery

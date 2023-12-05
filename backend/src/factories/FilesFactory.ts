@@ -9,7 +9,7 @@ export const FilesFactory = setSeederFactory(FilesModels, async (faker: Faker) =
   file.filename = faker.system.fileName();
   file.content = faker.lorem.lines();
   file.user = { id: faker.number.int({ min: 1, max: 10 })} as UsersModels;
-  file.language = { id: faker.number.int({ min: 1, max: 5 })} as LanguageModels;
+  file.language = { id: faker.number.int({ min: 1, max: 1 })} as LanguageModels;
   file.isPublic = faker.datatype.boolean();
 
   return file
