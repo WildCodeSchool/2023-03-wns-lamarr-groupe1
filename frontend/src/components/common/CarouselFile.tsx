@@ -1,6 +1,5 @@
 import React from "react";
 import ImageCode from "assets/img/our_project.png";
-
 interface IFileData {
   id?: number;
   filename: string;
@@ -8,6 +7,7 @@ interface IFileData {
   createdAt: string;
   image?: string;
   isPublic: boolean;
+  language: string;
 }
 const CarouselFile = (fileInfo: IFileData) => {
   return (
@@ -18,6 +18,7 @@ const CarouselFile = (fileInfo: IFileData) => {
       <div className="content-info">
         <h4>{fileInfo.filename}</h4>
         <p>{fileInfo.createdAt}</p>
+        <p className="language">{fileInfo.language}</p>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsNumber } from 'class-validator'
+import { IsOptional, IsString, IsNumber, IsBoolean } from "class-validator";
 import { Field, InputType } from "type-graphql";
 
 @InputType()
@@ -12,4 +12,9 @@ export class GetFilesQuery {
   @IsOptional()
   @IsNumber()
   page?: number;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsBoolean()
+  isPublic?: boolean;
 }

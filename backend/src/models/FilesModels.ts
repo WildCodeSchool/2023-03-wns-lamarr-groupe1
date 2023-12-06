@@ -7,84 +7,89 @@ import {
   ManyToOne,
   BeforeInsert,
   CreateDateColumn,
-  UpdateDateColumn
-} from "typeorm"
-import { Field, ObjectType } from "type-graphql"
-import { IssuesModels } from "./IssuesModels"
-import { CommentsModels } from "./CommentsModels"
-import { ReportsModels } from "./ReportsModels"
-import { InteractionsModels } from "./InteractionsModels"
-import { UsersModels } from "./UsersModels"
-import { LanguageModels } from "./LanguageModels"
+  UpdateDateColumn,
+} from "typeorm";
+import { Field, ObjectType } from "type-graphql";
+import { IssuesModels } from "./IssuesModels";
+import { CommentsModels } from "./CommentsModels";
+import { ReportsModels } from "./ReportsModels";
+import { InteractionsModels } from "./InteractionsModels";
+import { UsersModels } from "./UsersModels";
+import { LanguageModels } from "./LanguageModels";
 
 @ObjectType()
 @Entity()
 export class FilesModels extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Field()
   @Column()
-  filename!: string
+  filename!: string;
 
   @Field()
   @Column({ nullable: true })
-  content: string
+  content: string;
 
   @Field()
   @Column()
-  isPublic!: boolean
+  isPublic!: boolean;
 
+  @Field()
   @CreateDateColumn()
-  createdAt!: Date
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt!: Date
+  updatedAt!: Date;
 
   @Field()
   @Column()
-  nbOfReport: number
+  nbOfReport: number;
 
   @BeforeInsert()
   setDefaultNbOfReport(): void {
-    this.nbOfReport = 0
+    this.nbOfReport = 0;
   }
 
   @Field()
   @Column()
-  nbOfDownload: number
+  nbOfDownload: number;
 
   @BeforeInsert()
   setDefaultNbOfDownload(): void {
-    this.nbOfDownload = 0
+    this.nbOfDownload = 0;
   }
 
   @Field(() => [IssuesModels])
-  @OneToMany(() => IssuesModels, (issue) => issue.file)
+  @OneToMany(() => IssuesModels, (issue) => issue.file, {
+    eager: true
+  })
   issues: IssuesModels[]
 
   @Field(() => [CommentsModels])
   @OneToMany(() => CommentsModels, (comment) => comment.file, {
-    eager: true
+    eager: true,
   })
-  comments: CommentsModels[]
+  comments: CommentsModels[];
 
   @Field(() => [ReportsModels])
   @OneToMany(() => ReportsModels, (report) => report.file)
-  reports: ReportsModels[]
+  reports: ReportsModels[];
 
   @Field(() => [InteractionsModels])
   @OneToMany(() => InteractionsModels, (interaction) => interaction.file)
-  interactions: InteractionsModels[]
+  interactions: InteractionsModels[];
 
   @Field(() => UsersModels)
-  @ManyToOne(() => UsersModels, (user) => user.files)
+  @ManyToOne(() => UsersModels, (user) => user.files, {
+    eager: true
+  })
   user: UsersModels
 
   @Field(() => LanguageModels)
   @ManyToOne(() => LanguageModels, (language) => language.files, {
-    eager: true
+    eager: true,
   })
-  language: LanguageModels
+  language: LanguageModels;
 }

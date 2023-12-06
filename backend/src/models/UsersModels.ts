@@ -23,6 +23,7 @@ import { SubscriptionModels } from "./SubscriptionModels";
 @ObjectType()
 @Entity()
 export class UsersModels extends BaseEntity {
+  @Field()
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -75,10 +76,8 @@ export class UsersModels extends BaseEntity {
   createdAt!: Date;
 
   @Field(() => [IssuesModels])
-  @OneToMany(() => IssuesModels, (issue) => issue.user, {
-    eager: true,
-  })
-  issues: IssuesModels[];
+  @OneToMany(() => IssuesModels, (issue) => issue.user)
+  issues: IssuesModels[]
 
   @Field(() => [ContactModels])
   @OneToMany(() => ContactModels, (contact) => contact.user)
@@ -93,8 +92,10 @@ export class UsersModels extends BaseEntity {
   reports: ReportsModels[];
 
   @Field(() => [InteractionsModels])
-  @OneToMany(() => InteractionsModels, (interaction) => interaction.user)
-  interactions: InteractionsModels[];
+  @OneToMany(() => InteractionsModels, (interaction) => interaction.user, {
+    eager: true
+  })
+  interactions: InteractionsModels[]
 
   @Field(() => [FilesModels])
   @OneToMany(() => FilesModels, (file) => file.user)

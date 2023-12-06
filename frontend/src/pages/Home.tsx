@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Layout from "components/common/layouts/Layout";
 import HomePage from "components/common/HomePage";
 import AboutUs from "components/common/AboutUs";
