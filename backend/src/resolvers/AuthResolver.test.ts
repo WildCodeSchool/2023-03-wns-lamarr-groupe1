@@ -14,8 +14,39 @@ describe("AuthResolver", () => {
   });
 
   describe("signUp", () => {
+    it('should return property "signUp" if every variable are correct', async () => {
+			const email = "test.test@gmail.com";
+			const password = faker.internet.password({
+				length: 8,
+				prefix: "@A",
+			});
+			const username = "test1";
+			const firstname = faker.person.firstName();
+			const lastname = faker.person.lastName();
+			const type = "free";
+			const response = await callGraphQL({
+				query: `
+            mutation Mutation($input: SignUpInput!) {
+                signUp(input: $input)
+            }
+        `,
+
+				variables: {
+					input: { email, password, username, firstname, lastname, type },
+				},
+			});
+
+			expect(response.errors).not.toBeTruthy();
+			expect(response.data).toBeTruthy();
+			expect(response.data?.signUp).toBeTruthy();
+			// Test a JWT token is returned
+			expect(typeof response.data?.signUp).toBe("string");
+			expect(response.data?.signUp.length).toBeGreaterThan(10);
+			expect(response.data?.signUp.split(".").length).toBe(3);
+    });
+    
     it("should throw error, if email is already used", async () => {
-      const email = faker.internet.email();
+      const email = "test.test@gmail.com";
       const password = faker.internet.password({
         length: 8,
         prefix: '@A'
@@ -23,12 +54,6 @@ describe("AuthResolver", () => {
       const username = faker.internet.userName();
       const type = "free"
 
-      await UsersModels.create({
-        username,
-        password,
-        email,
-      }).save();
-      const name = faker.internet.userName();
       const response = await callGraphQL({
         query: `
             mutation Mutation($input: SignUpInput!) {
@@ -36,7 +61,7 @@ describe("AuthResolver", () => {
             }
         `,
 
-        variables: { input: { username: name, email, password, type } }
+        variables: { input: { username, email, password, type } }
       })
 
       expect(response.errors).toBeTruthy();
@@ -56,15 +81,8 @@ describe("AuthResolver", () => {
         length: 8,
         prefix: '@A'
       });      
-      const username = faker.internet.userName();
+      const username = "test1";
       const type = "free"
-
-      await UsersModels.create({
-        username,
-        password,
-        email,
-      }).save();
-      const mail = faker.internet.email();
       const response = await callGraphQL({
         query: `
             mutation Mutation($input: SignUpInput!) {
@@ -72,7 +90,7 @@ describe("AuthResolver", () => {
             }
         `,
 
-        variables: { input: { username, email: mail, password, type } }
+        variables: { input: { username, email, password, type } }
       })
 
       expect(response.errors).toBeTruthy();
@@ -113,36 +131,7 @@ describe("AuthResolver", () => {
       expect(response.data?.signUp.split(".").length).toBe(3);
     });
 
-    it('should return property "signUp" if every variable are correct', async () => {
-      const email = faker.internet.email();
-      const password = faker.internet.password({
-        length: 8,
-        prefix: '@A'
-      });
-      const username = faker.internet.userName();
-      const firstname = faker.person.firstName();
-      const lastname = faker.person.lastName();
-      const type = "free"
-      const response = await callGraphQL({
-        query: `
-            mutation Mutation($input: SignUpInput!) {
-                signUp(input: $input)
-            }
-        `,
-
-        variables: {
-          input: { email, password, username, firstname, lastname, type }
-        }
-      })
-
-      expect(response.errors).not.toBeTruthy();
-      expect(response.data).toBeTruthy();
-      expect(response.data?.signUp).toBeTruthy();
-      // Test a JWT token is returned
-      expect(typeof response.data?.signUp).toBe("string");
-      expect(response.data?.signUp.length).toBeGreaterThan(10);
-      expect(response.data?.signUp.split(".").length).toBe(3);
-    });
+    
   });
 
   describe("signIn", () => {
