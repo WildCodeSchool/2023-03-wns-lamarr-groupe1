@@ -12,6 +12,9 @@ export const GET_FILES_QUERY = gql`
 			}
 			interactions {
 				type
+				user {
+					username
+				}
 			}
 		}
 	}

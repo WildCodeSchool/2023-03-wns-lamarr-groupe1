@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { ListingFile } from "./ListingFile";
 import { handleDate } from "utils/DateFormat";
+import AddNewInteraction from "./form/FormAddInteraction";
+import { useGetProfile } from "utils/hook/getProfile";
 export type GridFileProps = {
 	files: Array<{
 		id: number;
@@ -10,6 +12,7 @@ export type GridFileProps = {
 		isPublic: boolean;
 		interactions: Array<{
 			type: string;
+			user: { username: string };
 		}>;
 		language: {
 			name: string;
@@ -17,9 +20,15 @@ export type GridFileProps = {
 	}>;
 	value: string;
 	valueFilter: string;
-	refetch: () => void
+	refetch: () => void;
 };
-const GridFileSearch = ({ files, value, valueFilter, refetch }: GridFileProps) => {
+const GridFileSearch = ({
+	files,
+	value,
+	valueFilter,
+	refetch,
+}: GridFileProps) => {
+	const profile = useGetProfile();
 	const handleString = (s: string) => {
 		var r = s.toLowerCase();
 		r = r.replace(new RegExp(/\s/g), "");
@@ -60,16 +69,21 @@ const GridFileSearch = ({ files, value, valueFilter, refetch }: GridFileProps) =
 						  handleString(element.language.name).includes(handleString(value))
 				)
 				.map((file) => (
-					<div className="card-container">
-            <ListingFile
-              id={file.id}
-							filename={file.filename}
-							content={file.content}
-							createdAt={handleDate(file.createdAt)}
-							isPublic={file.isPublic}
-							language={file.language.name}
-							interactions={file?.interactions}
-              refetch={refetch}
+					<div className="main-card">
+						<div className="card-container">
+							<ListingFile
+								filename={file.filename}
+								content={file.content}
+								createdAt={handleDate(file.createdAt)}
+								isPublic={file.isPublic}
+								language={file.language.name}
+							/>
+						</div>
+						<AddNewInteraction
+							id={file.id}
+							interactions={file.interactions}
+							refetch={refetch}
+							username={profile?.username}
 						/>
 					</div>
 				))}

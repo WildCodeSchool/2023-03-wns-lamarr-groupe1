@@ -19,7 +19,7 @@ describe("AuthResolver", () => {
       const password = faker.internet.password({
         length: 8,
         prefix: '@A'
-      });      
+      });   
       const username = faker.internet.userName();
       const type = "free"
 

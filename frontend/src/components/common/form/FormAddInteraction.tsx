@@ -9,8 +9,12 @@ interface IFileData {
 	id?: number;
 	interactions: Array<{
 		type: string;
+		user: {
+			username: string;
+		};
 	}>;
 	refetch: () => void;
+	username: string;
 }
 const AddNewInteraction = (file: IFileData) => {
 	const [interaction, setInteraction] = useState<string>("");
@@ -39,16 +43,41 @@ const AddNewInteraction = (file: IFileData) => {
 
 	return (
 		<div className="interaction-container">
-			<input type="radio" value="Like" />
-			<input type="radio" value="Dislike" />
-			<button>
-				<FontAwesomeIcon icon={faThumbsUp} size="lg" /> |
-				{file.interactions.filter((i) => i.type === "Like").length}
-			</button>
-			<button>
-				<FontAwesomeIcon icon={faThumbsDown} size="lg" /> |{" "}
-				{file.interactions.filter((i) => i.type === "Dislike").length}
-			</button>
+			<label
+				className={
+					file.interactions.find(
+						(i) => i.type === "Like" && i.user.username === file.username
+					)?.user.username === file.username
+						? "button-clicked"
+						: "button"
+				}
+				htmlFor="like"
+			>
+				<FontAwesomeIcon icon={faThumbsUp} size="sm" />
+				<span>|</span>
+				<span>
+					{file.interactions.filter((i) => i.type === "Dislike").length}
+				</span>
+				<input className="like" id="like" type="radio" value="Like" />
+			</label>
+
+			<label
+				className={
+					file.interactions.find(
+						(i) => i.type === "Dislike" && i.user.username === file.username
+					)?.user.username === file.username
+						? "button-clicked"
+						: "button"
+				}
+				htmlFor="dislike"
+			>
+				<FontAwesomeIcon icon={faThumbsDown} size="sm" />
+				<span>|</span>
+				<span>
+					{file.interactions.filter((i) => i.type === "Dislike").length}
+				</span>
+			</label>
+			<input className="dislike" id="dislike" type="radio" value="Dislike" />
 		</div>
 	);
 };
