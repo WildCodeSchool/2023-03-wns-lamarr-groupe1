@@ -3,8 +3,8 @@ import { UsersModels } from "../models/UsersModels";
 import { testDataSource } from "../Utils/testDataSource";
 import { callGraphQL } from "../Utils/callGraphQL";
 import { config } from "dotenv";
-import * as argon2 from 'argon2'
-import { SubscriptionModels } from "../models/SubscriptionModels"
+import * as argon2 from "argon2";
+import { SubscriptionModels } from "../models/SubscriptionModels";
 
 config();
 
@@ -14,86 +14,16 @@ describe("AuthResolver", () => {
   });
 
   describe("signUp", () => {
-    it("should throw error, if email is already used", async () => {
-      const email = faker.internet.email();
+    it('should return property "signUp" if every variable are correct', async () => {
+      const email = "test.test@gmail.com";
       const password = faker.internet.password({
         length: 8,
-        prefix: '@A'
-      });      
-      const username = faker.internet.userName();
-      const type = "free"
-
-      await UsersModels.create({
-        username,
-        password,
-        email,
-      }).save();
-      const name = faker.internet.userName();
-      const response = await callGraphQL({
-        query: `
-            mutation Mutation($input: SignUpInput!) {
-                signUp(input: $input)
-            }
-        `,
-
-        variables: { input: { username: name, email, password, type } }
-      })
-
-      expect(response.errors).toBeTruthy();
-      expect(response.errors?.length).toBeGreaterThanOrEqual(1);
-      expect(response.errors?.[0]).toHaveProperty("extensions");
-      expect(
-        response.errors?.[0].extensions?.exception.validationErrors[0].constraints
-          .IsUniqueConstraint
-      ).toContain("L'email choisi éxiste déjà");
-
-      expect(response.data).not.toBeTruthy();
-    });
-
-    it("should throw error, if username is already used", async () => {
-      const email = faker.internet.email();
-      const password = faker.internet.password({
-        length: 8,
-        prefix: '@A'
-      });      
-      const username = faker.internet.userName();
-      const type = "free"
-
-      await UsersModels.create({
-        username,
-        password,
-        email,
-      }).save();
-      const mail = faker.internet.email();
-      const response = await callGraphQL({
-        query: `
-            mutation Mutation($input: SignUpInput!) {
-                signUp(input: $input)
-            }
-        `,
-
-        variables: { input: { username, email: mail, password, type } }
-      })
-
-      expect(response.errors).toBeTruthy();
-      expect(response.errors?.length).toBeGreaterThanOrEqual(1);
-      expect(response.errors?.[0]).toHaveProperty("extensions");
-      expect(
-        response.errors?.[0].extensions?.exception.validationErrors[0].constraints
-          .IsUniqueConstraint
-      ).toContain("Le noms d'utilisateur choisi éxiste déjà.");
-
-      expect(response.data).not.toBeTruthy();
-    });
-
-    it('should return property "signUp" if a minimum variable are correct', async () => {
-      const email = faker.internet.email();
-      const password = faker.internet.password({
-        length: 8,
-        prefix: '@A'
+        prefix: "@A",
       });
-      const username = faker.internet.userName();
-      const type = "free"
+      const username = "JeanClaude";
+      const firstname = faker.person.firstName();
+      const lastname = faker.person.lastName();
+      const type = "free";
       const response = await callGraphQL({
         query: `
             mutation Mutation($input: SignUpInput!) {
@@ -101,8 +31,10 @@ describe("AuthResolver", () => {
             }
         `,
 
-        variables: { input: { email, password, username, type } }
-      })
+        variables: {
+          input: { email, password, username, firstname, lastname, type },
+        },
+      });
 
       expect(response.errors).not.toBeTruthy();
       expect(response.data).toBeTruthy();
@@ -113,16 +45,14 @@ describe("AuthResolver", () => {
       expect(response.data?.signUp.split(".").length).toBe(3);
     });
 
-    it('should return property "signUp" if every variable are correct', async () => {
-      const email = faker.internet.email();
+    it("should throw error, if email is already used", async () => {
+      const email = "test.test@gmail.com";
       const password = faker.internet.password({
         length: 8,
-        prefix: '@A'
+        prefix: "@A",
       });
       const username = faker.internet.userName();
-      const firstname = faker.person.firstName();
-      const lastname = faker.person.lastName();
-      const type = "free"
+      const type = "free";
       const response = await callGraphQL({
         query: `
             mutation Mutation($input: SignUpInput!) {
@@ -130,10 +60,66 @@ describe("AuthResolver", () => {
             }
         `,
 
-        variables: {
-          input: { email, password, username, firstname, lastname, type }
-        }
-      })
+        variables: { input: { username, email, password, type } },
+      });
+
+      expect(response.errors).toBeTruthy();
+      expect(response.errors?.length).toBeGreaterThanOrEqual(1);
+      expect(response.errors?.[0]).toHaveProperty("extensions");
+      expect(
+        response.errors?.[0].extensions?.exception.validationErrors[0]
+          .constraints.IsUniqueConstraint
+      ).toContain("L'email choisi éxiste déjà");
+
+      expect(response.data).not.toBeTruthy();
+    });
+
+    it("should throw error, if username is already used", async () => {
+      const email = faker.internet.email();
+      const password = faker.internet.password({
+        length: 8,
+        prefix: "@A",
+      });
+      const username = "JeanClaude";
+      const type = "free";
+      const response = await callGraphQL({
+        query: `
+            mutation Mutation($input: SignUpInput!) {
+                signUp(input: $input)
+            }
+        `,
+
+        variables: { input: { username, email, password, type } },
+      });
+
+      expect(response.errors).toBeTruthy();
+      expect(response.errors?.length).toBeGreaterThanOrEqual(1);
+      expect(response.errors?.[0]).toHaveProperty("extensions");
+      expect(
+        response.errors?.[0].extensions?.exception.validationErrors[0]
+          .constraints.IsUniqueConstraint
+      ).toContain("Le noms d'utilisateur choisi éxiste déjà.");
+
+      expect(response.data).not.toBeTruthy();
+    });
+
+    it('should return property "signUp" if a minimum variable are correct', async () => {
+      const email = faker.internet.email();
+      const password = faker.internet.password({
+        length: 8,
+        prefix: "@A",
+      });
+      const username = faker.internet.userName();
+      const type = "free";
+      const response = await callGraphQL({
+        query: `
+            mutation Mutation($input: SignUpInput!) {
+                signUp(input: $input)
+            }
+        `,
+
+        variables: { input: { email, password, username, type } },
+      });
 
       expect(response.errors).not.toBeTruthy();
       expect(response.data).toBeTruthy();
@@ -150,13 +136,13 @@ describe("AuthResolver", () => {
       const email = faker.internet.email();
       const pass = faker.internet.password({
         length: 8,
-        prefix: '@A'
+        prefix: "@A",
       });
       const password = await argon2.hash(pass);
       const badPassword = faker.internet.password({
         length: 8,
-        prefix: '@A'
-      }); 
+        prefix: "@A",
+      });
       const username = faker.internet.userName();
 
       const subscription = await SubscriptionModels.create({
@@ -164,10 +150,15 @@ describe("AuthResolver", () => {
         duration: "Monthly",
         status: "Active",
         subscribedAt: new Date(),
-        subscriptionEndedAt: new Date()
-      }).save()
+        subscriptionEndedAt: new Date(),
+      }).save();
 
-      await UsersModels.create({ email, password, username, subscription }).save();
+      await UsersModels.create({
+        email,
+        password,
+        username,
+        subscription,
+      }).save();
 
       const response = await callGraphQL({
         query: `
@@ -186,7 +177,7 @@ describe("AuthResolver", () => {
       const email = faker.internet.email();
       const pass = faker.internet.password({
         length: 8,
-        prefix: '@A'
+        prefix: "@A",
       });
       const password = await argon2.hash(pass);
       const username = faker.internet.userName();
@@ -196,15 +187,15 @@ describe("AuthResolver", () => {
         duration: "Monthly",
         status: "Active",
         subscribedAt: new Date(),
-        subscriptionEndedAt: new Date()
-      }).save()
+        subscriptionEndedAt: new Date(),
+      }).save();
 
       await UsersModels.create({
         email,
         password,
         username,
-        subscription
-      }).save()
+        subscription,
+      }).save();
 
       const response = await callGraphQL({
         query: `
