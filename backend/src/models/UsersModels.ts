@@ -92,10 +92,8 @@ export class UsersModels extends BaseEntity {
   reports: ReportsModels[];
 
   @Field(() => [InteractionsModels])
-  @OneToMany(() => InteractionsModels, (interaction) => interaction.user, {
-    eager: true
-  })
-  interactions: InteractionsModels[]
+  @OneToMany(() => InteractionsModels, (interaction) => interaction.user)
+  interactions: InteractionsModels[];
 
   @Field(() => [FilesModels])
   @OneToMany(() => FilesModels, (file) => file.user)

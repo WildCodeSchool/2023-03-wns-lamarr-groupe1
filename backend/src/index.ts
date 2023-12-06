@@ -11,7 +11,7 @@ config();
 const start = async (): Promise<void> => {
 
   await dataSource.initialize();
-  getRuntimes();
+  await getRuntimes();
 
   const schema = await createApolloSchema();
   const server = new ApolloServer({
