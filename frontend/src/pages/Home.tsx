@@ -5,6 +5,7 @@ import AboutUs from "components/common/AboutUs";
 import "styles/AboutUs.scss";
 import "styles/components/Pricing.scss";
 import Pricing from "components/common/Pricing";
+import CodingPage from "./Coding";
 
 const Home = () => {
   

@@ -6,5 +6,9 @@ query GetFile($fileId: Float!) {
     content
     filename
     id
+    language {
+      id
+      name
+    }
   }
 }`;
