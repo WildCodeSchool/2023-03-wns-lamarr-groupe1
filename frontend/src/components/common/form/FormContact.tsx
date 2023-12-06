@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -8,15 +8,15 @@ import { useMutation } from "@apollo/client";
 import { extractValidationsErrors } from "utils/extractValidationsErrors";
 
 interface IContactForm {
-  title: string;
   name: string;
   email: string;
+  title: string;
   content: string;
 }
 
 const ContactForm = () => {
-  const navigate = useNavigate();
   const [IContact, { loading }] = useMutation(CONTACT_MUTATION);
+  const [Toast, setToast] = useState(false);
 
   const {
     register,
@@ -25,15 +25,8 @@ const ContactForm = () => {
     formState: { errors },
   } = useForm<IContactForm>({ mode: "onBlur" });
   const onSubmit: SubmitHandler<IContactForm> = async (data) => {
-    const input = {
-      title: data.title,
-      name: data.name,
-      email: data.email,
-      content: data.content,
-    };
-
     try {
-      const result = await IContact({
+      await IContact({
         variables: {
           input: {
             title: data.title,
@@ -57,14 +50,22 @@ const ContactForm = () => {
           }
         },
       });
-      console.log(result);
-      navigate("/");
+      setTimeout(() => {
+        setToast(true);
+      }, 2000);
     } catch (error: any) {}
   };
 
   return (
     <div className="page-contact">
       <div className="contact-container">
+        {Toast && (
+          <div className="toast-message">
+            <p>
+              Formulaire envoyé. Nous vous répondrons sous les plus brefs délais
+            </p>
+          </div>
+        )}
         <form action="" onSubmit={handleSubmit(onSubmit)}>
           <label>Contactez-nous</label>
           <input
@@ -73,6 +74,7 @@ const ContactForm = () => {
             placeholder="Nom*"
             {...register("name", {
               required: "Un nom est requis !",
+              minLength: 1,
             })}
           />
           <ErrorMessage
@@ -85,11 +87,10 @@ const ContactForm = () => {
             id="email"
             placeholder="Email*"
             {...register("email", {
-              required: "Ce champ est requis !",
+              required: "L'adresse mail doit être valide",
               pattern: {
                 value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                message:
-                  "Le mot de passe doit contenir une lettres majuscules et minuscules, un chiffres et un caractères spécial",
+                message: "L'adresse mail doit être valide",
               },
             })}
           />
