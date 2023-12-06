@@ -25,73 +25,71 @@ import { SubscriptionModels } from "./SubscriptionModels";
 export class UsersModels extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
-  id!: number
+  id!: number;
 
   @Field()
   @Column({ nullable: true })
-  firstname!: string
+  firstname!: string;
 
   @Field()
   @Column({ nullable: true })
-  lastname!: string
+  lastname!: string;
 
   @Field()
   @Column()
   @IsUnique("username", {
     message:
-      "Le noms d'utilisateur choisi éxiste déjà. Merci d'en choisir un autre"
+      "Le noms d'utilisateur choisi éxiste déjà. Merci d'en choisir un autre",
   })
-  username!: string
+  username!: string;
 
   @Field()
   @Column()
   @IsUnique("email", {
-    message: "L'email choisi éxiste déjà. Merci d'en choisir un autre"
+    message: "L'email choisi éxiste déjà. Merci d'en choisir un autre",
   })
-  email!: string
+  email!: string;
 
   @Field()
   @Column()
-  password!: string
+  password!: string;
 
   @Field()
   @Column()
-  role!: string
+  role!: string;
 
   @BeforeInsert()
   setDefaultRole(): void {
-    this.role = "invited"
+    this.role = "invited";
   }
 
   @Column()
   @IsInt()
-  executedcode!: number
+  executedcode!: number;
 
   @BeforeInsert()
   setDefaultExecutedCode(): void {
-    this.executedcode = 0
+    this.executedcode = 0;
   }
 
   @CreateDateColumn()
-  createdAt!: Date
+  createdAt!: Date;
 
   @Field(() => [IssuesModels])
   @OneToMany(() => IssuesModels, (issue) => issue.user)
   issues: IssuesModels[]
 
   @Field(() => [ContactModels])
-  @OneToMany(() => ContactModels, (contact) => contact.user, {
-    eager: true
-  })
-  contacts: ContactModels[]
+  @OneToMany(() => ContactModels, (contact) => contact.user)
+  contacts: ContactModels[];
 
   @Field(() => [CommentsModels])
   @OneToMany(() => CommentsModels, (comment) => comment.user)
-  comments: CommentsModels[]
+  comments: CommentsModels[];
 
   @Field(() => [ReportsModels])
   @OneToMany(() => ReportsModels, (report) => report.user)
-  reports: ReportsModels[]
+  reports: ReportsModels[];
 
   @Field(() => [InteractionsModels])
   @OneToMany(() => InteractionsModels, (interaction) => interaction.user)
@@ -99,11 +97,11 @@ export class UsersModels extends BaseEntity {
 
   @Field(() => [FilesModels])
   @OneToMany(() => FilesModels, (file) => file.user)
-  files: FilesModels[]
+  files: FilesModels[];
 
   @OneToOne(() => SubscriptionModels, {
-    eager: true
+    eager: true,
   })
   @JoinColumn()
-  subscription: SubscriptionModels
+  subscription: SubscriptionModels;
 }
