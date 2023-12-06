@@ -69,7 +69,7 @@ const GridFileSearch = ({
 						  handleString(element.language.name).includes(handleString(value))
 				)
 				.map((file) => (
-					<div className="main-card">
+					<div className="main-card" key={file.id}>
 						<div className="card-container">
 							<ListingFile
 								filename={file.filename}

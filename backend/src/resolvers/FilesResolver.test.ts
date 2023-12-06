@@ -79,7 +79,7 @@ describe("FilesResolver", () => {
       const username = faker.internet.userName()
       const type = "free"
 
-      const language = await LanguageModels.create({
+      await LanguageModels.create({
         name: "javascript",
         version: "18.0.15"
       }).save()

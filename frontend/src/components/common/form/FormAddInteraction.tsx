@@ -4,7 +4,7 @@ import { NEW_INTERACTION_MUTATION } from "graphql/mutations/NEW_INTERACTION_MUTA
 import { useMutation } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { INewFileProps } from "utils/interface/INewFile";
+import { INewInteractionProps } from "utils/interface/INewInteraction";
 interface IFileData {
 	id?: number;
 	interactions: Array<{
@@ -17,21 +17,18 @@ interface IFileData {
 	username: string;
 }
 const AddNewInteraction = (file: IFileData) => {
-	const [interaction, setInteraction] = useState<string>("");
-	const [addInteraction, { loading }] = useMutation(NEW_INTERACTION_MUTATION);
+	const [addInteraction] = useMutation(NEW_INTERACTION_MUTATION);
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<INewFileProps>({ mode: "onBlur" });
-	const onSubmit: SubmitHandler<INewFileProps> = async (data) => {
+	const { register, handleSubmit } = useForm<INewInteractionProps>({
+		mode: "onBlur",
+	});
+	const onSubmit: SubmitHandler<INewInteractionProps> = async (data) => {
 		try {
 			await addInteraction({
 				variables: {
 					input: {
 						fileId: file.id,
-						type: "Dislike",
+						type: data.type,
 					},
 				},
 			});
@@ -42,7 +39,7 @@ const AddNewInteraction = (file: IFileData) => {
 	};
 
 	return (
-		<div className="interaction-container">
+		<form className="interaction-container">
 			<label
 				className={
 					file.interactions.find(
@@ -51,15 +48,21 @@ const AddNewInteraction = (file: IFileData) => {
 						? "button-clicked"
 						: "button"
 				}
-				htmlFor="like"
+				htmlFor={`like${file.id}`}
+				onClick={() => setTimeout(handleSubmit(onSubmit), 500)}
 			>
-				<FontAwesomeIcon icon={faThumbsUp} size="sm" />
-				<span>|</span>
-				<span>
-					{file.interactions.filter((i) => i.type === "Dislike").length}
+				<span className="icon">
+					<FontAwesomeIcon icon={faThumbsUp} size="sm" />
 				</span>
-				<input className="like" id="like" type="radio" value="Like" />
+				<span>{file.interactions.filter((i) => i.type === "Like").length}</span>
 			</label>
+			<input
+				className="like"
+				id={`like${file.id}`}
+				type="radio"
+				value="Like"
+				{...register("type")}
+			/>
 
 			<label
 				className={
@@ -69,16 +72,24 @@ const AddNewInteraction = (file: IFileData) => {
 						? "button-clicked"
 						: "button"
 				}
-				htmlFor="dislike"
+				htmlFor={`dislike${file.id}`}
+				onClick={() => setTimeout(handleSubmit(onSubmit), 500)}
 			>
-				<FontAwesomeIcon icon={faThumbsDown} size="sm" />
-				<span>|</span>
+				<span className="icon">
+					<FontAwesomeIcon icon={faThumbsDown} size="sm" />
+				</span>
 				<span>
 					{file.interactions.filter((i) => i.type === "Dislike").length}
 				</span>
 			</label>
-			<input className="dislike" id="dislike" type="radio" value="Dislike" />
-		</div>
+			<input
+				className="dislike"
+				id={`dislike${file.id}`}
+				{...register("type")}
+				type="radio"
+				value="Dislike"
+			/>
+		</form>
 	);
 };
 
