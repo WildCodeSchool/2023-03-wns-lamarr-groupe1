@@ -129,7 +129,7 @@ const CodingPage = () => {
 
   return (
     <Layout>
-      <div className='main'>
+      <div className='mainCodingPage'>
         <div className="buttons">
           <div className="leftButton">
             <button onClick={toggleIframe}>Preview</button>
@@ -182,7 +182,7 @@ const CodingPage = () => {
             </div>
           )}
         </div>
-    </div>
+        </div>
   </Layout>
   );
 };
