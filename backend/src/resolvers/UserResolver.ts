@@ -16,7 +16,7 @@ export class User {
     if (userToUpdate === null) {
       throw new Error("User not found");
     }
-    if (userToUpdate.id !== context.id) {
+    if (userToUpdate.id !== context.user.id) {
       throw new Error("You don't have the rights to modify this user");
     }
     if (password) {
