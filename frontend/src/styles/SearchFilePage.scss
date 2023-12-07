@@ -24,6 +24,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 40px;
+    padding-bottom: 30px;
 
     @include breakpoint("large-screen") {
       grid-template-columns: repeat(4, 1fr);

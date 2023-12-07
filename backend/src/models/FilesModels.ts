@@ -20,76 +20,78 @@ import { LanguageModels } from "./LanguageModels";
 @ObjectType()
 @Entity()
 export class FilesModels extends BaseEntity {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id: number;
+	@Field()
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @Field()
-  @Column()
-  filename!: string;
+	@Field()
+	@Column()
+	filename!: string;
 
-  @Field()
-  @Column({ nullable: true })
-  content: string;
+	@Field()
+	@Column({ nullable: true })
+	content: string;
 
-  @Field()
-  @Column()
-  isPublic!: boolean;
+	@Field()
+	@Column()
+	isPublic!: boolean;
 
-  @Field()
-  @CreateDateColumn()
-  createdAt!: Date;
+	@Field()
+	@CreateDateColumn()
+	createdAt!: Date;
 
-  @UpdateDateColumn()
-  updatedAt!: Date;
+	@UpdateDateColumn()
+	updatedAt!: Date;
 
-  @Field()
-  @Column()
-  nbOfReport: number;
+	@Field()
+	@Column()
+	nbOfReport: number;
 
-  @BeforeInsert()
-  setDefaultNbOfReport(): void {
-    this.nbOfReport = 0;
-  }
+	@BeforeInsert()
+	setDefaultNbOfReport(): void {
+		this.nbOfReport = 0;
+	}
 
-  @Field()
-  @Column()
-  nbOfDownload: number;
+	@Field()
+	@Column()
+	nbOfDownload: number;
 
-  @BeforeInsert()
-  setDefaultNbOfDownload(): void {
-    this.nbOfDownload = 0;
-  }
+	@BeforeInsert()
+	setDefaultNbOfDownload(): void {
+		this.nbOfDownload = 0;
+	}
 
-  @Field(() => [IssuesModels])
-  @OneToMany(() => IssuesModels, (issue) => issue.file, {
-    eager: true
-  })
-  issues: IssuesModels[]
+	@Field(() => [IssuesModels])
+	@OneToMany(() => IssuesModels, (issue) => issue.file, {
+		eager: true,
+	})
+	issues: IssuesModels[];
 
-  @Field(() => [CommentsModels])
-  @OneToMany(() => CommentsModels, (comment) => comment.file, {
-    eager: true,
-  })
-  comments: CommentsModels[];
+	@Field(() => [CommentsModels])
+	@OneToMany(() => CommentsModels, (comment) => comment.file, {
+		eager: true,
+	})
+	comments: CommentsModels[];
 
-  @Field(() => [ReportsModels])
-  @OneToMany(() => ReportsModels, (report) => report.file)
-  reports: ReportsModels[];
+	@Field(() => [ReportsModels])
+	@OneToMany(() => ReportsModels, (report) => report.file)
+	reports: ReportsModels[];
 
-  @Field(() => [InteractionsModels])
-  @OneToMany(() => InteractionsModels, (interaction) => interaction.file)
-  interactions: InteractionsModels[];
+	@Field(() => [InteractionsModels])
+	@OneToMany(() => InteractionsModels, (interaction) => interaction.file, {
+		eager: true,
+	})
+	interactions: InteractionsModels[];
 
-  @Field(() => UsersModels)
-  @ManyToOne(() => UsersModels, (user) => user.files, {
-    eager: true
-  })
-  user: UsersModels
+	@Field(() => UsersModels)
+	@ManyToOne(() => UsersModels, (user) => user.files, {
+		eager: true,
+	})
+	user: UsersModels;
 
-  @Field(() => LanguageModels)
-  @ManyToOne(() => LanguageModels, (language) => language.files, {
-    eager: true,
-  })
-  language: LanguageModels;
+	@Field(() => LanguageModels)
+	@ManyToOne(() => LanguageModels, (language) => language.files, {
+		eager: true,
+	})
+	language: LanguageModels;
 }

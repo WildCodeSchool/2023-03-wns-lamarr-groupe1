@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Layout from "components/common/layouts/Layout";
 import SearchBar from "components/common/SearchBar";
 import "styles/SearchFilePage.scss";
 import GridFileSearch from "components/common/GridFileSearch";
 import { GET_FILES_QUERY } from "graphql/queries/GET_FILES_QUERY";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 type File = {
   id: number;
@@ -18,7 +18,7 @@ type File = {
 };
 
 const SearchFilePage = () => {
-  const { data: getFilesData } = useQuery(GET_FILES_QUERY, {
+  const { data: getFilesData, refetch } = useQuery(GET_FILES_QUERY, {
     variables: { filter: { isPublic: false } },
   });
 
@@ -42,6 +42,7 @@ const SearchFilePage = () => {
             files={getFilesData?.getFiles || []}
             value={value}
             valueFilter={filteredTextValue}
+            refetch={refetch}
           />
         </div>
       </div>
