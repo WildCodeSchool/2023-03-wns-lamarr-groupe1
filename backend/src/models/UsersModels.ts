@@ -1,13 +1,13 @@
 import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  OneToOne,
-  JoinColumn,
-  BeforeInsert,
+	BaseEntity,
+	Column,
+	CreateDateColumn,
+	Entity,
+	PrimaryGeneratedColumn,
+	OneToMany,
+	OneToOne,
+	JoinColumn,
+	BeforeInsert,
 } from "typeorm";
 import { IsInt } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
@@ -23,85 +23,88 @@ import { SubscriptionModels } from "./SubscriptionModels";
 @ObjectType()
 @Entity()
 export class UsersModels extends BaseEntity {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id!: number;
+	@Field()
+	@PrimaryGeneratedColumn()
+	id!: number;
 
-  @Field()
-  @Column({ nullable: true })
-  firstname!: string;
+	@Field()
+	@Column({ nullable: true })
+	firstname!: string;
 
-  @Field()
-  @Column({ nullable: true })
-  lastname!: string;
+	@Field()
+	@Column({ nullable: true })
+	lastname!: string;
 
-  @Field()
-  @Column()
-  @IsUnique("username", {
-    message:
-      "Le noms d'utilisateur choisi éxiste déjà. Merci d'en choisir un autre",
-  })
-  username!: string;
+	@Field()
+	@Column()
+	@IsUnique("username", {
+		message:
+			"Le noms d'utilisateur choisi éxiste déjà. Merci d'en choisir un autre",
+	})
+	username!: string;
 
-  @Field()
-  @Column()
-  @IsUnique("email", {
-    message: "L'email choisi éxiste déjà. Merci d'en choisir un autre",
-  })
-  email!: string;
+	@Field()
+	@Column()
+	@IsUnique("email", {
+		message: "L'email choisi éxiste déjà. Merci d'en choisir un autre",
+	})
+	email!: string;
 
-  @Field()
-  @Column()
-  password!: string;
+	@Field()
+	@Column()
+	password!: string;
 
-  @Field()
-  @Column()
-  role!: string;
+	@Field()
+	@Column()
+	role!: string;
 
-  @BeforeInsert()
-  setDefaultRole(): void {
-    this.role = "invited";
-  }
+	@BeforeInsert()
+	setDefaultRole(): void {
+		this.role = "invited";
+	}
 
-  @Column()
-  @IsInt()
-  executedcode!: number;
+	@Column()
+	@IsInt()
+	executedcode!: number;
 
-  @BeforeInsert()
-  setDefaultExecutedCode(): void {
-    this.executedcode = 0;
-  }
+	@BeforeInsert()
+	setDefaultExecutedCode(): void {
+		this.executedcode = 0;
+	}
 
-  @CreateDateColumn()
-  createdAt!: Date;
+	@CreateDateColumn()
+	createdAt!: Date;
 
-  @Field(() => [IssuesModels])
-  @OneToMany(() => IssuesModels, (issue) => issue.user)
-  issues: IssuesModels[]
+	@Column({ nullable: true })
+	firstExecutedCodeAt!: Date;
 
-  @Field(() => [ContactModels])
-  @OneToMany(() => ContactModels, (contact) => contact.user)
-  contacts: ContactModels[];
+	@Field(() => [IssuesModels])
+	@OneToMany(() => IssuesModels, (issue) => issue.user)
+	issues: IssuesModels[];
 
-  @Field(() => [CommentsModels])
-  @OneToMany(() => CommentsModels, (comment) => comment.user)
-  comments: CommentsModels[];
+	@Field(() => [ContactModels])
+	@OneToMany(() => ContactModels, (contact) => contact.user)
+	contacts: ContactModels[];
 
-  @Field(() => [ReportsModels])
-  @OneToMany(() => ReportsModels, (report) => report.user)
-  reports: ReportsModels[];
+	@Field(() => [CommentsModels])
+	@OneToMany(() => CommentsModels, (comment) => comment.user)
+	comments: CommentsModels[];
 
-  @Field(() => [InteractionsModels])
-  @OneToMany(() => InteractionsModels, (interaction) => interaction.user)
-  interactions: InteractionsModels[];
+	@Field(() => [ReportsModels])
+	@OneToMany(() => ReportsModels, (report) => report.user)
+	reports: ReportsModels[];
 
-  @Field(() => [FilesModels])
-  @OneToMany(() => FilesModels, (file) => file.user)
-  files: FilesModels[];
+	@Field(() => [InteractionsModels])
+	@OneToMany(() => InteractionsModels, (interaction) => interaction.user)
+	interactions: InteractionsModels[];
 
-  @OneToOne(() => SubscriptionModels, {
-    eager: true,
-  })
-  @JoinColumn()
-  subscription: SubscriptionModels;
+	@Field(() => [FilesModels])
+	@OneToMany(() => FilesModels, (file) => file.user)
+	files: FilesModels[];
+
+	@OneToOne(() => SubscriptionModels, {
+		eager: true,
+	})
+	@JoinColumn()
+	subscription: SubscriptionModels;
 }
