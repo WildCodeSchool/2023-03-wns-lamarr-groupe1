@@ -13,7 +13,11 @@ import { GET_PROFILE_QUERY } from "graphql/queries/GET_PROFILE_QUERY";
 import "styles/FilePage.scss";
 import "styles/AddFileForm.scss";
 import AuthenticatedPage from "utils/hoc/authenticatedPage";
-import {useGetPrivateFiles, useGetPublicFiles} from "utils/hook/getProfile";
+import {
+  useGetPrivateFiles,
+  useGetPublicFiles,
+  useRefetchProfile,
+} from "utils/hook/getProfile";
 // src/types/file.ts
 // Dedans, on va exporter le type suivant :
 type File = {
@@ -28,9 +32,25 @@ type File = {
 const FilePage = () => {
   const { isShow, handleOpenModal, handleCloseModal } = useContext(fileContext);
 
-  const privateFiles =  useGetPrivateFiles()
-  const publicFiles =  useGetPublicFiles()
-  
+  const privateFiles = useGetPrivateFiles();
+  const publicFiles = useGetPublicFiles();
+  const { refetch: pulicRefetch, data: PubicData } = useQuery(
+    GET_PROFILE_QUERY,
+    {
+      variables: { filter: { isPublic: null } },
+    }
+  );
+  const { refetch: privateRefetch, data: privateData } = useQuery(
+    GET_PROFILE_QUERY,
+    {
+      variables: { filter: { isPublic: true } },
+    }
+  );
+  useEffect(() => {
+    pulicRefetch();
+    privateRefetch();
+  }, [pulicRefetch, privateRefetch]);
+
   return (
     <Layout>
       <div className="container-file-page">
@@ -40,14 +60,8 @@ const FilePage = () => {
             Fichier <FontAwesomeIcon className="icon" icon={faPlus} size="sm" />
           </button>
         </div>
-        <GridFile
-          filesCarousel={privateFiles}
-          title="Privés"
-        />
-        <GridFile
-          filesCarousel={publicFiles}
-          title="Publics"
-        />
+        <GridFile filesCarousel={privateFiles} title="Privés" />
+        <GridFile filesCarousel={publicFiles} title="Publics" />
       </div>
       {isShow ? (
         <>
