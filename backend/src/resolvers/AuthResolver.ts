@@ -108,7 +108,7 @@ export class AuthResolver {
 		}
 
 		const resetDate: Date = new Date();
-		resetDate.setUTCDate(userFoundByEmail.firstExecutedCodeAt.getUTCDate() + 1);
+		resetDate.setUTCDate(userFoundByEmail?.firstExecutedCodeAt?.getUTCDate() + 1);
 		if (
 			userFoundByEmail.subscription.type === "Free" &&
 			userFoundByEmail.firstExecutedCodeAt <= resetDate
