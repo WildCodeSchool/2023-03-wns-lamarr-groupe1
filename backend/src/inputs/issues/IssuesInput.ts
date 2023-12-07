@@ -20,8 +20,5 @@ import { IssuesType } from "../../enums/IssuesType";
 
     @Field()
     fileId!: number;
-
-    @Field()
-    userId!: number;
   }
   

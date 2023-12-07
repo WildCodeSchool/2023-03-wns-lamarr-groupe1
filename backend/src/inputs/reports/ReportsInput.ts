@@ -1,20 +1,16 @@
-import {
-    Length,
-    IsOptional,
-  } from "class-validator";
-import { Field, InputType } from "type-graphql";
+import { Length, IsOptional } from "class-validator"
+import { Field, InputType } from "type-graphql"
 
-  @InputType()
-  export class ReportsInput {
-    
-    @Field({ nullable: true })
-    @Length(1)
-    comment?: string;
+@InputType()
+export class ReportsInput {
+  @Field({ nullable: true })
+  @Length(1)
+  title?: string
 
-    @Field()
-    fileId!: number;
+  @Field({ nullable: true })
+  @Length(1)
+  comment?: string
 
-    @Field()
-    userId!: number;
-  }
-  
+  @Field()
+  fileId!: number
+}

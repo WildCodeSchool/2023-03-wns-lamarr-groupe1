@@ -10,7 +10,7 @@ export const IssuesFactory = setSeederFactory(IssuesModels, async (faker: Faker)
   issues.issue = faker.lorem.lines();
   issues.status = getRandomIssuesType();
   issues.user = { id: faker.number.int({ min: 1, max: 10 }) } as UsersModels;
-  issues.file = { id: faker.number.int({ min: 1, max: 40 }) } as FilesModels;
+  issues.file = { id: faker.number.int({ min: 1, max: 10 }) } as FilesModels;
   return issues
 });
 

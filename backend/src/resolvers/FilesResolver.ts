@@ -1,10 +1,10 @@
-import { Arg, Mutation, Authorized, Query, Ctx } from "type-graphql";
-import { FilesModels } from "../models/FilesModels";
-import { FileInput } from "../inputs/file/FileInput";
-import { UpdateFileInput } from "../inputs/file/UpdateFileInput";
-import { UsersModels } from "../models/UsersModels";
-import { LanguageModels } from "../models/LanguageModels";
-import { GetFilesQuery } from "../queries/GetFilesQuery";
+import { Arg, Mutation, Authorized, Query, Ctx } from "type-graphql"
+import { FilesModels } from "../models/FilesModels"
+import { FileInput } from "../inputs/file/FileInput"
+import { UpdateFileInput } from "../inputs/file/UpdateFileInput"
+import { UsersModels } from "../models/UsersModels"
+import { LanguageModels } from "../models/LanguageModels"
+import { GetFilesQuery } from "../queries/GetFilesQuery"
 
 export class FileResolver {
   // Mutation addFile -> insérer un fichier en BDD
@@ -50,7 +50,8 @@ export class FileResolver {
   async updateFile(
     @Arg("id") id: number,
     @Arg("update")
-    { filename, content, isPublic, nbOfReport, nbOfDownload }: UpdateFileInput
+    { filename, content, isPublic, nbOfReport, nbOfDownload }: UpdateFileInput,
+    @Ctx() context: any
   ): Promise<FilesModels> {
     // récupérer le fichier a update
     const fileToUpdate = await FilesModels.findOneBy({
@@ -58,6 +59,10 @@ export class FileResolver {
     })
     if (fileToUpdate === null) {
       throw new Error("File not found")
+    }
+
+    if (fileToUpdate.user.id !== context.user.id) {
+      throw new Error("You don't have the rights to modify this file")
     }
 
     // update les data envoyer
@@ -73,7 +78,6 @@ export class FileResolver {
   }
 
   // Query pour recuperer tous les fichier
-  @Authorized()
   @Query(() => [FilesModels])
   async getFiles(
     @Arg("filter") { programmingLanguage, page }: GetFilesQuery
@@ -104,6 +108,25 @@ export class FileResolver {
     if (file === null) {
       throw new Error("File not found")
     }
+    file.comments.sort((a, b) => {
+      if (a.updatedAt > b.updatedAt) {
+        return -1
+      }
+      if (a.updatedAt < b.updatedAt) {
+        return 1
+      }
+      return 0
+    })
+
+    file.issues.sort((a, b) => {
+      if (a.updatedAt > b.updatedAt) {
+        return -1
+      }
+      if (a.updatedAt < b.updatedAt) {
+        return 1
+      }
+      return 0
+    })
 
     return file
   }

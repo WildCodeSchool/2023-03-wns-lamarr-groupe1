@@ -6,19 +6,25 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from 'react-router-dom';
 import { SAVE_CODE } from 'graphql/mutations/SAVE_CODE';
 import Layout from 'components/common/layouts/Layout';
+import AuthenticatedPage from "utils/hoc/authenticatedPage"
+import Comments from "components/common/comments/CommentsList"
+import {useGetProfile} from "utils/hook/getProfile";
 import "styles/Coding.scss";
 
 const CodingPage = () => {
-  const [code, setCode] = useState<string>('');
-  const [result, setResult] = useState<string>('');
-  const [runCode, { loading }] = useMutation(RAN_CODE);
-  const [saveCode] = useMutation(SAVE_CODE);
+  const [code, setCode] = useState<string>("")
+  const [result, setResult] = useState<string>("")
+  const [runCode, { loading }] = useMutation(RAN_CODE)
+  const [saveCode] = useMutation(SAVE_CODE)
+  const [comments, setComments] = useState([])
+  const [issues, setIssues] = useState([])
   const { id } = useParams()
   let fileId = null
-  if(id) {
+  if (id) {
     fileId = parseInt(id)
   }
-  const { data } = useQuery(GET_FILE_QUERY, {variables: { fileId }})
+  const { data, refetch } = useQuery(GET_FILE_QUERY, {variables: { fileId }})
+  const profile = useGetProfile();
 
   const editorRef = useRef<any>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -46,6 +52,8 @@ const CodingPage = () => {
   
     if (data && data.getFile) {
       setCode(data.getFile.content);
+      setComments(data.getFile.comments)
+      setIssues(data.getFile.issues)
     }
   
     return () => {
@@ -53,12 +61,22 @@ const CodingPage = () => {
     };
   }, [data]);
 
+  async function refecthData() {
+    await refetch()
+    setComments(data.getFile.comments)
+    setIssues(data.getFile.issues)
+    setTimeout(() => {
+      const commentContainer = document.getElementById("commentContainer")
+      commentContainer?.scrollTo(0, commentContainer.scrollHeight)
+    }, 20)
+  }
+
   function handleEditorDidMount(editor: any, monaco: any) {
-    editorRef.current = editor;
+    editorRef.current = editor
   }
 
   function handleCodeChange(value: string | undefined) {
-    setCode(value || '');
+    setCode(value || "")
   }
 
   async function handleRunCode() {
@@ -84,19 +102,19 @@ const CodingPage = () => {
 
   async function handleSaveCode() {
     if (id) {
-      const saveCodeId = parseInt(id);
+      const saveCodeId = parseInt(id)
       const update = {
-        content: code,
-      };
+        content: code
+      }
       try {
         await saveCode({
           variables: {
             update: update,
-            updateFileId: saveCodeId,
-          },
-        });
+            updateFileId: saveCodeId
+          }
+        })
       } catch (error: any) {
-        console.log(error, error);
+        console.log(error, error)
       }
     }
   }
@@ -110,105 +128,63 @@ const CodingPage = () => {
   };
 
   return (
-    // <Layout>
-    //   <div className="buttons">
-    //     <div className="leftButton">
-    //       <button onClick={toggleIframe}>Preview</button>
-    //       <button onClick={toggleConsole}>Console</button>
-    //     </div>
-    //     <div className="rightButton">
-    //       <button onClick={handleSaveCode} disabled={loading ? true : false}>{loading ? 'Sauvegarde...' : 'Sauvegarder'}</button>
-    //       <button className='execButton' onClick={handleRunCode} disabled={loading ? true : false}>{loading ? 'Running...' : 'Executer'}</button>
-    //     </div>
-    //   </div>
-    //   <div className='general'>
-    //   <div className='editorAndPreview' style={{ 
-    //     height: showConsole ? 'calc(70% - 2px)' : '100%',
-    //     borderRadius: showConsole ? '5px, 5px, 0, 0 ' : '5px', }}>
-    //       <div className= 'editor' style={{ width: showIframe ? '50%' : '100%' }}>
-    //         <Editor
-    //           height="100%"
-    //           width="100%"
-    //           defaultLanguage="javascript"
-    //           defaultValue={code ? code : "// Write a code"}
-    //           onMount={handleEditorDidMount}
-    //           onChange={handleCodeChange as OnChange}
-    //           options={{
-    //             scrollBeyondLastLine: false,
-    //           }}
-    //           theme='vs-dark'
-    //         />
-    //       </div>
-    //       {showIframe && (
-    //         <div className='iframe'>
-    //           <div className='previewTitle'>
-    //             <p><b>Preview</b></p>
-    //           </div>
-    //           <iframe srcDoc={code ? `<html><body><script>${code}</script></body></html>` : '<html><body></body></html>'} title="output" frameBorder='0' style={{ width: '100%', height: '100%' }} />
-    //         </div>
-    //       )}
-    //     </div>
-    //     {showConsole && (
-    //       <div className='console'>
-    //         <div className='consoleTitle'>
-    //           <p><b>Console</b></p>
-    //         </div>
-    //         <div ref={resultRef} className='showConsole' hidden={!showConsole}>
-    //           {result}
-    //         </div>
-    //       </div>
-    //     )}
-    //   </div>
-    // </Layout>
     <Layout>
-    <div className="buttons">
-      <div className="leftButton">
-        <button onClick={toggleIframe}>Preview</button>
-        <button onClick={toggleConsole}>Console</button>
-      </div>
-      <div className="rightButton">
-        <button onClick={handleSaveCode} disabled={loading ? true : false}>{loading ? 'Sauvegarde...' : 'Sauvegarder'}</button>
-        <button className='execButton' onClick={handleRunCode} disabled={loading ? true : false}>{loading ? 'Running...' : 'Executer'}</button>
-      </div>
-    </div>
-    <div className={`general ${containerClassName}`}>
-      <div className='editorAndPreview'>
-        <div className= 'editor'>
-          <Editor
-            height="100%"
-            width="100%"
-            defaultLanguage="javascript"
-            defaultValue={code ? code : "// Write a code"}
-            onMount={handleEditorDidMount}
-            onChange={handleCodeChange as OnChange}
-            options={{
-              scrollBeyondLastLine: false,
-            }}
-            theme='vs-dark'
-          />
+      <div className='main'>
+        <div className="buttons">
+          <div className="leftButton">
+            <button onClick={toggleIframe}>Preview</button>
+            <button onClick={toggleConsole}>Console</button>
+          </div>
+          <div className="rightButton">
+            <button onClick={handleSaveCode} disabled={loading ? true : false}>{loading ? 'Sauvegarde...' : 'Sauvegarder'}</button>
+            <button className='execButton' onClick={handleRunCode} disabled={loading ? true : false}>{loading ? 'Running...' : 'Executer'}</button>
+          </div>
         </div>
-        {showIframe && (
-          <div className='iframe'>
-            <div className='previewTitle'>
-              <p><b>Preview</b></p>
+        <div className={`general ${containerClassName}`}>
+          <div className='editorAndPreview'>
+            <div className= 'editor'>
+              <Editor
+                height="100%"
+                width="100%"
+                defaultLanguage="javascript"
+                defaultValue={code ? code : "// Write a code"}
+                onMount={handleEditorDidMount}
+                onChange={handleCodeChange as OnChange}
+                options={{
+                  scrollBeyondLastLine: false,
+                }}
+                theme='vs-dark'
+              />
+              <Comments
+              comments={comments}
+              issues={issues}
+              refecthData={refecthData}
+              user={profile}
+            />
             </div>
-            <iframe srcDoc={code ? `<html><body><script>${code}</script></body></html>` : '<html><body></body></html>'} title="output" frameBorder='0' style={{ width: '100%' }} />
+            {showIframe && (
+              <div className='iframe'>
+                <div className='previewTitle'>
+                  <p><b>Preview</b></p>
+                </div>
+                <iframe srcDoc={code ? `<html><body><script>${code}</script></body></html>` : '<html><body></body></html>'} title="output" frameBorder='0' style={{ width: '100%' }} />
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      {showConsole && (
-        <div className='console'>
-          <div className='consoleTitle'>
-            <p><b>Console</b></p>
-          </div>
-          <div ref={resultRef} className='showConsole' hidden={!showConsole}>
-            {result}
-          </div>
+          {showConsole && (
+            <div className='console'>
+              <div className='consoleTitle'>
+                <p><b>Console</b></p>
+              </div>
+              <div ref={resultRef} className='showConsole' hidden={!showConsole}>
+                {result}
+              </div>
+            </div>
+          )}
         </div>
-      )}
     </div>
   </Layout>
   );
 };
 
-export default CodingPage;
+export default AuthenticatedPage(CodingPage)
