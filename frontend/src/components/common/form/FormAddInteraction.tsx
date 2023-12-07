@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
+import "styles/components/FormInteration.scss";
 import { NEW_INTERACTION_MUTATION } from "graphql/mutations/NEW_INTERACTION_MUTATION";
 import { useMutation } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

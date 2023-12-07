@@ -2,15 +2,6 @@ import { GET_PROFILE_QUERY } from "graphql/queries/GET_PROFILE_QUERY";
 import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 
-type File = {
-  id: number;
-  filename: string;
-  content: string;
-  createdAt: string;
-  image: string;
-  isPublic: boolean;
-};
-
 export const useGetPublicFiles = () => {
   const { data } = useQuery(GET_PROFILE_QUERY, {
     variables: { filter: { isPublic: false } },
