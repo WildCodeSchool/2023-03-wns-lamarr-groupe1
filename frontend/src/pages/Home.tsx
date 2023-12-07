@@ -9,10 +9,12 @@ import ContactForm from "components/common/form/FormContact";
 const Home = () => {
   return (
     <Layout>
-      <HomePage />
-      <Pricing />
-      <AboutUs />
-      <ContactForm />
+      <div className="mainHome">
+        <HomePage />
+        <Pricing />
+        <AboutUs />
+        <ContactForm />
+      </div>
     </Layout>
   );
 };
