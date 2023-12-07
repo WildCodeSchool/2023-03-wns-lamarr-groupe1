@@ -2,7 +2,7 @@ import FormAccount from "components/common/form/FormAccount";
 import Layout from "components/common/layouts/Layout";
 import React from "react";
 
-const Admin = () => {
+const Profile = () => {
   return (
     <Layout>
       <FormAccount />
@@ -10,4 +10,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default Profile;

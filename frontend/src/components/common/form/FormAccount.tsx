@@ -90,86 +90,88 @@ const FormAccount = () => {
   };
 
   return (
-    <div className="container-card-form container-card-form-account">
-      <h2>Compte</h2>
-      <p className="details-text">Modifier vos coordonées !</p>
-      <form action="" onSubmit={handleSubmit(onSubmit)}>
-        <div className="container-input-firstName-lastName">
-          <input
-            type="text"
-            id="firstName"
-            placeholder="Prénom"
-            {...register("firstname")}
-          />
-          <input
-            type="text"
-            id="lastName"
-            placeholder="Nom"
-            {...register("lastname")}
-          />
-        </div>
-        <input
-          type="text"
-          id="pseudo"
-          placeholder="Pseudo"
-          {...register("username", {
-            minLength: 1,
-          })}
-        />
-        <ErrorMessage
-          errors={errors}
-          name="username"
-          render={({ message }) => <p className="error-input"> {message}</p>}
-        />
-        <input
-          type="email"
-          id="email"
-          placeholder="Email"
-          {...register("email", {
-            pattern: {
-              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-              message: "Format d'email invalide",
-            },
-          })}
-        />
-        <ErrorMessage
-          errors={errors}
-          name="email"
-          render={({ message }) => <p className="error-input"> {message}</p>}
-        />
-        <input
-          type="password"
-          id="password"
-          placeholder="Mot de passe (optionnel)"
-          {...register("password", {
-            required: false,
-
-            minLength: {
-              value: 8,
-              message: "Le mot de passe doit contenir au moins 8 caractères",
-            },
-            pattern: {
-              value: /^(?=.*[A-Z])(?=.*[!@#$%^&*])/,
-              message:
-                "Le mot de passe doit contenir une lettres majuscules et minuscules, un chiffres et un caractères spécial",
-            },
-          })}
-        />
-        <ErrorMessage
-          errors={errors}
-          name="password"
-          render={({ message }) => <p className="error-input"> {message}</p>}
-        />
-        {validation && (
-          <div className="validation-save">
-            Les modifications ont bien été sauvgardé !
+    <div className="container-global-form-account">
+      <div className="container-card-form container-card-form-account">
+        <h2>Compte</h2>
+        <p className="details-text">Modifier vos coordonées !</p>
+        <form action="" onSubmit={handleSubmit(onSubmit)}>
+          <div className="container-input-firstName-lastName">
+            <input
+              type="text"
+              id="firstName"
+              placeholder="Prénom"
+              {...register("firstname")}
+            />
+            <input
+              type="text"
+              id="lastName"
+              placeholder="Nom"
+              {...register("lastname")}
+            />
           </div>
-        )}
+          <input
+            type="text"
+            id="pseudo"
+            placeholder="Pseudo"
+            {...register("username", {
+              minLength: 1,
+            })}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="username"
+            render={({ message }) => <p className="error-input"> {message}</p>}
+          />
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            {...register("email", {
+              pattern: {
+                value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                message: "Format d'email invalide",
+              },
+            })}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="email"
+            render={({ message }) => <p className="error-input"> {message}</p>}
+          />
+          <input
+            type="password"
+            id="password"
+            placeholder="Mot de passe (optionnel)"
+            {...register("password", {
+              required: false,
 
-        <button onClick={handlerValidation} className="button-form-signIn">
-          Sauvgarder
-        </button>
-      </form>
+              minLength: {
+                value: 8,
+                message: "Le mot de passe doit contenir au moins 8 caractères",
+              },
+              pattern: {
+                value: /^(?=.*[A-Z])(?=.*[!@#$%^&*])/,
+                message:
+                  "Le mot de passe doit contenir une lettres majuscules et minuscules, un chiffres et un caractères spécial",
+              },
+            })}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="password"
+            render={({ message }) => <p className="error-input"> {message}</p>}
+          />
+          {validation && (
+            <div className="validation-save">
+              Les modifications ont bien été sauvgardé !
+            </div>
+          )}
+
+          <button onClick={handlerValidation} className="button-form-signIn">
+            Sauvgarder
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
