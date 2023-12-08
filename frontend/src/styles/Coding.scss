@@ -1,12 +1,15 @@
 @import "mixins.scss";
-
+.suggest-widget {
+	color: aliceblue;
+	align-items: start;
+}
 body {
 	padding: 0;
 	.main-nav {
 		padding: 15px 5vh 15px 5vh;
 		box-shadow: 10px;
 	}
-	.main {
+	.mainCodingPage {
 		background-color: rgba(0, 0, 0, 0.05);
 		display: flex;
 		flex-direction: column;
@@ -26,6 +29,9 @@ body {
 			justify-content: flex-start;
 			width: 50%;
 			gap: 10px;
+			:hover {
+				background-color: #5340a91f;
+			}
 		}
 		.leftButton:first-child {
 			margin-left: 15px;
@@ -37,6 +43,9 @@ body {
 			justify-content: flex-end;
 			width: 50%;
 			gap: 10px;
+			:hover {
+				color: rgb(185, 170, 252);
+			}
 
 			button {
 				background-color: $primary;
@@ -52,6 +61,7 @@ body {
 			background-color: white;
 			color: $primary;
 			border: 1px solid $primary;
+			cursor: pointer;
 		}
 	}
 }
@@ -59,6 +69,9 @@ body {
 .general {
 	width: 98%;
 	height: 91%;
+	.showConsole {
+		padding: 0 10px 0 10px;
+	}
 	.editorAndPreview {
 		display: flex;
 		flex-direction: row;

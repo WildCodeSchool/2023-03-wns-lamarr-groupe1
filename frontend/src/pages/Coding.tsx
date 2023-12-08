@@ -55,8 +55,8 @@ const CodingPage = () => {
 		if (data && data.getFile) {
 			setCode(data.getFile.content);
 			setComments(data.getFile.comments);
-      setIssues(data.getFile.issues);
-      setInteractions(data.getFile.interactions);
+			setIssues(data.getFile.issues);
+			setInteractions(data.getFile.interactions);
 		}
 
 		return () => {
@@ -67,8 +67,8 @@ const CodingPage = () => {
 	async function refecthData() {
 		await refetch();
 		setComments(data.getFile.comments);
-    setIssues(data.getFile.issues);
-    setInteractions(data.getFile.interactions);
+		setIssues(data.getFile.issues);
+		setInteractions(data.getFile.interactions);
 		setTimeout(() => {
 			const commentContainer = document.getElementById("commentContainer");
 			commentContainer?.scrollTo(0, commentContainer.scrollHeight);
@@ -105,7 +105,6 @@ const CodingPage = () => {
 			}
 		}
 	}
-
 	async function handleSaveCode() {
 		if (id) {
 			const saveCodeId = parseInt(id);
@@ -135,7 +134,7 @@ const CodingPage = () => {
 
 	return (
 		<Layout>
-			<div className="main">
+			<div className="mainCodingPage">
 				<div className="buttons">
 					<div className="leftButton">
 						<button onClick={toggleIframe}>Preview</button>
