@@ -34,6 +34,7 @@ type commentsList = {
 	issues: IIssuesProps[];
 	refecthData: () => void;
 	user: userinterface;
+	fileId: number | null;
 };
 const Comments = (props: commentsList) => {
 	const [isShow, setIsShow] = useState<boolean>(false);
@@ -133,7 +134,8 @@ const Comments = (props: commentsList) => {
 										status={issue.status}
 										id={issue.id}
 										refecthIssues={props.refecthData}
-										currentUserName={props.user.username}
+										currentUser={props.user}
+										fileId={props.fileId}
 									/>
 							  ))
 							: null}

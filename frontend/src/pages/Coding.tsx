@@ -178,6 +178,7 @@ const CodingPage = () => {
 								issues={issues}
 								refecthData={refecthData}
 								user={profile}
+								fileId={fileId}
 							/>
 						</div>
 						{showIframe && (
