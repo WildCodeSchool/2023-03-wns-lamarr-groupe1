@@ -107,17 +107,17 @@ export class AuthResolver {
 			}).save();
 		}
 
-		const resetDate: Date = new Date();
-		resetDate.setUTCDate(userFoundByEmail?.firstExecutedCodeAt?.getUTCDate() + 1);
-		if (
-			userFoundByEmail.subscription.type === "Free" &&
-			userFoundByEmail.firstExecutedCodeAt <= resetDate
-    ) {
-			await UsersModels.merge(userFoundByEmail, {
-				executedcode: 0,
+		// const resetDate: Date = new Date();
+		// resetDate.setUTCDate(userFoundByEmail?.firstExecutedCodeAt?.getUTCDate() + 1);
+		// if (
+		// 	userFoundByEmail.subscription.type === "Free" &&
+		// 	userFoundByEmail.firstExecutedCodeAt <= resetDate
+    // ) {
+		// 	await UsersModels.merge(userFoundByEmail, {
+		// 		executedcode: 0,
         
-			}).save();
-		}
+		// 	}).save();
+		// }
 
 		const passwordValid: boolean = await argon2.verify(
 			userFoundByEmail.password,

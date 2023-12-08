@@ -58,7 +58,6 @@ const CodingPage = () => {
 			setIssues(data.getFile.issues);
 			setInteractions(data.getFile.interactions);
 		}
-
 		return () => {
 			window.removeEventListener("resize", handleWindowResize);
 		};
