@@ -72,6 +72,7 @@ const GridFileSearch = ({
 					<div className="main-card" key={file.id}>
 						<div className="card-container">
 							<ListingFile
+								id={file.id}
 								filename={file.filename}
 								content={file.content}
 								createdAt={handleDate(file.createdAt)}
@@ -79,12 +80,14 @@ const GridFileSearch = ({
 								language={file.language.name}
 							/>
 						</div>
-						<AddNewInteraction
-							id={file.id}
-							interactions={file.interactions}
-							refetch={refetch}
-							username={profile?.username}
-						/>
+						<div className="main-interaction-container">
+							<AddNewInteraction
+								id={file.id}
+								interactions={file.interactions}
+								refetch={refetch}
+								username={profile?.username}
+							/>
+						</div>
 					</div>
 				))}
 		</>
