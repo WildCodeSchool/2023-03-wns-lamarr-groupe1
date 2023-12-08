@@ -18,6 +18,10 @@ export class ContactModels extends BaseEntity {
 
   @Field()
   @Column()
+  name!: string;
+
+  @Field()
+  @Column()
   title!: string;
 
   @CreateDateColumn()
@@ -25,9 +29,13 @@ export class ContactModels extends BaseEntity {
 
   @Field()
   @Column()
+  email!: string;
+
+  @Field()
+  @Column()
   content!: string;
 
   @Field(() => UsersModels)
-  @ManyToOne(() => UsersModels, (user) => user.contacts)
-  user: UsersModels;
+  @ManyToOne(() => UsersModels, (user) => user.contacts, { nullable: true })
+  user: UsersModels | null;
 }

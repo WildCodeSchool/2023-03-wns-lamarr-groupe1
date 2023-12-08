@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query } from "type-graphql"
+import { Arg, Mutation, Query, Ctx } from "type-graphql"
 import { SubscriptionModels } from "../models/SubscriptionModels"
 import { UpdateSubscriptionInput } from "../inputs/subscription/UpdateSubscriptionInput"
 import { calculateEndedAt } from "../services/SubcriptionEndedAt.service"
@@ -8,7 +8,8 @@ export class SubscriptionResolver {
   async updateSubscription(
     @Arg("id") id: number,
     @Arg("update")
-    { type }: UpdateSubscriptionInput
+    { type }: UpdateSubscriptionInput,
+    @Ctx() context: any
   ): Promise<SubscriptionModels> {
     // passe la 1ère lettre ne majuscule
     type = `${type.charAt(0).toUpperCase()}${type.substring(1).toLowerCase()}`
@@ -21,15 +22,20 @@ export class SubscriptionResolver {
     const subscribedAt = new Date()
 
     // récupérer la soucription a update
-    const subscriptionToUpdate = await SubscriptionModels.findOneBy({
-      id
+    const subscriptionToUpdate = await SubscriptionModels.findOne({
+      where: { id },
+      relations: {
+        user: true
+      }
     })
     if (subscriptionToUpdate === null) {
       throw new Error("subscription not found")
     }
-
-    // calcule la date de fin en fonction de la date de début
+    if (subscriptionToUpdate.user.id !== context.user.id) {
+      throw new Error("You don't have the rights to modify this subscription")
+    }
     if (type === "Expert" && subscriptionToUpdate.status === "Inactive") {
+      // calcule la date de fin en fonction de la date de début
       status = "Active"
       duration = "Monthly"
       const subscriptionEndedAt = calculateEndedAt(

@@ -3,23 +3,26 @@ import CarouselFile from "./CarouselFile";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-
+import { handleDate } from "utils/DateFormat";
+import { Link } from "react-router-dom";
 export type GridFileProps = {
-  files: Array<{
+  filesCarousel: Array<{
     id: number;
     filename: string;
     content: string;
     createdAt: string;
-    image: string;
     isPublic: boolean;
+    language: {
+      name: string;
+    };
   }>;
   title: string;
 };
 
-const GridFile = ({ title, files }: GridFileProps) => {
+const GridFile = ({ title, filesCarousel }: GridFileProps) => {
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 600,
     slidesToShow: 4,
     slidesToScroll: 2,
@@ -58,16 +61,19 @@ const GridFile = ({ title, files }: GridFileProps) => {
       <div className="container-title">
         <h3>{title}</h3>
       </div>
+
       <div className="container-carousel">
         <Slider {...settings}>
-          {files.map((file) => (
-            <CarouselFile
-              key={file.id}
-              filename={file.filename}
-              content={file.content}
-              createdAt={file.createdAt}
-              isPublic={file.isPublic}
-            />
+          {filesCarousel.map((file) => (
+            <Link key={file.id} to={`/coding/${file.id}`}>
+              <CarouselFile
+                filename={file.filename}
+                content={file.content}
+                createdAt={handleDate(file.createdAt)}
+                isPublic={file.isPublic}
+                language={file.language.name}
+              />
+            </Link>
           ))}
         </Slider>
       </div>
@@ -76,3 +82,15 @@ const GridFile = ({ title, files }: GridFileProps) => {
 };
 
 export default GridFile;
+
+// <div className="container-carousel-no-slider">
+//   {filesCarousel.map((file) => (
+//     <CarouselFile
+//       key={file.id}
+//       filename={file.filename}
+//       content={file.content}
+//       createdAt={handleDate(file.createdAt)}
+//       isPublic={file.isPublic}
+//     />
+//   ))}
+// </div>

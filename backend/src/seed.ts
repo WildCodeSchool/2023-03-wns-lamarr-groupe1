@@ -34,7 +34,7 @@ export default class MySeeder implements Seeder {
     await userFactory.saveMany(10);
 
     const languageFactory = factoryManager.get(LanguageModels);
-    await languageFactory.saveMany(5);
+    await languageFactory.saveMany(1);
 
     const filesFactory = factoryManager.get(FilesModels);
     await filesFactory.saveMany(10);

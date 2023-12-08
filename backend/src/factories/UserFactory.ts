@@ -8,10 +8,7 @@ import { calculateEndedAt } from "../services/SubcriptionEndedAt.service";
 export const UserFactory = setSeederFactory(UsersModels, async (faker: Faker) => {
   const user = new UsersModels();
   user.email = faker.internet.email();
-  const password = faker.internet.password({
-    length: 8,
-    prefix: '@A'
-  });
+  const password = "aA@aaaaa"
   user.password = await argon2.hash(password);
   user.username = faker.internet.userName();
   user.firstname = faker.person.firstName();

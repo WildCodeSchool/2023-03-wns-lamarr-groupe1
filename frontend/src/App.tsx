@@ -7,9 +7,11 @@ import {
   SignUpPage,
   PricingPage,
   FilePage,
-  CodingPage
+  CodingPage,
+  ProfilePage,
 } from "./pages/ExportPages";
 import { FileProvider } from "./utils/context/FileContext";
+import SearchFilePage from "pages/SearchFilePage";
 
 const App = () => {
   const { pathname, hash, key } = useLocation();
@@ -29,6 +31,7 @@ const App = () => {
       }, 0);
     }
   }, [pathname, hash, key]);
+
   return (
     <FileProvider>
       <Routes>
@@ -38,6 +41,8 @@ const App = () => {
         <Route path="/subscribe" element={<PricingPage />} />
         <Route path="/coding/:id" element={<CodingPage />} />
         <Route path="/file" element={<FilePage />} />
+        <Route path="/search-files" element={<SearchFilePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </FileProvider>
   );

@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "components/common/layouts/Layout";
 import GridFile from "components/common/GridFile";
 import "styles/FilePage.scss";
 import { useContext } from "react";
-import { dataFile } from "utils/dataFile";
 import { fileContext } from "utils/context/FileContext";
 import FormNewFile from "components/common/form/FormAddFile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "styles/AddFileForm.scss";
+import { useQuery } from "@apollo/client";
+import { GET_PROFILE_QUERY } from "graphql/queries/GET_PROFILE_QUERY";
+import "styles/FilePage.scss";
+import "styles/AddFileForm.scss";
+import AuthenticatedPage from "utils/hoc/authenticatedPage";
+import {
+  useGetPrivateFiles,
+  useGetPublicFiles,
+  useRefetchProfile,
+} from "utils/hook/getProfile";
 // src/types/file.ts
 // Dedans, on va exporter le type suivant :
 type File = {
@@ -21,10 +30,26 @@ type File = {
 };
 
 const FilePage = () => {
-  const privateFiles: File[] = dataFile.filter((file) => !file.isPublic);
-  const publicFiles: File[] = dataFile.filter((file) => file.isPublic);
-
   const { isShow, handleOpenModal, handleCloseModal } = useContext(fileContext);
+
+  const privateFiles = useGetPrivateFiles();
+  const publicFiles = useGetPublicFiles();
+  const { refetch: pulicRefetch, data: PubicData } = useQuery(
+    GET_PROFILE_QUERY,
+    {
+      variables: { filter: { isPublic: null } },
+    }
+  );
+  const { refetch: privateRefetch, data: privateData } = useQuery(
+    GET_PROFILE_QUERY,
+    {
+      variables: { filter: { isPublic: true } },
+    }
+  );
+  useEffect(() => {
+    pulicRefetch();
+    privateRefetch();
+  }, [pulicRefetch, privateRefetch]);
 
   return (
     <Layout>
@@ -35,9 +60,8 @@ const FilePage = () => {
             Fichier <FontAwesomeIcon className="icon" icon={faPlus} size="sm" />
           </button>
         </div>
-
-        <GridFile files={privateFiles} title="Privés" />
-        <GridFile files={publicFiles} title="Publics" />
+        <GridFile filesCarousel={privateFiles} title="Privés" />
+        <GridFile filesCarousel={publicFiles} title="Publics" />
       </div>
       {isShow ? (
         <>
@@ -57,4 +81,4 @@ const FilePage = () => {
   );
 };
 
-export default FilePage;
+export default AuthenticatedPage(FilePage);
