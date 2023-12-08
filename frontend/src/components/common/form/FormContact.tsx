@@ -57,7 +57,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="page-contact">
+    <div id="contact" className="page-contact">
       <div className="contact-container">
         {Toast && (
           <div className="toast-message">

@@ -21,6 +21,22 @@ export class PistonResolver {
 			id: context.user.id,
 		});
 
+		const resetDate: Date = new Date();
+		if (
+			user?.subscription.type === "Free" &&
+			user?.firstExecutedCodeAt !== null &&
+			(user?.firstExecutedCodeAt.getUTCDate() < resetDate.getUTCDate() ||
+				user?.firstExecutedCodeAt.getUTCMonth() < resetDate.getUTCMonth() ||
+				user?.firstExecutedCodeAt.getUTCFullYear() < resetDate.getUTCFullYear())
+		) {
+			await UsersModels.merge(user, {
+				executedcode: 0,
+			}).save();
+		}
+		if (user?.subscription.type === "Free" && user.executedcode > 50) {
+			throw new Error("code execution limit reached");
+		}
+
 		if (user?.subscription.type === "Free" && user.executedcode === 0) {
 			const firstExecutedCodeAt = new Date();
 			const executedcode = 1;
@@ -37,9 +53,6 @@ export class PistonResolver {
 			await UsersModels.merge(user, {
 				executedcode,
 			}).save();
-		}
-		if (user?.subscription.type === "Free" && user.executedcode > 50) {
-			throw new Error("code execution limit reached");
 		}
 
 		try {
