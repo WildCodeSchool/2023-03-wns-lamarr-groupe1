@@ -54,7 +54,7 @@ const AddNewReport = () => {
           <textarea
             id="report"
             placeholder="Expliquez en quoi ce fichier est inapproprié ..."
-            rows={7}
+            rows={5}
             {...register("comment")}
           ></textarea>
 

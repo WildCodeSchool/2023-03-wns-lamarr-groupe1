@@ -46,7 +46,7 @@ const AddNewIssue = (refecthIssues: refetch) => {
           <textarea
             id="issue"
             placeholder="Expliquez quel est le bug ..."
-            rows={7}
+            rows={5}
             {...register("issue")}
           ></textarea>
 

@@ -4,7 +4,7 @@
 	position: absolute;
 	top: 124px;
 	left: 0;
-	height: calc(100% - 124px);
+	height: calc(100vh - 124px);
 	min-width: 30%;
 	max-width: 30%;
 	z-index: 10;
@@ -275,8 +275,8 @@ body {
 	background: white;
 	border-bottom: none;
 	overflow: auto;
-	min-height: 60%;
-	max-height: 60%;
+	min-height: 40%;
+	max-height: 55%;
 	box-shadow: 0 25px 50px -12px #676874;
 	overflow: auto;
 }
@@ -449,8 +449,9 @@ body {
 	position: absolute;
 	top: 124px;
 	left: 0;
-	height: calc(100% - 124px);
+	height: calc(100vh - 124px);
 	max-width: 30%;
+	z-index: 10;
 }
 
 @keyframes slidein {
