@@ -1,7 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import Editor, { OnChange } from "@monaco-editor/react";
 import { RAN_CODE } from "graphql/mutations/RAN_CODE";
-import { GET_FILE_QUERY } from "graphql/queries/GET_FILE_QUERY";
 import { GET_COMMENTS_QUERY } from "graphql/queries/GET_COMMENTS_QUERY";
 import { GET_ISSUES_QUERY } from "graphql/queries/GET_ISSUES_QUERY";
 import { useMutation, useQuery } from "@apollo/client";
@@ -13,37 +12,34 @@ import Comments from "components/common/comments/CommentsList";
 import { useGetProfile } from "utils/hook/getProfile";
 import AddNewInteraction from "../components/common/form/FormAddInteraction";
 import "styles/Coding.scss";
+import { fileContext } from "utils/context/FileContext";
+
+export interface interactionsInterface {
+		type: string;
+            user: {
+                username: string;
+            };
+	}
 
 const CodingPage = () => {
-	interface Fileinterface {
-		id: number;
-		filename: string;
-		content: string;
-		createdAt: string;
-		image: string;
-		isPublic: boolean;
-	}
 
-	interface userinterface {
-		username: string;
-		files: Fileinterface[];
-	}
+	
 	const [code, setCode] = useState<string>("");
 	const [result, setResult] = useState<string>("");
 	const [runCode, { loading }] = useMutation(RAN_CODE);
 	const [saveCode] = useMutation(SAVE_CODE);
 	const [comments, setComments] = useState([]);
 	const [issues, setIssues] = useState([]);
-	const [interactions, setInteractions] = useState([]);
+	const [interactions, setInteractions] = useState<interactionsInterface[]>([]);
 	const [fileUser, setfileUser] = useState<string>("");
-	const { id } = useParams();
-	let fileId = null;
+	const { id } = useParams()
+	const { downloadFile, fileRefetch, fileData, setFileId } = useContext(fileContext);
+	let fileId: number | null = null
 	if (id) {
-		fileId = parseInt(id);
+		fileId = parseInt(id)
+		setFileId(parseInt(id));
 	}
-	const { data, refetch } = useQuery(GET_FILE_QUERY, {
-		variables: { fileId },
-	});
+
 	const { data: commentsData, refetch: refetchComments } = useQuery(
 		GET_COMMENTS_QUERY,
 		{ variables: { filter: { file: fileId } } }
@@ -79,11 +75,11 @@ const CodingPage = () => {
 		}
 		window.addEventListener("resize", handleWindowResize);
 
-		if (data && data.getFile) {
-			setCode(data.getFile.content);
-			setInteractions(data.getFile.interactions);
-			setfileUser(data.getFile.user.username);
-			console.log(data.getFile);
+		if (fileData && fileData.getFile) {
+			setCode(fileData.getFile.content);
+			setInteractions(fileData.getFile.interactions);
+			setfileUser(fileData.getFile.user.username);
+			console.log(fileData.getFile)
 			
 		}
 
@@ -98,7 +94,7 @@ const CodingPage = () => {
 		return () => {
 			window.removeEventListener("resize", handleWindowResize);
 		};
-	}, [data, commentsData, issuesData]);
+	}, [fileData, commentsData, issuesData]);
 
 	async function refetchCommentsData() {
 		await refetchComments();
@@ -111,8 +107,8 @@ const CodingPage = () => {
 	}
 
 	async function refecthInteractionsData() {
-		await refetch();
-		setComments(data.getFile.interactions);
+		await fileRefetch();
+		setInteractions(fileData.getFile.interactions);
 	}
 
 	function handleEditorDidMount(editor: any, monaco: any) {
@@ -124,8 +120,8 @@ const CodingPage = () => {
 	}
 
 	async function handleRunCode() {
-		if (id) {
-			const runCodeId = parseInt(id);
+		if (fileId) {
+			const runCodeId = fileId;
 			try {
 				const response = await runCode({
 					variables: {
@@ -146,8 +142,8 @@ const CodingPage = () => {
 		}
 	}
 	async function handleSaveCode() {
-		if (id) {
-			const saveCodeId = parseInt(id);
+		if (fileId) {
+			const saveCodeId = fileId;
 			const update = {
 				content: code,
 			};
@@ -187,6 +183,9 @@ const CodingPage = () => {
 						/>
 					</div>
 					<div className="rightButton">
+						<button onClick={() =>downloadFile(code)} disabled={loading ? true : false}>
+							{loading ? "Téléchargement..." : "Télécharger"}
+						</button>
 						<button onClick={handleSaveCode} disabled={loading ? true : false}>
 							{loading ? "Sauvegarde..." : "Sauvegarder"}
 						</button>
