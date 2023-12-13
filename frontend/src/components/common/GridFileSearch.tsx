@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
 import { ListingFile } from "./ListingFile";
 import { handleDate } from "utils/DateFormat";
 import AddNewInteraction from "./form/FormAddInteraction";
 import { useGetProfile } from "utils/hook/getProfile";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import FileActionMenu from "./dropdown/FileActionMenu";
+import { useState } from "react";
 export type GridFileProps = {
 	files: Array<{
 		id: number;
@@ -29,6 +32,17 @@ const GridFileSearch = ({
 	refetch,
 }: GridFileProps) => {
 	const profile = useGetProfile();
+
+	const [isActionOpen, setIsActionOpen] = useState<string>();
+
+	const HandleToggleAction = (id: string) => {
+		if (isActionOpen === id) {
+			setIsActionOpen("");
+			return;
+		}
+		setIsActionOpen(id);
+	};
+
 	const handleString = (s: string) => {
 		var r = s.toLowerCase();
 		r = r.replace(new RegExp(/\s/g), "");
