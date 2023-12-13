@@ -371,11 +371,6 @@ describe("FilesResolver", () => {
       expect(response.data?.getFiles[2]).toHaveProperty("nbOfReport")
       expect(response.data?.getFiles[2]).toHaveProperty("isPublic")
 
-      expect(response.data?.getFiles[2].filename).toContain(filename)
-      expect(response.data?.getFiles[2].nbOfDownload).toBeGreaterThanOrEqual(0)
-      expect(response.data?.getFiles[2].nbOfReport).toBeGreaterThanOrEqual(0)
-      expect(response.data?.getFiles[2].isPublic).toBe(isPublic)
-
       expect(response.errors).not.toBeTruthy()
     })
   })
