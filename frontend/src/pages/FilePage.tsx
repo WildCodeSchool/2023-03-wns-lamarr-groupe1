@@ -34,23 +34,7 @@ const FilePage = () => {
 
   const privateFiles = useGetPrivateFiles();
   const publicFiles = useGetPublicFiles();
-  const { refetch: pulicRefetch, data: PubicData } = useQuery(
-    GET_PROFILE_QUERY,
-    {
-      variables: { filter: { isPublic: null } },
-    }
-  );
-  const { refetch: privateRefetch, data: privateData } = useQuery(
-    GET_PROFILE_QUERY,
-    {
-      variables: { filter: { isPublic: true } },
-    }
-  );
-  useEffect(() => {
-    pulicRefetch();
-    privateRefetch();
-  }, [pulicRefetch, privateRefetch]);
-
+  
   return (
     <Layout>
       <div className="container-file-page">
