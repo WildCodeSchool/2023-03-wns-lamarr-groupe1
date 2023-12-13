@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const NEW_ISSUE_MUTATION = gql`
-	mutation Mutation($input: IssuesInput!) {
-		addIssue(input: $input) {
+export const GET_ISSUES_QUERY = gql`
+	query GetIssues($filter: GetIssuesQuery!) {
+		getIssues(filter: $filter) {
 			id
 			issue
 			status

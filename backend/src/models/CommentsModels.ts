@@ -15,29 +15,31 @@ import { UsersModels } from "./UsersModels"
 @ObjectType()
 @Entity()
 export class CommentsModels extends BaseEntity {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id: number
+	@Field()
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @Field()
-  @Column()
-  comment!: string
+	@Field()
+	@Column()
+	comment!: string;
 
-  @Field()
-  @CreateDateColumn()
-  createdAt!: Date
+	@Field()
+	@CreateDateColumn()
+	createdAt!: Date;
 
-  @Field()
-  @UpdateDateColumn()
-  updatedAt!: Date
+	@Field()
+	@UpdateDateColumn()
+	updatedAt!: Date;
 
-  @Field(() => FilesModels)
-  @ManyToOne(() => FilesModels, (file) => file.comments)
-  file: FilesModels
+	@Field(() => FilesModels)
+	@ManyToOne(() => FilesModels, (file) => file.comments, {
+		eager: true,
+	})
+	file: FilesModels;
 
-  @Field(() => UsersModels)
-  @ManyToOne(() => UsersModels, (user) => user.comments, {
-    eager: true
-  })
-  user: UsersModels
+	@Field(() => UsersModels)
+	@ManyToOne(() => UsersModels, (user) => user.comments, {
+		eager: true,
+	})
+	user: UsersModels;
 }

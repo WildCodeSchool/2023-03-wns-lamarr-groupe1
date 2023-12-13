@@ -9,13 +9,14 @@ import { useMutation } from "@apollo/client"
 import { INewCommentProps } from "utils/interface/INewComment"
 
 interface ICommentData {
-  index: number
-  id: number
-  comment: string
-  updatedAt: string
-  username: string
-  refecthComments: () => void
-  currentUserName: string
+	index: number;
+	id: number;
+	comment: string;
+	updatedAt: string;
+	createdAt: string;
+	username: string;
+	refetchComments: () => void;
+	currentUserName: string;
 }
 
 export const handleDate = (day: any): any => {
@@ -53,48 +54,48 @@ const CommentCard = (commentInfo: ICommentData) => {
           }
         })
         setIsShow(false)
-        commentInfo.refecthComments()
+        commentInfo.refetchComments()
       } catch (error: any) {
         console.log(error)
       }
     }
   }
   return (
-    <div className="card-comment">
-      <div className={"comment-info"}>
-        <div className="comment-header">
-          <p>
-            {commentInfo.username.charAt(0).toUpperCase()}
-            {commentInfo.username.substring(1).toLowerCase()}
-          </p>
-          <p>{handleDate(commentInfo.updatedAt)}</p>
-        </div>
-        {!isShow ? (
-          <div className="edit-container">
-            <p>{commentInfo.comment}</p>
-            {commentInfo.currentUserName === commentInfo.username ? 
-            <div className="edit-button-container">
-              <button
-                className="edit-button"
-                onClick={() =>
-                  handleToggleForm(commentInfo.id, commentInfo.comment)
-                }
-              >
-                <FontAwesomeIcon icon={faPenToSquare} size="lg" />
-              </button>
-              </div>
-              : null}
-          </div>
-        ) : (
-          <FormUpdateComment
-              onSubmit={handleSubmit(onSubmit)}
-              register={register}
-            currentComment={currentComment ? currentComment : ""}
-          />
-        )}
-      </div>
-    </div>
-  )
+		<div className="card-comment">
+			<div className={"comment-info"}>
+				<div className="comment-header">
+					<p>
+						{commentInfo.username.charAt(0).toUpperCase()}
+						{commentInfo.username.substring(1).toLowerCase()}
+					</p>
+					<p>{handleDate(commentInfo.createdAt)}</p>
+				</div>
+				{!isShow ? (
+					<div className="edit-container">
+						<p>{commentInfo.comment}</p>
+						{commentInfo.currentUserName === commentInfo.username ? (
+							<div className="edit-button-container">
+								<button
+									className="edit-button"
+									onClick={() =>
+										handleToggleForm(commentInfo.id, commentInfo.comment)
+									}
+								>
+									<FontAwesomeIcon icon={faPenToSquare} size="lg" />
+								</button>
+							</div>
+						) : null}
+					</div>
+				) : (
+					<FormUpdateComment
+						onSubmit={handleSubmit(onSubmit)}
+						register={register}
+						currentComment={currentComment ? currentComment : ""}
+					/>
+				)}
+			</div>
+		</div>
+	);
 }
 
 export default CommentCard

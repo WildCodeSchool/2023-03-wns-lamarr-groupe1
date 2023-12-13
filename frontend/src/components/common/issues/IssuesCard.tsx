@@ -30,7 +30,7 @@ export interface IIssueData {
 	status: string;
 	refecthIssues: () => void;
 	currentUser: userinterface;
-	fileId: number | null;
+	fileUser: string;
 }
 
 export const handleDate = (day: any): any => {
@@ -44,13 +44,11 @@ export const handleDate = (day: any): any => {
 
 const IssuesCard = (issueInfo: IIssueData) => {
 	const [id, setId] = useState<number>();
-	const [currentIssue, setCurrentIssue] = useState<string>();
 	const [isShow, setIsShow] = useState<boolean>(false);
-	const [updateIssue, { loading }] = useMutation(UPDATE_ISSUE_MUTATION);
+	const [updateIssue] = useMutation(UPDATE_ISSUE_MUTATION);
 
 	const handleToggleForm = (id?: number, comment?: string) => {
 		setId(id);
-		setCurrentIssue(comment);
 		setIsShow(true);
 	};
 	const { register, handleSubmit } = useForm<INewIssueProps>({
@@ -90,7 +88,8 @@ const IssuesCard = (issueInfo: IIssueData) => {
 						</div>
 						<div className="edit-container">
 							<p>{issueInfo.issue}</p>
-							{issueInfo.currentUser.username === issueInfo.username ? (
+							{issueInfo.currentUser.username === issueInfo.username ||
+							issueInfo.fileUser === issueInfo.currentUser.username ? (
 								<div className="edit-button-container">
 									<button
 										className="edit-button"

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { INewInteractionProps } from "utils/interface/INewInteraction";
 interface IFileData {
-	id?: number;
+	id: number | null;
 	interactions: Array<{
 		type: string;
 		user: {

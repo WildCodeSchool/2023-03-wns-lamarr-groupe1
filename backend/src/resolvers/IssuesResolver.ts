@@ -6,6 +6,7 @@ import { UsersModels } from "../models/UsersModels";
 import { FilesModels } from "../models/FilesModels";
 import { Equal } from "typeorm";
 import { IssuesType } from "../enums/IssuesType";
+import { GetIssuesQuery } from "../queries/GetIssuesQuery";
 
 export class IssuesResolver {
 	@Authorized()
@@ -79,8 +80,9 @@ export class IssuesResolver {
 			issueToUpdate.file.user.id === context.user.id &&
 			issueToUpdate.user.id !== context.user.id &&
 			status !== undefined &&
-      status !== issueToUpdate.status &&
-      issue === issueToUpdate.issue
+			status !== issueToUpdate.status &&
+			issue !== undefined &&
+			issue === issueToUpdate.issue
 		) {
 			// si l'utlisateur est propriétaire du fichier concerner
 			// on permet uniquement l'édition du statut
@@ -113,8 +115,18 @@ export class IssuesResolver {
 
 	// Query pour obtenir toutes les issues
 	@Query(() => [IssuesModels])
-	async getIssues(): Promise<IssuesModels[]> {
-		const issues = await IssuesModels.find();
+	async getIssues(
+		@Arg("filter") { file }: GetIssuesQuery
+	): Promise<IssuesModels[]> {
+		const where: Record<string, any> = {};
+		const order: Record<string, any> = { createdAt: "DESC" };
+
+		if (file !== undefined) {
+			where.file = { id: file };
+		}
+
+		const issues = await IssuesModels.find({ where, order });
+
 		return issues;
 	}
 

@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import Editor, { OnChange } from "@monaco-editor/react";
 import { RAN_CODE } from "graphql/mutations/RAN_CODE";
 import { GET_FILE_QUERY } from "graphql/queries/GET_FILE_QUERY";
+import { GET_COMMENTS_QUERY } from "graphql/queries/GET_COMMENTS_QUERY";
+import { GET_ISSUES_QUERY } from "graphql/queries/GET_ISSUES_QUERY";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { SAVE_CODE } from "graphql/mutations/SAVE_CODE";
@@ -13,6 +15,19 @@ import AddNewInteraction from "../components/common/form/FormAddInteraction";
 import "styles/Coding.scss";
 
 const CodingPage = () => {
+	interface Fileinterface {
+		id: number;
+		filename: string;
+		content: string;
+		createdAt: string;
+		image: string;
+		isPublic: boolean;
+	}
+
+	interface userinterface {
+		username: string;
+		files: Fileinterface[];
+	}
 	const [code, setCode] = useState<string>("");
 	const [result, setResult] = useState<string>("");
 	const [runCode, { loading }] = useMutation(RAN_CODE);
@@ -20,12 +35,24 @@ const CodingPage = () => {
 	const [comments, setComments] = useState([]);
 	const [issues, setIssues] = useState([]);
 	const [interactions, setInteractions] = useState([]);
+	const [fileUser, setfileUser] = useState<string>("");
 	const { id } = useParams();
 	let fileId = null;
 	if (id) {
 		fileId = parseInt(id);
 	}
-	const { data, refetch } = useQuery(GET_FILE_QUERY, { variables: { fileId } });
+	const { data, refetch } = useQuery(GET_FILE_QUERY, {
+		variables: { fileId },
+	});
+	const { data: commentsData, refetch: refetchComments } = useQuery(
+		GET_COMMENTS_QUERY,
+		{ variables: { filter: { file: fileId } } }
+	);
+	const { data: issuesData, refetch: refetchIssues } = useQuery(
+		GET_ISSUES_QUERY,
+		{ variables: { filter: { file: fileId } } }
+	);
+
 	const profile = useGetProfile();
 
 	const editorRef = useRef<any>(null);
@@ -54,24 +81,38 @@ const CodingPage = () => {
 
 		if (data && data.getFile) {
 			setCode(data.getFile.content);
-			setComments(data.getFile.comments);
-			setIssues(data.getFile.issues);
 			setInteractions(data.getFile.interactions);
+			setfileUser(data.getFile.user.username);
+			console.log(data.getFile);
+			
 		}
+
+		if (commentsData && commentsData.getComments) {
+			setComments(commentsData.getComments);
+		}
+
+		if (issuesData && issuesData.getIssues) {
+			setIssues(issuesData.getIssues);
+		}
+
 		return () => {
 			window.removeEventListener("resize", handleWindowResize);
 		};
-	}, [data]);
+	}, [data, commentsData, issuesData]);
 
-	async function refecthData() {
+	async function refetchCommentsData() {
+		await refetchComments();
+		setComments(commentsData.getComments);
+	}
+
+	async function refecthIssuesData() {
+		await refetchIssues();
+		setIssues(issuesData.getIssues);
+	}
+
+	async function refecthInteractionsData() {
 		await refetch();
-		setComments(data.getFile.comments);
-		setIssues(data.getFile.issues);
-		setInteractions(data.getFile.interactions);
-		setTimeout(() => {
-			const commentContainer = document.getElementById("commentContainer");
-			commentContainer?.scrollTo(0, commentContainer.scrollHeight);
-		}, 20);
+		setComments(data.getFile.interactions);
 	}
 
 	function handleEditorDidMount(editor: any, monaco: any) {
@@ -139,9 +180,9 @@ const CodingPage = () => {
 						<button onClick={toggleIframe}>Preview</button>
 						<button onClick={toggleConsole}>Console</button>
 						<AddNewInteraction
-							id={data?.getFile.id}
+							id={fileId}
 							interactions={interactions}
-							refetch={refetch}
+							refetch={refecthInteractionsData}
 							username={profile?.username}
 						/>
 					</div>
@@ -174,11 +215,12 @@ const CodingPage = () => {
 								theme="vs-dark"
 							/>
 							<Comments
+								fileUser={fileUser}
 								comments={comments}
 								issues={issues}
-								refecthData={refecthData}
+								refetchComments={refetchCommentsData}
+								refetchIssues={refecthIssuesData}
 								user={profile}
-								fileId={fileId}
 							/>
 						</div>
 						{showIframe && (
