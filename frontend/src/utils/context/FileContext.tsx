@@ -3,44 +3,50 @@ import { GET_LANGUAGES_QUERY } from "graphql/queries/GET_LANGUAGES_QUERY"
 import { useQuery } from "@apollo/client"
 import { IFileContextProps } from "utils/interface/IFileContext"
 import { GET_FILE_QUERY } from "graphql/queries/GET_FILE_QUERY";
-import { useParams } from "react-router-dom";
+
 import { Fileinterface } from "utils/interface/IFile";
 
 // on défini un nouveau context
 export const fileContext = createContext<IFileContextProps>({
-  Languages: [],
-  isShow: false,
-  handleOpenModal: () => {},
-  handleCloseModal: () => {},
-  downloadFile: () => '',
-  fileData: {getFile: {
-    id: 0,
-    filename: '',
-    content: '',
-    createdAt: '',
-    isPublic: false,
-    language: {
-      name: '',
-    },
-    interactions: [{
-      type: '',
-      user: {
-      username: ''
-    }}],
-    user: {
-      username: ''
-    }
-    
-  }},
-  fileRefetch: () => {},
-  fileId: null
-})
+	Languages: [],
+	isShow: false,
+	handleOpenModal: () => {},
+	handleCloseModal: () => {},
+	downloadFile: () => "",
+	fileData: {
+		getFile: {
+			id: 0,
+			filename: "",
+			content: "",
+			createdAt: "",
+			isPublic: false,
+			language: {
+				name: "",
+			},
+			interactions: [
+				{
+					type: "",
+					user: {
+						username: "",
+					},
+				},
+			],
+			user: {
+				username: "",
+			},
+		},
+	},
+	fileRefetch: () => {},
+	fileId: null,
+	setFileId: () => {}
+});
 
 interface FileProviderProps {
   children?: React.ReactNode
 }
 export const FileProvider = ({ children }: FileProviderProps) => {
   const [isShow, setIsShow] = useState<boolean>(false)
+  const [fileId, setFileId] = useState<number | null>(null)
   
   const { data, refetch } = useQuery(GET_LANGUAGES_QUERY)
 
@@ -58,14 +64,6 @@ export const FileProvider = ({ children }: FileProviderProps) => {
     setIsShow(false)
   }
 
-  const { id } = useParams();
-
-  let fileId = null;
-
-	if (id) {
-		fileId = parseInt(id);
-  }
-  console.log(fileId)
 
   const { data: fileData, refetch: fileRefetch } = useQuery(GET_FILE_QUERY, {
 		variables: { fileId },
@@ -105,20 +103,21 @@ export const FileProvider = ({ children }: FileProviderProps) => {
   };
 
   return (
-    <fileContext.Provider
-      value={{
-        Languages,
-        handleOpenModal,
-        handleCloseModal,
-        downloadFile,
-        fileData,
-        fileRefetch,
-        isShow,
-        fileId
-      }}
-    >
-      {children}
-    </fileContext.Provider>
-  )
+		<fileContext.Provider
+			value={{
+				Languages,
+				handleOpenModal,
+				handleCloseModal,
+				downloadFile,
+				fileData,
+				fileRefetch,
+				isShow,
+				fileId,
+				setFileId,
+			}}
+		>
+			{children}
+		</fileContext.Provider>
+	);
 }
 

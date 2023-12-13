@@ -32,9 +32,13 @@ const CodingPage = () => {
 	const [issues, setIssues] = useState([]);
 	const [interactions, setInteractions] = useState<interactionsInterface[]>([]);
 	const [fileUser, setfileUser] = useState<string>("");
-	
-	const { downloadFile, fileRefetch, fileData, fileId } = useContext(fileContext);
-	
+	const { id } = useParams()
+	const { downloadFile, fileRefetch, fileData, setFileId } = useContext(fileContext);
+	let fileId: number | null = null
+	if (id) {
+		fileId = parseInt(id)
+		setFileId(parseInt(id));
+	}
 
 	const { data: commentsData, refetch: refetchComments } = useQuery(
 		GET_COMMENTS_QUERY,
