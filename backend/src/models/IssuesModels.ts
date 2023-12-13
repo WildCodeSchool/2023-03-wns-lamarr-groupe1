@@ -15,33 +15,35 @@ import { IssuesType } from "../enums/IssuesType"
 @ObjectType()
 @Entity()
 export class IssuesModels extends BaseEntity {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id: number
+	@Field()
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @Field()
-  @Column({ nullable: true })
-  issue?: string
+	@Field()
+	@Column({ nullable: true })
+	issue?: string;
 
-  @Field()
-  @CreateDateColumn()
-  createdAt!: Date
+	@Field()
+	@CreateDateColumn()
+	createdAt!: Date;
 
-  @Field()
-  @UpdateDateColumn()
-  updatedAt!: Date
+	@Field()
+	@UpdateDateColumn()
+	updatedAt!: Date;
 
-  @Field(() => IssuesType)
-  @Column()
-  status!: IssuesType
+	@Field(() => IssuesType)
+	@Column()
+	status!: IssuesType;
 
-  @Field(() => FilesModels)
-  @ManyToOne(() => FilesModels, (file) => file.issues)
-  file: FilesModels
+	@Field(() => FilesModels)
+	@ManyToOne(() => FilesModels, (file) => file.issues, {
+		eager: true,
+	})
+	file: FilesModels;
 
-  @Field(() => UsersModels)
-  @ManyToOne(() => UsersModels, (user) => user.issues, {
-    eager: true
-  })
-  user: UsersModels
+	@Field(() => UsersModels)
+	@ManyToOne(() => UsersModels, (user) => user.issues, {
+		eager: true,
+	})
+	user: UsersModels;
 }

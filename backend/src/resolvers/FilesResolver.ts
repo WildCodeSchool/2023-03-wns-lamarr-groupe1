@@ -85,6 +85,7 @@ export class FileResolver {
 		const pagination: number = page !== undefined ? page : 1;
 		const NUMBER_OF_FILES_PER_PAGE: number = 10;
 		const take = NUMBER_OF_FILES_PER_PAGE;
+		const order: Record<string, any> = { createdAt: "DESC" };
 		const skip = (pagination - 1) * NUMBER_OF_FILES_PER_PAGE;
 
 		const where: Record<string, any> = {};
@@ -92,10 +93,15 @@ export class FileResolver {
 		if (programmingLanguage !== undefined) {
 			where.language = { name: programmingLanguage };
 		}
-    if (isPublic !== undefined) {
-      where.isPublic = isPublic
+		if (isPublic !== undefined) {
+			where.isPublic = isPublic;
 		}
-		const files = await FilesModels.find({ where, take, skip });
+		const files = await FilesModels.find({
+			where,
+			take,
+			skip,
+			order,
+		});
 
 		return files;
 	}
@@ -110,26 +116,6 @@ export class FileResolver {
 		if (file === null) {
 			throw new Error("File not found");
 		}
-		file.comments.sort((a, b) => {
-			if (a.updatedAt > b.updatedAt) {
-				return -1;
-			}
-			if (a.updatedAt < b.updatedAt) {
-				return 1;
-			}
-			return 0;
-		});
-
-		file.issues.sort((a, b) => {
-			if (a.updatedAt > b.updatedAt) {
-				return -1;
-			}
-			if (a.updatedAt < b.updatedAt) {
-				return 1;
-			}
-			return 0;
-		});
-
 		return file;
 	}
 }

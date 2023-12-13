@@ -28,7 +28,7 @@ export class FilesModels extends BaseEntity {
 	@Column()
 	filename!: string;
 
-	@Field()
+	@Field({ nullable: true })
 	@Column({ nullable: true })
 	content: string;
 
@@ -62,15 +62,11 @@ export class FilesModels extends BaseEntity {
 	}
 
 	@Field(() => [IssuesModels])
-	@OneToMany(() => IssuesModels, (issue) => issue.file, {
-		eager: true,
-	})
+	@OneToMany(() => IssuesModels, (issue) => issue.file)
 	issues: IssuesModels[];
 
 	@Field(() => [CommentsModels])
-	@OneToMany(() => CommentsModels, (comment) => comment.file, {
-		eager: true,
-	})
+	@OneToMany(() => CommentsModels, (comment) => comment.file)
 	comments: CommentsModels[];
 
 	@Field(() => [ReportsModels])

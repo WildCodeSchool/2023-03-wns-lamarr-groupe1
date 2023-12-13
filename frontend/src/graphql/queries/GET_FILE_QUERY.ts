@@ -6,32 +6,17 @@ export const GET_FILE_QUERY = gql`
 			content
 			filename
 			id
-			comments {
-				comment
-				updatedAt
-				id
-				user {
-					username
-					id
-				}
-			}
-			issues {
-				id
-				issue
-				status
-				updatedAt
-				user {
-					username
-				}
-			}
-			user {
-				username
+			language {
+				name
 			}
 			interactions {
 				type
 				user {
 					username
 				}
+			}
+			user {
+				username
 			}
 		}
 	}

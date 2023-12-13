@@ -32,8 +32,10 @@ interface userinterface {
 type commentsList = {
 	comments: ICommentsProps[];
 	issues: IIssuesProps[];
-	refecthData: () => void;
+	refetchComments: () => void;
+	refetchIssues: () => void;
 	user: userinterface;
+	fileUser: string;
 };
 const Comments = (props: commentsList) => {
 	const [isShow, setIsShow] = useState<boolean>(false);
@@ -41,6 +43,8 @@ const Comments = (props: commentsList) => {
 
 	const handleModal = (contentType: string) => {
 		if (!isShow) {
+			props.refetchComments();
+			props.refetchIssues();
 			setIsShow(true);
 			setType(contentType);
 		}
@@ -51,6 +55,8 @@ const Comments = (props: commentsList) => {
 					setType(contentType);
 				}, 100);
 			} else {
+				props.refetchComments();
+				props.refetchIssues();
 				setType(contentType);
 			}
 		}
@@ -115,9 +121,10 @@ const Comments = (props: commentsList) => {
 										index={index}
 										key={comment.id}
 										comment={comment.comment}
+										createdAt={comment.createdAt}
 										updatedAt={comment.updatedAt}
 										username={comment.user.username}
-										refecthComments={props.refecthData}
+										refetchComments={props.refetchComments}
 										currentUserName={props.user.username}
 										id={comment.id}
 									/>
@@ -132,8 +139,9 @@ const Comments = (props: commentsList) => {
 										username={issue.user.username}
 										status={issue.status}
 										id={issue.id}
-										refecthIssues={props.refecthData}
-										currentUserName={props.user.username}
+										refecthIssues={props.refetchIssues}
+										currentUser={props.user}
+										fileUser={props.fileUser}
 									/>
 							  ))
 							: null}
@@ -141,9 +149,9 @@ const Comments = (props: commentsList) => {
 				) : null}
 
 				{type === "comment" ? (
-					<FormAddComment refecthComments={props.refecthData} />
+					<FormAddComment refecthComments={props.refetchComments} />
 				) : type === "issue" ? (
-					<FormAddIssue refecthIssues={props.refecthData} />
+					<FormAddIssue refecthIssues={props.refetchIssues} />
 				) : type === "report" ? (
 					<FormAddReport />
 				) : null}
