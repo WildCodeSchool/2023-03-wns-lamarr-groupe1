@@ -5,14 +5,11 @@ import { useMutation } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { INewInteractionProps } from "utils/interface/INewInteraction";
+import {interactionsInterface} from '../../../pages/Coding';
+
 interface IFileData {
 	id: number | null;
-	interactions: Array<{
-		type: string;
-		user: {
-			username: string;
-		};
-	}>;
+	interactions: interactionsInterface[];
 	refetch: () => void;
 	username: string;
 }

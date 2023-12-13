@@ -2,13 +2,38 @@ import { createContext, useState } from "react"
 import { GET_LANGUAGES_QUERY } from "graphql/queries/GET_LANGUAGES_QUERY"
 import { useQuery } from "@apollo/client"
 import { IFileContextProps } from "utils/interface/IFileContext"
+import { GET_FILE_QUERY } from "graphql/queries/GET_FILE_QUERY";
+import { useParams } from "react-router-dom";
+import { Fileinterface } from "utils/interface/IFile";
 
 // on défini un nouveau context
 export const fileContext = createContext<IFileContextProps>({
   Languages: [],
   isShow: false,
   handleOpenModal: () => {},
-  handleCloseModal: () => {}
+  handleCloseModal: () => {},
+  downloadFile: () => '',
+  fileData: {getFile: {
+    id: 0,
+    filename: '',
+    content: '',
+    createdAt: '',
+    isPublic: false,
+    language: {
+      name: '',
+    },
+    interactions: [{
+      type: '',
+      user: {
+      username: ''
+    }}],
+    user: {
+      username: ''
+    }
+    
+  }},
+  fileRefetch: () => {},
+  fileId: null
 })
 
 interface FileProviderProps {
@@ -33,16 +58,67 @@ export const FileProvider = ({ children }: FileProviderProps) => {
     setIsShow(false)
   }
 
+  const { id } = useParams();
+
+  let fileId = null;
+
+	if (id) {
+		fileId = parseInt(id);
+  }
+  console.log(fileId)
+
+  const { data: fileData, refetch: fileRefetch } = useQuery(GET_FILE_QUERY, {
+		variables: { fileId },
+	});
+
+  const getExtensionForLanguage = (languageId: { name: string } | undefined) => {
+    if (languageId && typeof languageId.name === 'string') {
+      switch (languageId.name.toLowerCase()) {
+        case "javascript":
+          return ".js";
+        case "typescript":
+          return ".ts";
+        case "php":
+          return ".php";
+        default:
+          return ".txt";
+      }
+    }
+    return null;
+  };
+  
+  const downloadFile = (code: string) => {
+    if (fileData && fileData.getFile) {
+      const languageId = fileData.getFile.language;
+      const fileExtension = getExtensionForLanguage(languageId) || ".txt";
+      const fileName = fileData.getFile.filename || `default_filename`;
+      const blob = new Blob([code], { type: 'application/octet-stream' });
+      const a = document.createElement("a");
+  
+      a.href = URL.createObjectURL(blob);
+      a.download = `${fileName}${fileExtension}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+  };
+
   return (
     <fileContext.Provider
       value={{
         Languages,
         handleOpenModal,
         handleCloseModal,
-        isShow
+        downloadFile,
+        fileData,
+        fileRefetch,
+        isShow,
+        fileId
       }}
     >
       {children}
     </fileContext.Provider>
   )
 }
+
