@@ -109,13 +109,15 @@
 				}
 			}
 			.main-card-carousel {
-				text-decoration: none;
-				color: #000;
 				transition: transform 0.3s ease-in-out;
 				position: relative;
 
 				&:hover {
 					transform: scale(1.1);
+				}
+				a {
+					text-decoration: none;
+					color: #000;
 				}
 				.action-container {
 					position: relative;
