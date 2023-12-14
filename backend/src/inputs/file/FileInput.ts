@@ -1,9 +1,9 @@
 import { Length } from "class-validator";
 import { Field, InputType } from "type-graphql";
 
-// interface ILanguage {
-//   name: string;
-// }
+interface ILanguage {
+  name: string;
+}
 
 @InputType()
 export class FileInput {
@@ -16,9 +16,6 @@ export class FileInput {
 
 	@Field()
 	isPublic: boolean;
-
-	// @Field({ nullable: true })
-	// language: ILanguage;
 
 	@Field({ nullable: true })
 	nbOfReport: number;

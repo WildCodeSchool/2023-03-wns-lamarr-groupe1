@@ -97,7 +97,7 @@ const AddNewFile = () => {
           <label htmlFor="privé">Marquer comme privé</label>
         </div>
         <button className="button-form" disabled={loading}>
-          valider
+          Valider
         </button>
       </form>
     </div>

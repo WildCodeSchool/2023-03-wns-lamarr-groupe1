@@ -6,8 +6,10 @@ export const GET_FILE_QUERY = gql`
 			content
 			filename
 			id
+			isPublic
 			language {
 				name
+				id
 			}
 			interactions {
 				type
