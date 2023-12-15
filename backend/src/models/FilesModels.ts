@@ -7,7 +7,8 @@ import {
   ManyToOne,
   BeforeInsert,
   CreateDateColumn,
-  UpdateDateColumn,
+	UpdateDateColumn,
+	DeleteDateColumn
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { IssuesModels } from "./IssuesModels";
@@ -42,6 +43,9 @@ export class FilesModels extends BaseEntity {
 
 	@UpdateDateColumn()
 	updatedAt!: Date;
+
+	@DeleteDateColumn({ nullable: true })
+	deletedAt!: Date;
 
 	@Field()
 	@Column()

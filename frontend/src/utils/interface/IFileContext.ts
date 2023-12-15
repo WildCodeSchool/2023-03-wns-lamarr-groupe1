@@ -11,4 +11,6 @@ export interface IFileContextProps {
 	fileRefetch: () => void;
 	fileId: number | null;
 	setFileId: (arg: number | null) => void
+	setIsCreate: (arg: boolean) => void
+	isCreate: boolean
 }

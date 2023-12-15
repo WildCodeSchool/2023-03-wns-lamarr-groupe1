@@ -22,6 +22,7 @@ export const fileContext = createContext<IFileContextProps>({
 			isPublic: false,
 			language: {
 				name: "",
+				id: 0
 			},
 			interactions: [
 				{
@@ -38,7 +39,9 @@ export const fileContext = createContext<IFileContextProps>({
 	},
 	fileRefetch: () => {},
 	fileId: null,
-	setFileId: () => {}
+	setFileId: () => {},
+	setIsCreate: () => {},
+	isCreate: true
 });
 
 interface FileProviderProps {
@@ -47,6 +50,7 @@ interface FileProviderProps {
 export const FileProvider = ({ children }: FileProviderProps) => {
   const [isShow, setIsShow] = useState<boolean>(false)
   const [fileId, setFileId] = useState<number | null>(null)
+  const [isCreate, setIsCreate] = useState<boolean>(true)
   
   const { data, refetch } = useQuery(GET_LANGUAGES_QUERY)
 
@@ -63,7 +67,6 @@ export const FileProvider = ({ children }: FileProviderProps) => {
   const handleCloseModal = () => {
     setIsShow(false)
   }
-
 
   const { data: fileData, refetch: fileRefetch } = useQuery(GET_FILE_QUERY, {
 		variables: { fileId },
@@ -114,6 +117,8 @@ export const FileProvider = ({ children }: FileProviderProps) => {
 				isShow,
 				fileId,
 				setFileId,
+				isCreate,
+				setIsCreate,
 			}}
 		>
 			{children}

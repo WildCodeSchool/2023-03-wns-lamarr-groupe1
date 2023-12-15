@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
 import { ListingFile } from "./ListingFile";
 import { handleDate } from "utils/DateFormat";
 import AddNewInteraction from "./form/FormAddInteraction";
 import { useGetProfile } from "utils/hook/getProfile";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import FileActionMenu from "./dropdown/FileActionMenu";
+import { useContext, useState } from "react";
+import { fileContext } from "utils/context/FileContext";
 export type GridFileProps = {
 	files: Array<{
 		id: number;
@@ -28,7 +32,21 @@ const GridFileSearch = ({
 	valueFilter,
 	refetch,
 }: GridFileProps) => {
+	const { setFileId } =
+		useContext(fileContext);
 	const profile = useGetProfile();
+
+	const [isActionOpen, setIsActionOpen] = useState<number | null>(null);
+
+	const HandleToggleAction = (id: number) => {
+		if (isActionOpen === id) {
+			setIsActionOpen(null);
+			return;
+		}
+		setIsActionOpen(id);
+		setFileId(id)
+	};
+
 	const handleString = (s: string) => {
 		var r = s.toLowerCase();
 		r = r.replace(new RegExp(/\s/g), "");
@@ -70,6 +88,15 @@ const GridFileSearch = ({
 				)
 				.map((file) => (
 					<div className="main-card" key={file.id}>
+						<div className="action-container">
+							<button
+								onClick={() => HandleToggleAction(file.id)}
+								className="action-button"
+							>
+								<FontAwesomeIcon icon={faEllipsis} size="xl" />
+							</button>
+							{isActionOpen === file.id ? <FileActionMenu /> : null}
+						</div>
 						<div className="card-container">
 							<ListingFile
 								id={file.id}

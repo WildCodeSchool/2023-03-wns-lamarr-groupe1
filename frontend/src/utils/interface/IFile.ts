@@ -6,7 +6,8 @@ export interface Fileinterface {
         createdAt: string;
         isPublic: boolean;
         language: {
-          name: string;
+            name: string;
+            id: number
         };
         interactions: Array<{
             type: string;
