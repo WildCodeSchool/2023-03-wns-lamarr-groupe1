@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
 interface IFileData {
   id?: number;
@@ -12,19 +12,26 @@ interface IFileData {
 }
 const CarouselFile = (fileInfo: IFileData) => {
   return (
-    <>
-    <View style="styles.card-carousel">
-      <div className="content-img">
-        <img alt="Preview du fichier" />
-      </div>
-      <div className="content-info">
-        <h4>{fileInfo.filename}</h4>
-        <p>{fileInfo.createdAt}</p>
-        <p className="language">{fileInfo.language}</p>
-      </div>
-    </View>
-    </>
+    <ScrollView>
+      <View style={styles.cardCarousel}>
+        <View style={styles.contentImg}>
+          {/* <Image source={} alt="Preview du fichier" /> */}
+        </View>
+        <View style={styles.contentInfo}>
+          <Text>{fileInfo.filename}</Text>
+          <Text>{fileInfo.createdAt}</Text>
+          <Text style={styles.language}>{fileInfo.language}</Text>
+        </View>
+      </View>
+    </ScrollView>
   );
+};
+
+const styles = {
+  cardCarousel: {},
+  contentImg: {},
+  contentInfo: {},
+  language: {},
 };
 
 export default CarouselFile;

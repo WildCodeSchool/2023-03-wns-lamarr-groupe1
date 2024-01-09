@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 import CarouselFile from "./CarouselFile";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
@@ -68,10 +69,10 @@ const GridFile = ({ title, filesCarousel }: GridFileProps) => {
   // };
 
   return (
-    <div className="container-title-carousel">
-      <div className="container-title">
+    <View style={styles.containerTitleCarousel}>
+      <View style={styles.containerTitle}>
         <Text>{title}</Text>
-      </div>
+      </View>
 
       <div className="container-carousel">
         {/* <Slider {...settings}> */}
@@ -99,8 +100,15 @@ const GridFile = ({ title, filesCarousel }: GridFileProps) => {
           ))}
         </View>
       </div>
-    </div>
+    </View>
   );
+};
+
+const styles = {
+  containerTitleCarousel: {},
+  containerTitle: {},
+  contentInfo: {},
+  language: {},
 };
 
 export default GridFile;
