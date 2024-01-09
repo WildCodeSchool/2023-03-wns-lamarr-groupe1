@@ -10,8 +10,8 @@ export const useGetPublicFiles = () => {
 };
 export const useGetPrivateFiles = () => {
   const { data, refetch: refetchPrivate } = useQuery(GET_PROFILE_QUERY, {
-		variables: { filter: { isPublic: true } },
-	});
+    variables: { filter: { isPublic: true } },
+  });
   const privateFiles = data?.getProfile.files || [];
   return { privateFiles, refetchPrivate };
 };

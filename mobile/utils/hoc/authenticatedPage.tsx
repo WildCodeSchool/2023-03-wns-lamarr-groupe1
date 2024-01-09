@@ -1,22 +1,26 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type ReactComponent = () => JSX.Element
+type ReactComponent = () => JSX.Element;
 
 const AuthenticatedPage = (Page: ReactComponent) => {
-  function MyComponent() {
+  const navigation = useNavigation();
 
     useEffect(() => {
-      const isAuthenticated = localStorage.getItem("token")
+      const checkToken = async () => {
+        const token = await AsyncStorage.getItem("token").then((res) => {
+          console.log(res);
+          if (!res) {
+            //navigation.navigate("Sign-in");
+          }
+        });
+      };
+  
+      checkToken();
+    }, []);
 
-      if (!isAuthenticated) {
-        // Redirect to the sign-in page
-      }
-    }, [])
-
-    return <Page />
+    return <Page />;
   }
 
-  return MyComponent
-}
-
-export default AuthenticatedPage
+export default AuthenticatedPage;
