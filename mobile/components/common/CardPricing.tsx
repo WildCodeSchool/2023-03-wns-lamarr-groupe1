@@ -68,7 +68,7 @@ const CardPricing = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   marginSection: {
-    marginBottom: 80,
+    marginBottom: 30,
   },
   textAlignCenter: {
     textAlign: "center",

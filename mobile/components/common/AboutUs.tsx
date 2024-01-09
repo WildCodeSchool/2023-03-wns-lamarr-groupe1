@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   marginSection: {
-    marginBottom: 80,
+    marginBottom: 30,
   },
   marginLeftRight: {
     paddingHorizontal: 15,
