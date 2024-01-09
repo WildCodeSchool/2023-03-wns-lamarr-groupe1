@@ -14,7 +14,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const httpLink = createHttpLink({
-  uri: "http://192.168.1.35:5000",
+  //uri: "http://192.168.1.35:5000", //Gautier
+  //uri: "http://192.168.1.12:5000", //Christopher
+  //uri: "http://192.168.1.35:5000", //Flora
+  //uri: "http://192.168.1.4:5000", //Khemis
   fetchOptions: {
     mode: "no-cors",
   },
@@ -35,7 +38,10 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const apolloClient = new ApolloClient({
-  uri: "http://192.168.1.35:5000",
+  //uri: "http://192.168.1.35:5000", //Gautier
+  //uri: "http://192.168.1.12:5000", //Christopher
+  //uri: "http://192.168.1.35:5000", //Flora
+  //uri: "http://192.168.1.4:5000", //Khemis
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
