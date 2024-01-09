@@ -15,7 +15,7 @@ import {
 
 const FileScreen = () => {
   const navigation = useNavigation();
-  const { isShow } = useContext(fileContext);
+  //const { isShow } = useContext(fileContext);
 
   const { privateFiles } = useGetPrivateFiles();
   const { publicFiles } = useGetPublicFiles();
