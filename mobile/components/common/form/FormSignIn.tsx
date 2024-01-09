@@ -26,10 +26,9 @@ const FormSignIn = ({ navigation }) => {
 				variables: data,
 			});
 			const token = result.data.signIn;
-			AsyncStorage.setItem("token", token);
+			await AsyncStorage.setItem("token", token);
 			setCredantials(false);
 			navigation.navigate("Home");
-			console.log(result.data.signIn)
 		} catch (error) {
 			console.log(error)
 			setCredantials(true);
