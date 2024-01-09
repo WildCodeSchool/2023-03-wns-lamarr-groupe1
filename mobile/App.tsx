@@ -21,10 +21,10 @@ const httpLink = createHttpLink({
     mode: "no-cors",
   },
 });
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
 
-  const token = AsyncStorage?.getItem("token");
+  const token = await AsyncStorage?.getItem("token");
 
   // return the headers to the context so httpLink can read them
 
@@ -54,18 +54,18 @@ export default function App() {
   return (
     <ApolloProvider client={apolloClient}>
       <authContext.Provider value={{ isAuthenticated, setIsAuth }}>
-		<FileProvider>
-        <NavigationContainer>
-          <Tab.Navigator>
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Sign-in" component={SignIn} />
-            {isAuthenticated ? (
-              <Tab.Screen name="FilePage" component={FileScreen} />
-            ) : null}
-          </Tab.Navigator>
-          <StatusBar style="light" />
-        </NavigationContainer>
-		</FileProvider>
+        <FileProvider>
+          <NavigationContainer>
+            <Tab.Navigator>
+              <Tab.Screen name="Home" component={Home} />
+              <Tab.Screen name="Sign-in" component={SignIn} />
+              {isAuthenticated ? (
+                <Tab.Screen name="FilePage" component={FileScreen} />
+              ) : null}
+            </Tab.Navigator>
+            <StatusBar style="light" />
+          </NavigationContainer>
+        </FileProvider>
       </authContext.Provider>
     </ApolloProvider>
   );

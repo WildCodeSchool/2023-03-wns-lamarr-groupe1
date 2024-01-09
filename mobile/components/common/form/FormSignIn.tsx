@@ -26,14 +26,13 @@ const FormSignIn = ({ navigation }) => {
     try {
       const result = await signIn({
         variables: data,
-      }).then((result) => {
-        console.log(result.data.signIn);
-        const token = result.data.signIn;
-        AsyncStorage.setItem("token", token);
-        setIsAuth(true);
-        setCredentials(false);
-        navigation.navigate("Home");
       });
+      console.log(result);
+      const token = result.data.signIn;
+      await AsyncStorage.setItem("token", token);
+      setIsAuth(true);
+      setCredentials(false);
+      navigation.navigate("Home");
     } catch (error) {
       console.log(error);
       setCredentials(true);
@@ -113,12 +112,6 @@ const FormSignIn = ({ navigation }) => {
           onPress={handleSubmit(onSubmit)}
           disabled={loading}
         />
-      </View>
-      <Text>- OR -</Text>
-
-      <View>
-        <Button title="Connection avec Google" />
-        <Button title="Connection avec Facebook" />
       </View>
       <Text>
         Pas encore de compte ?{" "}

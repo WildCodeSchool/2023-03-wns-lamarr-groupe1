@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import CarouselFile from "./CarouselFile";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 import { handleDate } from "../../utils/DateFormat";
 import { fileContext } from "../../utils/context/FileContext";
 export type GridFileProps = {
@@ -32,41 +30,6 @@ const GridFile = ({ title, filesCarousel }: GridFileProps) => {
     setIsActionOpen(id);
     setFileId(id);
   };
-  // const settings = {
-  //   dots: true,
-  //   infinite: false,
-  //   speed: 600,
-  //   slidesToShow: 4,
-  //   slidesToScroll: 2,
-  //   responsive: [
-  //     {
-  //       breakpoint: 1024,
-  //       settings: {
-  //         slidesToShow: 3,
-  //         slidesToScroll: 3,
-  //         infinite: true,
-  //         dots: true,
-  //       },
-  //     },
-  //     {
-  //       breakpoint: 700,
-  //       settings: {
-  //         slidesToShow: 2,
-  //         slidesToScroll: 2,
-  //         initialSlide: 2,
-  //         dots: true,
-  //       },
-  //     },
-  //     {
-  //       breakpoint: 600,
-  //       settings: {
-  //         slidesToShow: 1,
-  //         slidesToScroll: 1,
-  //         dots: true,
-  //       },
-  //     },
-  //   ],
-  // };
 
   return (
     <View style={styles.containerTitleCarousel}>
@@ -112,15 +75,3 @@ const styles = {
 };
 
 export default GridFile;
-
-// <div className="container-carousel-no-slider">
-//   {filesCarousel.map((file) => (
-//     <CarouselFile
-//       key={file.id}
-//       filename={file.filename}
-//       content={file.content}
-//       createdAt={handleDate(file.createdAt)}
-//       isPublic={file.isPublic}
-//     />
-//   ))}
-// </div>
