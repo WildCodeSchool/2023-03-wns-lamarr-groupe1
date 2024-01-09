@@ -118,7 +118,7 @@ const GridFileSearch = ({
 	};
 
 	return (
-		<SafeAreaView style={[styles.app, styles.shadowProp]}>
+		<SafeAreaView style={styles.app}>
 			<FlatList
 				data={files.filter((element: any) =>
 					valueFilter
@@ -162,12 +162,6 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		width: "100%",
 		marginVertical: 10,
-	},
-	shadowProp: {
-		shadowColor: "#171717",
-		shadowOffset: { width: -2, height: 4 },
-		shadowOpacity: 0.2,
-		shadowRadius: 3,
 	},
 });
 
