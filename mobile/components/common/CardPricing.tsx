@@ -32,7 +32,7 @@ const CardPricing = ({ navigation }) => {
 
         {/* deuxième card */}
         <View style={[styles.containerCard, { backgroundColor: "#5340a9" }]}>
-          <Text style={[styles.title, { color: "#fff" }]}>Basique</Text>
+          <Text style={[styles.title, { color: "#fff" }]}>Premium</Text>
           <View style={[styles.containerPrice]}>
             <Text style={[styles.price, { color: "#fff" }]}>
               9,99<Text style={[styles.devise, { color: "#fff" }]}>€</Text>
