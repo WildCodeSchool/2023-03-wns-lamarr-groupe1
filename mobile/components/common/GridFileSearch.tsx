@@ -11,7 +11,6 @@ import searchFiles from "../../styles/SearchFiles";
 import { authContext } from "../../utils/context/AuthContext";
 
 import {
-	Text,
 	View,
 	SafeAreaView,
 	TouchableOpacity,

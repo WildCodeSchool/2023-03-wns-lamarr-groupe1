@@ -1,10 +1,7 @@
-// import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { SIGN_UP_MUTATION } from "../../../graphql/mutations/SIGN_UP_MUTATION";
 import { useMutation } from "@apollo/client";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-// import { extractValidationsErrors } from "utils/extractValidationsErrors"
-// import { useSearchParams } from "react-router-dom"
 import { ErrorMessage } from "@hookform/error-message";
 import {
   StyleSheet,
@@ -25,11 +22,7 @@ interface IuserSignUp {
   password: string;
 }
 const FormSignUp = ({ navigation, route }) => {
-  // const [searchParams] = useSearchParams();
-  // const queryType = searchParams.get("type");
   const { type } = route.params;
-  console.log(type);
-  // const navigate = useNavigate();
   const [addUser, { loading }] = useMutation(SIGN_UP_MUTATION);
   const [toast, setToast] = useState(false);
 
@@ -43,9 +36,7 @@ const FormSignUp = ({ navigation, route }) => {
   const onSubmit: SubmitHandler<IuserSignUp> = async (data) => {
     const input = {
       ...data,
-      // type: "free",
       type: type || "free",
-      // type: queryType || "free",
     };
 
     try {
@@ -75,7 +66,6 @@ const FormSignUp = ({ navigation, route }) => {
           navigation.navigate("Home");
         }, 3000);
       }, 1000);
-      // input.type === "free" ? navigate("/") : navigate("/");
     } catch (error: any) {}
   };
   return (

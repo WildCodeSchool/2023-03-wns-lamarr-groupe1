@@ -1,7 +1,6 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { Console } from "console";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { fileContext } from "../../utils/context/FileContext";
 import { ILanguageProps } from "../../utils/interface/ILanguage";
 import { View, TextInput } from "react-native";
@@ -48,6 +47,7 @@ const SearchBar = ({
 					style={searchFiles.searchInput}
 					value={value}
 					onChangeText={(value) => setValue(value)}
+					placeholder="Rechercher par nom, langage, date"
 				/>
 				<FontAwesomeIcon
 					style={searchFiles.searchIcon}
@@ -63,7 +63,7 @@ const SearchBar = ({
 					setOpen={setOpen}
 					setValue={setFilterValue}
 					setItems={setItems}
-					placeholder="Choisir un language"
+					placeholder="Choisir un langage"
 				/>
 			</View>
 		</View>
