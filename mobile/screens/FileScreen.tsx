@@ -13,20 +13,9 @@ import {
   useGetPublicFiles,
 } from "../utils/hook/getProfile";
 
-// // src/types/file.ts
-// // Dedans, on va exporter le type suivant :
-// type File = {
-// 	id: number;
-// 	filename: string;
-// 	content: string;
-// 	createdAt: string;
-// 	image: string;
-// 	isPublic: boolean;
-// };
-
 const FileScreen = () => {
   const navigation = useNavigation();
-  const { isShow } = useContext(fileContext);
+  //const { isShow } = useContext(fileContext);
 
   const { privateFiles } = useGetPrivateFiles();
   const { publicFiles } = useGetPublicFiles();

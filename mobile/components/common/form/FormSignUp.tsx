@@ -1,7 +1,10 @@
-import React, { useState, useContext } from "react";
-import { SIGN_IN_QUERY } from "../../../graphql/queries/SIGN_IN_QUERY";
-import { useLazyQuery } from "@apollo/client";
+// import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { SIGN_UP_MUTATION } from "../../../graphql/mutations/SIGN_UP_MUTATION";
+import { useMutation } from "@apollo/client";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+// import { extractValidationsErrors } from "utils/extractValidationsErrors"
+// import { useSearchParams } from "react-router-dom"
 import { ErrorMessage } from "@hookform/error-message";
 import {
   StyleSheet,
@@ -13,29 +16,57 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { authContext } from "../../../utils/context/AuthContext";
 
-interface IuserSignIn {
+interface IuserSignUp {
+  firstname?: string;
+  lastname?: string;
+  username: string;
   email: string;
   password: string;
 }
-
-const FormSignIn = ({ navigation }) => {
-  const [signIn, { loading }] = useLazyQuery(SIGN_IN_QUERY);
-  const { setIsAuth } = useContext(authContext);
+const FormSignUp = ({ navigation, route }) => {
+  // const [searchParams] = useSearchParams();
+  // const queryType = searchParams.get("type");
+  const { type } = route.params;
+  console.log(type);
+  // const navigate = useNavigate();
+  const [addUser, { loading }] = useMutation(SIGN_UP_MUTATION);
   const [toast, setToast] = useState(false);
 
   const {
     control,
+    register,
     handleSubmit,
+    setError,
     formState: { errors },
-  } = useForm<IuserSignIn>({ mode: "onBlur" });
-  const onSubmit: SubmitHandler<IuserSignIn> = async (data) => {
+  } = useForm<IuserSignUp>({ mode: "onBlur" });
+  const onSubmit: SubmitHandler<IuserSignUp> = async (data) => {
+    const input = {
+      ...data,
+      // type: "free",
+      type: type || "free",
+      // type: queryType || "free",
+    };
+
     try {
-      const result = await signIn({
-        variables: data,
+      const result = await addUser({
+        variables: { input },
+
+        // onError: (error) => {
+        //   const validationErrors: Record<string, string[]> =
+        //     extractValidationsErrors(error.graphQLErrors);
+        //   for (const fieldKey of Object.keys(validationErrors)) {
+        //     for (const message of validationErrors[fieldKey]) {
+        //       const testError = setError(fieldKey as keyof IuserSignUp, {
+        //         type: "manual",
+        //         message: message,
+        //       });
+        //       console.log(testError);
+        //     }
+        //   }
+        // },
       });
-      const token = result.data.signIn;
+      const token = result.data.signUp;
       await AsyncStorage.setItem("token", token);
       setTimeout(() => {
         setToast(true);
@@ -44,11 +75,9 @@ const FormSignIn = ({ navigation }) => {
           navigation.navigate("Home");
         }, 3000);
       }, 1000);
-    } catch (error) {
-      console.log(error);
-    }
+      // input.type === "free" ? navigate("/") : navigate("/");
+    } catch (error: any) {}
   };
-
   return (
     <View style={[styles.displayFlexCenter]}>
       <View style={[styles.containerCard, { backgroundColor: "#5340a9" }]}>
@@ -56,12 +85,12 @@ const FormSignIn = ({ navigation }) => {
           <Text
             style={[styles.title, styles.textAlignCenter, { color: "#fff" }]}
           >
-            Connectez-vous
+            Inscrivez-vous
           </Text>
           <Text
             style={[styles.text, styles.textAlignCenter, { color: "#fff" }]}
           >
-            Bonjour ! Renseigner vos coordonnées pour vous connecter
+            Bonjour ! Renseigner vos coordonnées pour vous Inscrire
           </Text>
           {toast && (
             <View>
@@ -71,6 +100,63 @@ const FormSignIn = ({ navigation }) => {
               </Text>
             </View>
           )}
+
+          <View style={[styles.containerInputName]}>
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={[styles.input, { width: "46%" }]}
+                  id="firstName"
+                  placeholder="Prénom*"
+                  onBlur={onBlur}
+                  onChangeText={(value) => onChange(value)}
+                  value={value}
+                />
+              )}
+              name="firstname"
+            />
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={[styles.input, { width: "48%" }]}
+                  id="lastName"
+                  placeholder="Nom*"
+                  onBlur={onBlur}
+                  onChangeText={(value) => onChange(value)}
+                  value={value}
+                />
+              )}
+              name="lastname"
+            />
+          </View>
+
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                id="pseudo"
+                placeholder="Pseudo*"
+                onBlur={onBlur}
+                onChangeText={(value) => onChange(value)}
+                value={value}
+              />
+            )}
+            name="username"
+            rules={{
+              required: "Ce champ est requis !",
+              minLength: 3,
+            }}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="username"
+            render={({ message }) => (
+              <Text style={styles.error}> {message}</Text>
+            )}
+          />
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
@@ -141,18 +227,18 @@ const FormSignIn = ({ navigation }) => {
             disabled={loading}
           >
             <Text style={(styles.buttonText, { color: "#5340a9" })}>
-              Se connecter
+              S'inscrire
             </Text>
           </TouchableOpacity>
         </View>
 
         <Text style={[styles.text, styles.textAlignCenter, { color: "#fff" }]}>
-          Pas encore de compte ?{" "}
+          Déjà de compte ?{" "}
           <Text
             style={[styles.text, styles.textAlignCenter, { color: "#849BCE" }]}
-            onPress={() => navigation.navigate("File")}
+            onPress={() => navigation.navigate("signIn")}
           >
-            Inscrivez-vous !
+            Connectez-vous !
           </Text>
         </Text>
       </View>
@@ -160,6 +246,11 @@ const FormSignIn = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
+  containerInputName: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
   marginSection: {
     marginBottom: 80,
   },
@@ -252,4 +343,5 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
-export default FormSignIn;
+
+export default FormSignUp;

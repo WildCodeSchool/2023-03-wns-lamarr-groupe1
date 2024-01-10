@@ -1,4 +1,4 @@
-import { ILanguageProps } from "utils/interface/ILanguage"
+import { ILanguageProps } from "./ILanguage"
 import { Fileinterface } from "./IFile"
 
 export interface IFileContextProps {

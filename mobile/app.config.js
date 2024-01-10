@@ -27,7 +27,7 @@ export default {
 		},
 		extra: {
 			expoClient: {
-				hostUri: "http://192.168.1.12:5000",
+				hostUri: "http://192.168.1.35:5000",
 			},
 		},
 	},
