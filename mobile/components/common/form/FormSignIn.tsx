@@ -45,7 +45,9 @@ const FormSignIn = ({ navigation }) => {
           navigation.navigate("Home");
         }, 3000);
       }, 1000);
+      setIsAuth(true);
     } catch (error) {
+      setIsAuth(false);
       console.log(error);
     }
   };
