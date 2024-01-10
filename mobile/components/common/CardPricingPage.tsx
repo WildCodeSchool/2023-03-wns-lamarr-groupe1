@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-const CardPricing = ({ navigation }) => {
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+
+const CardPricingPage = ({ navigation }) => {
   const handleLinkPress = () => {
     // Action à effectuer lorsque le lien est pressé
-    navigation.navigate("Pricing"); // Remplacez par l'action souhaitée
+    navigation.navigate("Home"); // Remplacez par l'action souhaitée
   };
   return (
     <View style={[styles.marginSection]}>
@@ -137,4 +138,4 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 });
-export default CardPricing;
+export default CardPricingPage;

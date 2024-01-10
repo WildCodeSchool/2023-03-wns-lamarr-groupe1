@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, SignIn, Profile, FileScreen } from "./screens/ExportPages";
+import { Home, SignIn, Profile, FileScreen, Pricing } from "./screens/ExportPages";
 import {
   ApolloClient,
   ApolloProvider,
@@ -14,10 +14,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authContext } from "./utils/context/AuthContext";
 import { FileProvider } from "./utils/context/FileContext";
 import { useContext, useState } from "react";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 const httpLink = createHttpLink({
-  //uri: "http://192.168.1.35:5000", //Gautier
+  uri: "http://192.168.1.35:5000", //Gautier
   //uri: "http://192.168.1.12:5000", //Christopher
   //uri: "http://192.168.1.119:5000", //Flora
   //uri: "http://192.168.1.4:5000", //Khemis
@@ -42,7 +43,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const apolloClient = new ApolloClient({
-  //uri: "http://192.168.1.35:5000", //Gautier
+  uri: "http://192.168.1.35:5000", //Gautier
   //uri: "http://192.168.1.12:5000", //Christopher
   //uri: "http://192.168.1.119:5000", //Flora
   //uri: "http://192.168.1.4:5000", //Khemis
@@ -51,6 +52,7 @@ const apolloClient = new ApolloClient({
 });
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -59,18 +61,25 @@ export default function App() {
     setIsAuthenticated(value);
   };
 
+  const HomeStack = () => (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Pricing" component={Pricing} />
+    </Stack.Navigator>
+  );
+
   return (
     <ApolloProvider client={apolloClient}>
       <authContext.Provider value={{ isAuthenticated, setIsAuth }}>
         <FileProvider>
           <NavigationContainer>
             <Tab.Navigator>
-              <Tab.Screen name="Home" component={Home} />
+              <Tab.Screen name="Home" component={HomeStack} />
               <Tab.Screen name="Sign-in" component={SignIn} />
               {isAuthenticated ? (
                 <>
-                <Tab.Screen name="FilePage" component={FileScreen} />
-				          <Tab.Screen name="Profile" component={Profile} />
+                  <Tab.Screen name="FilePage" component={FileScreen} />
+                  <Tab.Screen name="Profile" component={Profile} />
                 </>
               ) : null}
             </Tab.Navigator>
