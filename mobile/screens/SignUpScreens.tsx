@@ -1,16 +1,16 @@
-import FormSignIn from "../components/common/form/FormSignIn";
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import FormSignUp from "../components/common/form/FormSignUp";
 
-const SignInScreens = () => {
-  const navigation = useNavigation();
+const SignUpScreens = ({navigation, route}) => {
+  
   return (
     <>
       <View style={[{ flex: 1 }, { backgroundColor: "#fff" }]}>
-        <FormSignIn navigation={navigation} />
+        <FormSignUp navigation={navigation} route={route} />
       </View>
     </>
   );
 };
 
-export default SignInScreens;
+export default SignUpScreens;
