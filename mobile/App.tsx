@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, SignIn, Profile, FileScreen, Pricing } from "./screens/ExportPages";
+import { Home, SignIn, Profile, FileScreen, Pricing, SignUp } from "./screens/ExportPages";
 import {
   ApolloClient,
   ApolloProvider,
@@ -65,7 +65,7 @@ export default function App() {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Pricing" component={Pricing} />
-      <Stack.Screen name="Sign-up" component={Signup} />
+      <Stack.Screen name="Sign-up" component={SignUp} />
     </Stack.Navigator>
   );
 
@@ -76,7 +76,7 @@ export default function App() {
           <NavigationContainer>
             <Tab.Navigator>
               <Tab.Screen name="Home" component={HomeStack} />
-              <Tab.Screen name="Sign-in" component={HomeStack} />
+              <Tab.Screen name="Sign-in" component={SignIn} />
               {isAuthenticated ? (
                 <>
                   <Tab.Screen name="FilePage" component={FileScreen} />
