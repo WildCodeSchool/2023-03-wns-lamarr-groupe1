@@ -65,6 +65,7 @@ export default function App() {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Pricing" component={Pricing} />
+      <Stack.Screen name="Sign-up" component={Signup} />
     </Stack.Navigator>
   );
 
@@ -75,7 +76,7 @@ export default function App() {
           <NavigationContainer>
             <Tab.Navigator>
               <Tab.Screen name="Home" component={HomeStack} />
-              <Tab.Screen name="Sign-in" component={SignIn} />
+              <Tab.Screen name="Sign-in" component={HomeStack} />
               {isAuthenticated ? (
                 <>
                   <Tab.Screen name="FilePage" component={FileScreen} />
