@@ -70,7 +70,7 @@ export default function App() {
 
 	const HomeStack = () => (
 		<Stack.Navigator>
-			<Stack.Screen name="Home" component={Home} />
+			<Stack.Screen name="Home3" component={Home}  options={{ headerShown: false }}/>
 			<Stack.Screen name="Pricing" component={Pricing} />
 			<Stack.Screen name="Sign-up" component={SignUp} />
 		</Stack.Navigator>
@@ -81,17 +81,23 @@ export default function App() {
 			<authContext.Provider value={{ isAuthenticated, setIsAuth }}>
 				<FileProvider>
 					<NavigationContainer>
-						<Tab.Navigator>
-							<Tab.Screen name="Home" component={HomeStack} />
-							<Tab.Screen name="Sign-in" component={SignIn} />
-							<Tab.Screen name="Search-files" component={SearchFiles} />
-							{isAuthenticated ? (
-								<>
-									<Tab.Screen name="FilePage" component={FileScreen} />
-									<Tab.Screen name="Profile" component={Profile} />
-								</>
-							) : null}
-						</Tab.Navigator>
+					<Tab.Navigator>
+  {isAuthenticated ? (
+    <>
+      <Tab.Screen name="Home" component={HomeStack}/>
+      <Tab.Screen name="Search-files" component={SearchFiles} />
+      <Tab.Screen name="FilePage" component={FileScreen} />
+      <Tab.Screen name="Profile" component={Profile} />
+    </>
+  ) : (
+    <>
+      <Tab.Screen name="Home" component={HomeStack}/>
+      <Tab.Screen name="Search-files" component={SearchFiles} />
+      <Tab.Screen name="FilePage" component={FileScreen} />
+      <Tab.Screen name="Sign-in" component={SignIn} />
+    </>
+  )}
+</Tab.Navigator>
 						<StatusBar style="light" />
 					</NavigationContainer>
 				</FileProvider>
