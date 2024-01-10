@@ -14,6 +14,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authContext } from "./utils/context/AuthContext";
 import { FileProvider } from "./utils/context/FileContext";
 import { useContext, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faFile, faHouse, faKey } from "@fortawesome/free-solid-svg-icons";
 
 const httpLink = createHttpLink({
   uri: "http://192.168.1.119:5000",
@@ -58,10 +60,38 @@ export default function App() {
         <FileProvider>
           <NavigationContainer>
             <Tab.Navigator>
-              <Tab.Screen name="Home" component={Home} />
-              <Tab.Screen name="Sign-in" component={SignIn} />
+              <Tab.Screen
+                name="Home"
+                component={Home}
+                options={{
+                  tabBarIcon: ({ color, size }) => (
+                    <FontAwesomeIcon icon={faHouse} color={color} size={size} />
+                  ),
+                }}
+              />
+              <Tab.Screen
+                name="Connexion"
+                component={SignIn}
+                options={{
+                  tabBarIcon: ({ color, size }) => (
+                    <FontAwesomeIcon icon={faKey} color={color} size={size} />
+                  ),
+                }}
+              />
               {isAuthenticated ? (
-                <Tab.Screen name="FilePage" component={FileScreen} />
+                <Tab.Screen
+                  name="Mes fichiers"
+                  component={FileScreen}
+                  options={{
+                    tabBarIcon: ({ color, size }) => (
+                      <FontAwesomeIcon
+                        icon={faFile}
+                        color={color}
+                        size={size}
+                      />
+                    ),
+                  }}
+                />
               ) : null}
             </Tab.Navigator>
             <StatusBar style="light" />

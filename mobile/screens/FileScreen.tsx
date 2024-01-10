@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState, useContext } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
 import AuthenticatedPage from "../utils/hoc/authenticatedPage";
 import { useNavigation } from "@react-navigation/native";
 import { authContext } from "../utils/context/AuthContext";
@@ -41,12 +41,11 @@ const FileScreen = () => {
   };
 
   return isAuthenticated ? (
-    <>
-      <Text>Hello world </Text>
+    <ScrollView>
       <GridFile filesCarousel={privateFiles} title="Privés" />
       <GridFile filesCarousel={publicFiles} title="Publics" />
       <Button title="Déconnexion" onPress={disconnect} />
-    </>
+    </ScrollView>
   ) : (
     <>
       <Text>Not authenticated</Text>

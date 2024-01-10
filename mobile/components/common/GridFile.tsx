@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
 import CarouselFile from "./CarouselFile";
 import { handleDate } from "../../utils/DateFormat";
 import { fileContext } from "../../utils/context/FileContext";
@@ -32,46 +32,49 @@ const GridFile = ({ title, filesCarousel }: GridFileProps) => {
   };
 
   return (
-    <View style={styles.containerTitleCarousel}>
-      <View style={styles.containerTitle}>
-        <Text>{title}</Text>
-      </View>
-
-      <div className="container-carousel">
-        {/* <Slider {...settings}> */}
-        <View>
-          {filesCarousel.map((file) => (
-            <div className="main-card-carousel" key={file.id}>
-              {/* <div className="action-container">
-                <button
-                  onClick={() => HandleToggleAction(file.id)}
-                  className="action-button"
-                >
-                  <FontAwesomeIcon icon={faEllipsis} size={32} />
-                </button>
-                {isActionOpen === file.id ? <FileActionMenu /> : null}
-              </div> */}
-
-              <CarouselFile
-                filename={file.filename}
-                content={file.content}
-                createdAt={handleDate(file.createdAt)}
-                isPublic={file.isPublic}
-                language={file.language.name}
-              />
-            </div>
-          ))}
+    <>
+      <View>
+        <View style={styles.containerTitle}>
+          <Text style={styles.titleText}>{title}</Text>
         </View>
-      </div>
-    </View>
+
+        <View style={styles.containerCarousel}>
+          <View>
+            {filesCarousel.map((file) => (
+              <View style={styles.mainCardCarousel} key={file.id}>
+                <CarouselFile
+                  filename={file.filename}
+                  content={file.content}
+                  createdAt={handleDate(file.createdAt)}
+                  isPublic={file.isPublic}
+                  language={file.language.name}
+                />
+              </View>
+            ))}
+          </View>
+        </View>
+      </View>
+    </>
   );
 };
 
-const styles = {
-  containerTitleCarousel: {},
-  containerTitle: {},
-  contentInfo: {},
-  language: {},
-};
+const styles = StyleSheet.create({
+  containerTitle: {
+    backgroundColor: "#5340a9",
+    padding: 10,
+    alignItems: "center",
+  },
+  titleText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  containerCarousel: {
+    padding: 10,
+  },
+  mainCardCarousel: {
+    paddingBottom: 10,
+  },
+});
 
 export default GridFile;

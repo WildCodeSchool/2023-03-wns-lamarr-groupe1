@@ -27,7 +27,6 @@ const FormSignIn = ({ navigation }) => {
       const result = await signIn({
         variables: data,
       });
-      console.log(result);
       const token = result.data.signIn;
       await AsyncStorage.setItem("token", token);
       setIsAuth(true);
