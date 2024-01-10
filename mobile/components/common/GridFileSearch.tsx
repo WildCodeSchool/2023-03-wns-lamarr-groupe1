@@ -2,19 +2,19 @@ import { ListingFile } from "./ListingFile";
 import { handleDate } from "../../utils/DateFormat";
 import AddNewInteraction from "./form/FormAddInteraction";
 import { useGetProfile } from "../../utils/hook/getProfile";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-// import FileActionMenu from "./dropdown/FileActionMenu";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import FileActionMenu from "./dropdown/FileActionMenu";
 import { useContext, useState } from "react";
 import { fileContext } from "../../utils/context/FileContext";
+import searchFiles from "../../styles/SearchFiles";
+
 import {
 	Text,
 	View,
 	SafeAreaView,
-	Button,
-	TextInput,
+	TouchableOpacity,
 	FlatList,
-	StyleSheet,
 } from "react-native";
 
 type File = {
@@ -50,13 +50,11 @@ export type GridFileProps = {
 	value: string;
 	valueFilter: string;
 	refetch: () => void;
+	isFocused?: boolean;
 };
-const GridFileSearch = ({
-	files,
-	value,
-	valueFilter,
-	refetch,
-}: GridFileProps) => {
+const GridFileSearch = (
+	{ files, value, valueFilter, refetch, isFocused }: GridFileProps,
+) => {
 	const { setFileId } = useContext(fileContext);
 	const profile = useGetProfile();
 
@@ -89,11 +87,37 @@ const GridFileSearch = ({
 		return r;
 	};
 
+	const handleFilter = () => {
+		return files.filter((element: any) =>
+			valueFilter
+				? (handleString(element.filename).includes(handleString(value)) ||
+						handleString(handleDate(element.createdAt)).includes(
+							handleString(value)
+						) ||
+						handleString(element.language.name).includes(
+							handleString(value)
+						)) &&
+				  handleString(element.language.name).includes(
+						handleString(valueFilter)
+				  )
+				: handleString(element.filename).includes(handleString(value)) ||
+				  handleString(handleDate(element.createdAt)).includes(
+						handleString(value)
+				  ) ||
+				  handleString(element.language.name).includes(handleString(value))
+		);
+	};
+
 	const FileItem = ({ file }) => {
 		return (
-			<View style={styles.item}>
-				<View>
-					{/* {isActionOpen === file.id ? <FileActionMenu /> : null} */}
+			<View style={searchFiles.card}>
+				<View style={searchFiles.actionContainer}>
+					<TouchableOpacity onPress={() => HandleToggleAction(file.id)}>
+						<FontAwesomeIcon icon={faEllipsis} size={28} />
+					</TouchableOpacity>
+					{isActionOpen === file.id ? (
+						<FileActionMenu isFocused={isFocused} />
+					) : null}
 				</View>
 				<View>
 					<ListingFile
@@ -118,51 +142,14 @@ const GridFileSearch = ({
 	};
 
 	return (
-		<SafeAreaView style={styles.app}>
+		<SafeAreaView style={searchFiles.cardList}>
 			<FlatList
-				data={files.filter((element: any) =>
-					valueFilter
-						? (handleString(element.filename).includes(handleString(value)) ||
-								handleString(handleDate(element.createdAt)).includes(
-									handleString(value)
-								) ||
-								handleString(element.language.name).includes(
-									handleString(value)
-								)) &&
-						  handleString(element.language.name).includes(
-								handleString(valueFilter)
-						  )
-						: handleString(element.filename).includes(handleString(value)) ||
-						  handleString(handleDate(element.createdAt)).includes(
-								handleString(value)
-						  ) ||
-						  handleString(element.language.name).includes(handleString(value))
-				)}
-				renderItem={({item}) => <FileItem file={item} />}
+				data={handleFilter()}
+				renderItem={({ item }) => <FileItem file={item} />}
 				keyExtractor={(item) => item.id.toString()}
 			/>
 		</SafeAreaView>
 	);
 };
-const styles = StyleSheet.create({
-	app: {
-		marginHorizontal: "auto",
-		width: "auto",
-	},
-	item: {
-		flex: 1,
-		backgroundColor: "white",
-		borderRadius: 8,
-		paddingHorizontal: 5,
-		width: "100%",
-		marginVertical: 10,
-	},
-	card: {
-		backgroundColor: "white",
-		borderRadius: 8,
-		width: "100%",
-		marginVertical: 10,
-	},
-});
 
 export default GridFileSearch;

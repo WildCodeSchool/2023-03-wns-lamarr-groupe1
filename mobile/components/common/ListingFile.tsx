@@ -1,5 +1,6 @@
 import React from "react";
-import { Text, View, Image, Button } from "react-native";
+import { Text, View, Image } from "react-native";
+import searchFiles from "../../styles/SearchFiles";
 
 
 interface IFileData {
@@ -19,18 +20,15 @@ export const ListingFile = (fileInfo: IFileData, {navigation}) => {
 		<View>
 			<View>
 				<Image
-					style={{
-						resizeMode: "contain",
-						maxWidth: "100%",
-					}}
+					style={searchFiles.cardImg}
 					source={require("../../assets/img/our_project.png")}
 					alt="Illustration page d'accueil"
 				/>
 			</View>
-			<View>
-				<Text>{fileInfo.filename}</Text>
-				<Text>{fileInfo.createdAt}</Text>
-				<Text>{fileInfo.language}</Text>
+			<View style={searchFiles.fileInfo}>
+				<Text style={searchFiles.filename}>{fileInfo.filename}</Text>
+				<Text style={searchFiles.date}>{fileInfo.createdAt}</Text>
+				<Text style={searchFiles.language}>{fileInfo.language}</Text>
 			</View>
 		</View>
 	);
