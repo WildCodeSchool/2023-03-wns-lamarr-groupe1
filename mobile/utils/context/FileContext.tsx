@@ -89,7 +89,6 @@ export const FileProvider = ({ children }: FileProviderProps) => {
     }
     return null;
   };
-
   const downloadFile = (code: string) => {
     if (fileData && fileData.getFile) {
       const languageId = fileData.getFile.language;
