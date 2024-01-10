@@ -17,21 +17,6 @@ import {
 	FlatList,
 } from "react-native";
 
-type File = {
-	id: number;
-	filename: string;
-	content?: string;
-	createdAt: string;
-	isPublic: boolean;
-	language: {
-		name: string;
-	};
-	interactions: Array<{
-		type: string;
-		user: { username: string };
-	}>;
-};
-
 export type GridFileProps = {
 	files: Array<{
 		id: number;

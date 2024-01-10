@@ -25,8 +25,8 @@ import { useContext, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const httpLink = createHttpLink({
-	//uri: "http://192.168.1.35:5000", //Gautier
-	uri: "http://192.168.1.12:5000", //Christopher
+	uri: "http://192.168.1.35:5000", //Gautier
+	//uri: "http://192.168.1.12:5000", //Christopher
 	//uri: "http://192.168.1.119:5000", //Flora
 	//uri: "http://192.168.1.4:5000", //Khemis
 	fetchOptions: {
@@ -50,8 +50,8 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const apolloClient = new ApolloClient({
-	//uri: "http://192.168.1.35:5000", //Gautier
-	uri: "http://192.168.1.12:5000", //Christopher
+	uri: "http://192.168.1.35:5000", //Gautier
+	//uri: "http://192.168.1.12:5000", //Christopher
 	//uri: "http://192.168.1.119:5000", //Flora
 	//uri: "http://192.168.1.4:5000", //Khemis
 	link: authLink.concat(httpLink),
