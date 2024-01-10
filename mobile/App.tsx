@@ -6,6 +6,8 @@ import {
 	SignIn,
 	Profile,
 	FileScreen,
+	Pricing,
+	SignUp,
 	SearchFiles,
 } from "./screens/ExportPages";
 import {
@@ -20,6 +22,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authContext } from "./utils/context/AuthContext";
 import { FileProvider } from "./utils/context/FileContext";
 import { useContext, useState } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const httpLink = createHttpLink({
 	//uri: "http://192.168.1.35:5000", //Gautier
@@ -56,6 +59,7 @@ const apolloClient = new ApolloClient({
 });
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -64,13 +68,21 @@ export default function App() {
 		setIsAuthenticated(value);
 	};
 
+	const HomeStack = () => (
+		<Stack.Navigator>
+			<Stack.Screen name="Home" component={Home} />
+			<Stack.Screen name="Pricing" component={Pricing} />
+			<Stack.Screen name="Sign-up" component={SignUp} />
+		</Stack.Navigator>
+	);
+
 	return (
 		<ApolloProvider client={apolloClient}>
 			<authContext.Provider value={{ isAuthenticated, setIsAuth }}>
 				<FileProvider>
 					<NavigationContainer>
 						<Tab.Navigator>
-							<Tab.Screen name="Home" component={Home} />
+							<Tab.Screen name="Home" component={HomeStack} />
 							<Tab.Screen name="Sign-in" component={SignIn} />
 							<Tab.Screen name="Search-files" component={SearchFiles} />
 							{isAuthenticated ? (
