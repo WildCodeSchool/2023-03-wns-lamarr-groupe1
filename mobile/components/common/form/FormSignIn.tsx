@@ -35,7 +35,6 @@ const FormSignIn = ({ navigation }) => {
       const result = await signIn({
         variables: data,
       });
-      console.log(result);
       const token = result.data.signIn;
       await AsyncStorage.setItem("token", token);
       setTimeout(() => {
@@ -43,8 +42,8 @@ const FormSignIn = ({ navigation }) => {
         setTimeout(() => {
           setToast(false);
           navigation.navigate("Home");
-        }, 3000);
-      }, 1000);
+        }, 500);
+      }, 500);
       setIsAuth(true);
     } catch (error) {
       setIsAuth(false);

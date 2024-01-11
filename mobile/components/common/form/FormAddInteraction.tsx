@@ -1,11 +1,10 @@
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { NEW_INTERACTION_MUTATION } from "../../../graphql/mutations/NEW_INTERACTION_MUTATION";
 import { useMutation } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { INewInteractionProps } from "../../../utils/interface/INewInteraction";
-import { Text, View, TouchableOpacity, Button, TextInput } from "react-native";
-import { useEffect, useState } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
 import searchFiles from "../../../styles/SearchFiles";
 import { LinearGradient } from "expo-linear-gradient";
 

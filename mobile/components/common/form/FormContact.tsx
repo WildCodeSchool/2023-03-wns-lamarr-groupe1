@@ -26,7 +26,6 @@ const FormContact = () => {
 
   const {
     control,
-    register,
     handleSubmit,
     setError,
     formState: { errors },

@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import CarouselFile from "./CarouselFile";
 import { handleDate } from "../../utils/DateFormat";
 import { fileContext } from "../../utils/context/FileContext";
+
 export type GridFileProps = {
   filesCarousel: Array<{
     id: number;
@@ -19,6 +20,8 @@ export type GridFileProps = {
 
 const GridFile = ({ title, filesCarousel }: GridFileProps) => {
   const { setFileId } = useContext(fileContext);
+
+
 
   const [isActionOpen, setIsActionOpen] = useState<number | null>(null);
 
