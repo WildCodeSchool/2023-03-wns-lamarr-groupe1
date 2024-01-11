@@ -29,7 +29,7 @@ const FileScreen = () => {
   };
 
   return isAuthenticated ? (
-    <View>
+    <View style={{ flex: 1 }}>
       <GridFile
         filesCarousel={privateFiles}
         title="Privés"
