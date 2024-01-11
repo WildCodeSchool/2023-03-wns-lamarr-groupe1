@@ -30,6 +30,12 @@ const FormSignIn = ({ navigation }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IuserSignIn>({ mode: "onBlur" });
+
+  const handleLinkPress = (value) => {
+    // Action à effectuer lorsque le lien est pressé
+    navigation.navigate("S'incrire'", { type: value }); // Remplacez par l'action souhaitée
+  };
+
   const onSubmit: SubmitHandler<IuserSignIn> = async (data) => {
     try {
       const result = await signIn({
@@ -37,6 +43,7 @@ const FormSignIn = ({ navigation }) => {
       });
       const token = result.data.signIn;
       await AsyncStorage.setItem("token", token);
+      setIsAuth(true);
       setTimeout(() => {
         setToast(true);
         setTimeout(() => {
@@ -44,7 +51,6 @@ const FormSignIn = ({ navigation }) => {
           navigation.navigate("Home");
         }, 500);
       }, 500);
-      setIsAuth(true);
     } catch (error) {
       setIsAuth(false);
       console.log(error);
@@ -63,12 +69,12 @@ const FormSignIn = ({ navigation }) => {
           <Text
             style={[styles.text, styles.textAlignCenter, { color: "#fff" }]}
           >
-            Bonjour ! Renseigner vos coordonnées pour vous connecter
+            Bonjour ! Renseignez vos coordonnées pour vous connecter
           </Text>
           {toast && (
             <View>
               <Text style={[styles.success, styles.textAlignCenter]}>
-                Inscription réussie! Vous allez être redirigé vers la page
+                Connexion réussie! Vous allez être redirigé vers la page
                 d'accueil.
               </Text>
             </View>
@@ -152,7 +158,7 @@ const FormSignIn = ({ navigation }) => {
           Pas encore de compte ?{" "}
           <Text
             style={[styles.text, styles.textAlignCenter, { color: "#849BCE" }]}
-            onPress={() => navigation.navigate("File")}
+            onPress={() => handleLinkPress("free")}
           >
             Inscrivez-vous !
           </Text>
