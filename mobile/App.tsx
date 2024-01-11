@@ -32,6 +32,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { REACT_APP_GRAPHQL_URI } from "@env";
+import { Title } from "react-native-paper";
 
 const httpLink = createHttpLink({
   uri: REACT_APP_GRAPHQL_URI,
@@ -73,7 +74,11 @@ export default function App() {
 
   const HomeStack = () => (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ title: "Accueil" }}
+      />
       <Stack.Screen name="Pricing" component={Pricing} />
       <Stack.Screen name="S'inscrire" component={SignUp} />
     </Stack.Navigator>

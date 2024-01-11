@@ -6,6 +6,11 @@ const searchFiles = StyleSheet.create({
     width: "auto",
     paddingBottom: 120,
   },
+  cardListMyfiles: {
+    marginHorizontal: "auto",
+    width: "auto",
+    paddingBottom: 120,
+  },
   card: {
     flex: 1,
     backgroundColor: "white",

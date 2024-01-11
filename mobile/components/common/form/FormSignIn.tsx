@@ -33,7 +33,7 @@ const FormSignIn = ({ navigation }) => {
 
   const handleLinkPress = (value) => {
     // Action à effectuer lorsque le lien est pressé
-    navigation.navigate("S'inscrire", { type: value }); // Remplacez par l'action souhaitée
+    navigation.navigate("S'incrire'", { type: value }); // Remplacez par l'action souhaitée
   };
 
   const onSubmit: SubmitHandler<IuserSignIn> = async (data) => {
@@ -43,6 +43,7 @@ const FormSignIn = ({ navigation }) => {
       });
       const token = result.data.signIn;
       await AsyncStorage.setItem("token", token);
+      setIsAuth(true);
       setTimeout(() => {
         setToast(true);
         setTimeout(() => {
@@ -50,7 +51,6 @@ const FormSignIn = ({ navigation }) => {
           navigation.navigate("Home");
         }, 500);
       }, 500);
-      setIsAuth(true);
     } catch (error) {
       setIsAuth(false);
       console.log(error);

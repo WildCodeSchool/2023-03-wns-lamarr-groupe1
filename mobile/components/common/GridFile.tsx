@@ -86,10 +86,7 @@ const GridFile = ({ title, filesCarousel, refetch }: GridFileProps) => {
   };
 
   return (
-    <SafeAreaView style={searchFiles.cardList}>
-      <View style={styles.containerTitle}>
-        <Text style={styles.titleText}>{title}</Text>
-      </View>
+    <SafeAreaView style={searchFiles.cardListMyfiles}>
       <FlatList
         data={filesCarousel}
         renderItem={({ item }) => <FileItem file={item} />}
@@ -98,18 +95,5 @@ const GridFile = ({ title, filesCarousel, refetch }: GridFileProps) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  containerTitle: {
-    backgroundColor: "#5340a9",
-    padding: 10,
-    alignItems: "center",
-  },
-  titleText: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-});
 
 export default GridFile;
