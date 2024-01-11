@@ -50,12 +50,12 @@ const HomePage = ({ navigation }) => {
               Nunc
             </Text>
             <View style={styles.flex}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.customButton}
                 onPress={handleButtonClick}
               >
                 <Text style={styles.buttonText}>Commencer</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity onPress={handleLinkPress}>
                 <Text style={(styles.linkText, styles.center)}>
                   En savoir plus

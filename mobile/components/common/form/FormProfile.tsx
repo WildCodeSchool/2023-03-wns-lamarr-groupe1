@@ -8,11 +8,11 @@ import profileStyles from '../../../styles/ProfileStyles';
 
 
 interface IuserProfile {
-	firstname: string;
+  firstname: string;
   lastname: string;
   username: string;
   email: string;
-	password: string;
+  password: string;
 }
 
 const FormProfile = () => {
@@ -27,10 +27,10 @@ const FormProfile = () => {
 
   useEffect(() => {
     if (data?.getProfile) {
-      setValue('firstname', data.getProfile.firstname);
-      setValue('lastname', data.getProfile.lastname);
-      setValue('username', data.getProfile.username);
-      setValue('email', data.getProfile.email);
+      setValue("firstname", data.getProfile.firstname);
+      setValue("lastname", data.getProfile.lastname);
+      setValue("username", data.getProfile.username);
+      setValue("email", data.getProfile.email);
     }
   }, [data]);
 
@@ -46,7 +46,10 @@ const FormProfile = () => {
     const input = {
       ...formData,
       email: formData.email !== userInfo?.email ? formData.email : undefined,
-      username: formData.username !== userInfo?.username ? formData.username : undefined,
+      username:
+        formData.username !== userInfo?.username
+          ? formData.username
+          : undefined,
     };
 
     try {
@@ -57,103 +60,107 @@ const FormProfile = () => {
       refetch();
       handlerValidation();
     } catch (error) {
-      Alert.alert('Error', 'An error occurred while updating the user.');
+      Alert.alert("Error", "An error occurred while updating the user.");
     }
   };
 
   return (
     <View style={profileStyles.container}>
       <Text style={profileStyles.title}>Compte</Text>
-      <Text style={profileStyles.subtitle}>Modifier vos coordonnées !</Text>
+      <Text style={profileStyles.subtitle}>Modifiez vos coordonnées !</Text>
 
       <View style={profileStyles.inputs}>
-      <Controller
-        control={control}
-        render={({ field }) => (
-          <TextInput
-            style={profileStyles.textInput}
-            placeholder="Prénom"
-            value={field.value}
-            onChangeText={(text) => field.onChange(text)}
-          />
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              style={profileStyles.textInput}
+              placeholder="Prénom"
+              value={field.value}
+              onChangeText={(text) => field.onChange(text)}
+            />
+          )}
+          name="firstname"
+        />
+        {errors.firstname && <Text>{errors.firstname.message}</Text>}
+
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              style={profileStyles.textInput}
+              placeholder="Nom"
+              value={field.value}
+              onChangeText={(text) => field.onChange(text)}
+            />
+          )}
+          name="lastname"
+        />
+        {errors.lastname && <Text>{errors.lastname.message}</Text>}
+
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              style={profileStyles.textInput}
+              placeholder="Pseudo"
+              value={field.value}
+              onChangeText={(text) => field.onChange(text)}
+            />
+          )}
+          name="username"
+        />
+        {errors.username && <Text>{errors.username.message}</Text>}
+
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              style={profileStyles.textInput}
+              placeholder="Email"
+              value={field.value}
+              onChangeText={(text) => field.onChange(text)}
+            />
+          )}
+          name="email"
+        />
+        {errors.email && <Text>{errors.email.message}</Text>}
+
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              style={profileStyles.textInput}
+              placeholder="Mot de passe (optionnel)"
+              value={field.value}
+              onChangeText={(text) => field.onChange(text)}
+            />
+          )}
+          name="password"
+        />
+        {errors.password && <Text>{errors.password.message}</Text>}
+
+        {validation && (
+          <View>
+            <Text>Les modifications ont bien été sauvegardées !</Text>
+          </View>
         )}
-        name="firstname"
-      />
-      {errors.firstname && <Text>{errors.firstname.message}</Text>}
 
-      <Controller
-        control={control}
-        render={({ field }) => (
-          <TextInput
-            style={profileStyles.textInput}
-            placeholder="Nom"
-            value={field.value}
-            onChangeText={(text) => field.onChange(text)}
-          />
+        <TouchableOpacity
+          style={profileStyles.button}
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Text style={profileStyles.buttonText}>Sauvegarder</Text>
+        </TouchableOpacity>
+        {validation && (
+          <View>
+            <Text style={profileStyles.validationText}>
+              Les modifications ont bien été sauvegardées !
+            </Text>
+          </View>
         )}
-        name="lastname"
-      />
-      {errors.lastname && <Text>{errors.lastname.message}</Text>}
-
-      <Controller
-        control={control}
-        render={({ field }) => (
-          <TextInput
-            style={profileStyles.textInput}
-            placeholder="Pseudo"
-            value={field.value}
-            onChangeText={(text) => field.onChange(text)}
-          />
-        )}
-        name="username"
-      />
-      {errors.username && <Text>{errors.username.message}</Text>}
-
-      <Controller
-        control={control}
-        render={({ field }) => (
-          <TextInput
-            style={profileStyles.textInput}
-            placeholder="Email"
-            value={field.value}
-            onChangeText={(text) => field.onChange(text)}
-          />
-        )}
-        name="email"
-      />
-      {errors.email && <Text>{errors.email.message}</Text>}
-
-      <Controller
-        control={control}
-        render={({ field }) => (
-          <TextInput
-            style={profileStyles.textInput}
-            placeholder="Mot de passe (optionnel)"
-            value={field.value}
-            onChangeText={(text) => field.onChange(text)}
-          />
-        )}
-        name="password"
-      />
-      {errors.password && <Text>{errors.password.message}</Text>}
-
-      {validation && (
-        <View>
-          <Text>Les modifications ont bien été sauvegardées !</Text>
-        </View>
-      )}
-
-      <TouchableOpacity style={profileStyles.button} onPress={handleSubmit(onSubmit)}>
-        <Text style={profileStyles.buttonText}>Sauvegarder</Text>
-      </TouchableOpacity>
-      {validation && (
-    <View>
-      <Text style={profileStyles.validationText}>Les modifications ont bien été sauvegardées !</Text>
+      </View>
     </View>
-  )}
-  </View>
-  </View>
-  
   );
 };
 

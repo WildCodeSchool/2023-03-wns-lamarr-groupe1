@@ -1,8 +1,23 @@
 import React, { useContext, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import CarouselFile from "./CarouselFile";
 import { handleDate } from "../../utils/DateFormat";
 import { fileContext } from "../../utils/context/FileContext";
+import searchFiles from "../../styles/SearchFiles";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import FileActionMenu from "./dropdown/FileActionMenu";
+import AddNewInteraction from "./form/FormAddInteraction";
+import { useGetProfile } from "../../utils/hook/getProfile";
 
 export type GridFileProps = {
   filesCarousel: Array<{
@@ -14,15 +29,19 @@ export type GridFileProps = {
     language: {
       name: string;
     };
+    interactions: Array<{
+      type: string;
+      user: { username: string };
+    }>;
   }>;
+
   title: string;
+  refetch: () => void;
 };
 
-const GridFile = ({ title, filesCarousel }: GridFileProps) => {
+const GridFile = ({ title, filesCarousel, refetch }: GridFileProps) => {
   const { setFileId } = useContext(fileContext);
-
-
-
+  const profile = useGetProfile();
   const [isActionOpen, setIsActionOpen] = useState<number | null>(null);
 
   const HandleToggleAction = (id: number) => {
@@ -34,47 +53,47 @@ const GridFile = ({ title, filesCarousel }: GridFileProps) => {
     setFileId(id);
   };
 
-  return (
-    <View style={styles.containerTitleCarousel}>
-      <View style={styles.containerTitle}>
-        <Text>{title}</Text>
-      </View>
-
-      <div className="container-carousel">
-        {/* <Slider {...settings}> */}
-        <View>
-          {filesCarousel.map((file) => (
-            <div className="main-card-carousel" key={file.id}>
-              {/* <div className="action-container">
-                <button
-                  onClick={() => HandleToggleAction(file.id)}
-                  className="action-button"
-                >
-                  <FontAwesomeIcon icon={faEllipsis} size={32} />
-                </button>
-                {isActionOpen === file.id ? <FileActionMenu /> : null}
-              </div> */}
-
-              <CarouselFile
-                filename={file.filename}
-                content={file.content}
-                createdAt={handleDate(file.createdAt)}
-                isPublic={file.isPublic}
-                language={file.language.name}
-              />
-            </div>
-          ))}
+  const FileItem = ({ file }) => {
+    return (
+      <View style={searchFiles.card}>
+        <View style={searchFiles.actionContainer}>
+          <TouchableOpacity onPress={() => HandleToggleAction(file.id)}>
+            <FontAwesomeIcon icon={faEllipsis} size={28} />
+          </TouchableOpacity>
+          {isActionOpen === file.id ? (
+            <FileActionMenu isFocused={false} />
+          ) : null}
         </View>
-      </div>
-    </View>
-  );
-};
+        <View>
+          <CarouselFile
+            filename={file.filename}
+            content={file.content}
+            createdAt={handleDate(file.createdAt)}
+            isPublic={file.isPublic}
+            language={file.language.name}
+          />
+        </View>
+        <View>
+          <AddNewInteraction
+            id={file.id}
+            interactions={file.interactions}
+            refetch={refetch}
+            username={profile?.username}
+          />
+        </View>
+      </View>
+    );
+  };
 
-const styles = {
-  containerTitleCarousel: {},
-  containerTitle: {},
-  contentInfo: {},
-  language: {},
+  return (
+    <SafeAreaView style={searchFiles.cardListMyfiles}>
+      <FlatList
+        data={filesCarousel}
+        renderItem={({ item }) => <FileItem file={item} />}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </SafeAreaView>
+  );
 };
 
 export default GridFile;

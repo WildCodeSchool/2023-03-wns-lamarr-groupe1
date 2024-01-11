@@ -223,10 +223,10 @@ const FormSignUp = ({ navigation, route }) => {
         </View>
 
         <Text style={[styles.text, styles.textAlignCenter, { color: "#fff" }]}>
-          Déjà de compte ?{" "}
+          Déjà un compte ?{" "}
           <Text
             style={[styles.text, styles.textAlignCenter, { color: "#849BCE" }]}
-            onPress={() => navigation.navigate("signIn")}
+            onPress={() => navigation.navigate("Connexion")}
           >
             Connectez-vous !
           </Text>
