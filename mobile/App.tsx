@@ -9,6 +9,7 @@ import {
 	Pricing,
 	SignUp,
 	SearchFiles,
+	Editor
 } from "./screens/ExportPages";
 import {
 	ApolloClient,
@@ -87,6 +88,7 @@ export default function App() {
 									<Tab.Screen name="Search-files" component={SearchFiles} />
 									<Tab.Screen name="FilePage" component={FileScreen} />
 									<Tab.Screen name="Profile" component={Profile} />
+									<Tab.Screen name="Editor" component={Editor} />
 								</>
 							) : (
 								<>

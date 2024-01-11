@@ -23,6 +23,7 @@ const FormProfile = () => {
 
   const [update, { loading }] = useMutation(UPDATE_USER);
   const userInfo = data?.getProfile;
+  console.log(userInfo);
   const [validation, setValidation] = useState(false);
 
   useEffect(() => {
