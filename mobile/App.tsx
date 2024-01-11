@@ -31,15 +31,13 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { REACT_APP_GRAPHQL_URI } from "@env";
 
 const httpLink = createHttpLink({
-  //uri: "http://192.168.1.35:5000", //Gautier
-  // uri: "http://192.168.1.12:5000", //Christopher
-  uri: "http://192.168.1.119:5000", //Flora
-  //uri: "http://192.168.1.4:5000", //Khemis
-  fetchOptions: {
-    mode: "no-cors",
-  },
+	uri: REACT_APP_GRAPHQL_URI,
+	fetchOptions: {
+		mode: "no-cors",
+	},
 });
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -58,12 +56,9 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const apolloClient = new ApolloClient({
-  //uri: "http://192.168.1.35:5000", //Gautier
-  // uri: "http://192.168.1.12:5000", //Christopher
-  uri: "http://192.168.1.119:5000", //Flora
-  //uri: "http://192.168.1.4:5000", //Khemis
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+	uri: REACT_APP_GRAPHQL_URI,
+	link: authLink.concat(httpLink),
+	cache: new InMemoryCache(),
 });
 
 const Tab = createBottomTabNavigator();
@@ -78,7 +73,7 @@ export default function App() {
 
   const HomeStack = () => (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home3" component={Home} />
       <Stack.Screen name="Pricing" component={Pricing} />
       <Stack.Screen name="S'inscrire" component={SignUp} />
     </Stack.Navigator>
@@ -90,39 +85,31 @@ export default function App() {
         <FileProvider>
           <NavigationContainer>
             <Tab.Navigator>
-              <Tab.Screen
-                name="Accueil"
-                component={HomeStack}
-                options={{
-                  tabBarIcon: ({ color, size }) => (
-                    <FontAwesomeIcon icon={faHouse} color={color} size={size} />
-                  ),
-                }}
-              />
-              <Tab.Screen
-                name="Parcourir"
-                component={SearchFiles}
-                options={{
-                  tabBarIcon: ({ color, size }) => (
-                    <FontAwesomeIcon
-                      icon={faMagnifyingGlass}
-                      color={color}
-                      size={size}
-                    />
-                  ),
-                }}
-              />
-              <Tab.Screen
-                name="Connexion"
-                component={SignIn}
-                options={{
-                  tabBarIcon: ({ color, size }) => (
-                    <FontAwesomeIcon icon={faKey} color={color} size={size} />
-                  ),
-                }}
-              />
               {isAuthenticated ? (
                 <>
+                <Tab.Screen
+              name="Accueil"
+              component={HomeStack}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <FontAwesomeIcon icon={faHouse} color={color} size={size} />
+                ),
+                headerShown: false
+              }}
+            />
+            <Tab.Screen
+              name="Parcourir"
+              component={SearchFiles}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    color={color}
+                    size={size}
+                  />
+                ),
+              }}
+            />
                   <Tab.Screen
                     name="Mes fichiers"
                     component={FileScreen}
@@ -150,7 +137,38 @@ export default function App() {
                     }}
                   />
                 </>
-              ) : null}
+              ) : <><Tab.Screen
+              name="Accueil"
+              component={HomeStack}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <FontAwesomeIcon icon={faHouse} color={color} size={size} />
+                ),
+                headerShown: false
+              }}
+            />
+            <Tab.Screen
+              name="Parcourir"
+              component={SearchFiles}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    color={color}
+                    size={size}
+                  />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Connexion"
+              component={SignIn}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <FontAwesomeIcon icon={faKey} color={color} size={size} />
+                ),
+              }}
+            /></>}
             </Tab.Navigator>
             <StatusBar style="light" />
           </NavigationContainer>

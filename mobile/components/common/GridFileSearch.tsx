@@ -8,29 +8,14 @@ import FileActionMenu from "./dropdown/FileActionMenu";
 import { useContext, useState } from "react";
 import { fileContext } from "../../utils/context/FileContext";
 import searchFiles from "../../styles/SearchFiles";
+import { authContext } from "../../utils/context/AuthContext";
 
 import {
-	Text,
 	View,
 	SafeAreaView,
 	TouchableOpacity,
 	FlatList,
 } from "react-native";
-
-type File = {
-	id: number;
-	filename: string;
-	content?: string;
-	createdAt: string;
-	isPublic: boolean;
-	language: {
-		name: string;
-	};
-	interactions: Array<{
-		type: string;
-		user: { username: string };
-	}>;
-};
 
 export type GridFileProps = {
 	files: Array<{
@@ -52,10 +37,15 @@ export type GridFileProps = {
 	refetch: () => void;
 	isFocused?: boolean;
 };
-const GridFileSearch = (
-	{ files, value, valueFilter, refetch, isFocused }: GridFileProps,
-) => {
+const GridFileSearch = ({
+	files,
+	value,
+	valueFilter,
+	refetch,
+	isFocused,
+}: GridFileProps) => {
 	const { setFileId } = useContext(fileContext);
+	const { isAuthenticated } = useContext(authContext);
 	const profile = useGetProfile();
 
 	const [isActionOpen, setIsActionOpen] = useState<number | null>(null);
@@ -129,14 +119,16 @@ const GridFileSearch = (
 						language={file?.language?.name}
 					/>
 				</View>
-				<View>
-					<AddNewInteraction
-						id={file.id}
-						interactions={file.interactions}
-						refetch={refetch}
-						username={profile?.username}
-					/>
-				</View>
+				{isAuthenticated ? (
+					<View>
+						<AddNewInteraction
+							id={file.id}
+							interactions={file.interactions}
+							refetch={refetch}
+							username={profile?.username}
+						/>
+					</View>
+				) : null}
 			</View>
 		);
 	};

@@ -1,11 +1,10 @@
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { NEW_INTERACTION_MUTATION } from "../../../graphql/mutations/NEW_INTERACTION_MUTATION";
 import { useMutation } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { INewInteractionProps } from "../../../utils/interface/INewInteraction";
-import { Text, View, TouchableOpacity, Button, TextInput } from "react-native";
-import { useEffect, useState } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
 import searchFiles from "../../../styles/SearchFiles";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -23,24 +22,14 @@ interface IFileData {
 }
 const AddNewInteraction = (file: IFileData) => {
 	const [addInteraction] = useMutation(NEW_INTERACTION_MUTATION);
-	const [checked, setChecked] = useState("");
-	let interactionValue = checked;
-
-	useEffect(() => {
-		setChecked(
-			file.interactions.find(
-				(i) => i.user.username === file.username
-			)?.type
-		);
-	});
+	let interactionValue = '';
 
 	const handleSetChecked = (value: string) => {
-		setChecked(value);
 		interactionValue = value;
 		setTimeout(handleSubmit(onSubmit), 500);
 	};
 
-	const { handleSubmit, control } = useForm<INewInteractionProps>({
+	const { handleSubmit } = useForm<INewInteractionProps>({
 		mode: "onBlur",
 	});
 	const onSubmit: SubmitHandler<INewInteractionProps> = async () => {
@@ -64,7 +53,9 @@ const AddNewInteraction = (file: IFileData) => {
 			<TouchableOpacity onPress={() => handleSetChecked("Like")}>
 				<LinearGradient
 					colors={
-						checked === "Like"
+						file.interactions.find(
+							(i) => i.user.username === file.username
+						)?.type === "Like"
 							? [
 									"rgba(133, 115, 215, 0.85)",
 									"#6351b4",
@@ -75,19 +66,25 @@ const AddNewInteraction = (file: IFileData) => {
 							: ["white", "white"]
 					}
 					style={
-						checked === "Like"
+						file.interactions.find(
+							(i) => i.user.username === file.username
+						)?.type === "Like"
 							? searchFiles.activeInterationContainer
 							: searchFiles.interactionContainer
 					}
 				>
 					<Text
 						style={
-							checked === "Like" ? searchFiles.active : searchFiles.inactive
+							file.interactions.find(
+								(i) => i.user.username === file.username
+							)?.type === "Like" ? searchFiles.active : searchFiles.inactive
 						}
 					>
 						<FontAwesomeIcon
 							style={
-								checked === "Like"
+								file.interactions.find(
+									(i) => i.user.username === file.username
+								)?.type === "Like"
 									? searchFiles.iconActive
 									: searchFiles.iconInactive
 							}
@@ -97,7 +94,9 @@ const AddNewInteraction = (file: IFileData) => {
 					</Text>
 					<Text
 						style={
-							checked === "Like"
+							file.interactions.find(
+								(i) => i.user.username === file.username
+							)?.type === "Like"
 								? searchFiles.iconActive
 								: searchFiles.iconInactive
 						}
@@ -110,7 +109,9 @@ const AddNewInteraction = (file: IFileData) => {
 			<TouchableOpacity onPress={() => handleSetChecked("Dislike")}>
 				<LinearGradient
 					colors={
-						checked === "Dislike"
+						file.interactions.find(
+							(i) => i.user.username === file.username
+						)?.type === "Dislike"
 							? [
 									"rgba(133, 115, 215, 0.85)",
 									"#6351b4",
@@ -121,19 +122,25 @@ const AddNewInteraction = (file: IFileData) => {
 							: ["white", "white"]
 					}
 					style={
-						checked === "Dislike"
+						file.interactions.find(
+							(i) => i.user.username === file.username
+						)?.type === "Dislike"
 							? searchFiles.activeInterationContainer
 							: searchFiles.interactionContainer
 					}
 				>
 					<Text
 						style={
-							checked === "Dislike" ? searchFiles.active : searchFiles.inactive
+							file.interactions.find(
+								(i) => i.user.username === file.username
+							)?.type === "Dislike" ? searchFiles.active : searchFiles.inactive
 						}
 					>
 						<FontAwesomeIcon
 							style={
-								checked === "Dislike"
+								file.interactions.find(
+									(i) => i.user.username === file.username
+								)?.type === "Dislike"
 									? searchFiles.iconActive
 									: searchFiles.iconInactive
 							}
@@ -143,7 +150,9 @@ const AddNewInteraction = (file: IFileData) => {
 					</Text>
 					<Text
 						style={
-							checked === "Dislike"
+							file.interactions.find(
+								(i) => i.user.username === file.username
+							)?.type === "Dislike"
 								? searchFiles.iconActive
 								: searchFiles.iconInactive
 						}

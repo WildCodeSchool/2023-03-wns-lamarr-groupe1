@@ -7,7 +7,7 @@ const ProfileScreen = () => {
 	return (
 		<>
 			<ScrollView> 
-				<FormProfile navigation={navigation} />
+				<FormProfile />
 			</ScrollView>
 		</>
 	);
