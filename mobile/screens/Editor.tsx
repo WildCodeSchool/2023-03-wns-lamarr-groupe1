@@ -1,12 +1,14 @@
 import CodeEditor, { CodeEditorSyntaxStyles } from '@rivascva/react-native-code-editor';
 import React, { useRef, useState, useEffect, useContext } from "react";
-import { View, Text, Button, ScrollView, TextInput } from "react-native";
+import { View, Text, Button, ScrollView, TextInput, SafeAreaView } from "react-native";
 import { useMutation, useQuery } from "@apollo/client";
 import { RAN_CODE } from "../graphql/mutations/RAN_CODE";
 import { SAVE_CODE } from "../graphql/mutations/SAVE_CODE";
 //import Layout from "components/common/layouts/Layout";
 import { useGetProfile } from "../utils/hook/getProfile";
 import { fileContext } from "../utils/context/FileContext";
+import { GET_FILE_QUERY } from "../graphql/queries/GET_FILE_QUERY";
+import { useFocusEffect } from '@react-navigation/native'
 
 const Editor = ( {navigation, route}): JSX.Element => {
   const [code, setCode] = useState<string>("");
@@ -15,12 +17,14 @@ const Editor = ( {navigation, route}): JSX.Element => {
   const [saveCode] = useMutation(SAVE_CODE);
   const [fileUser, setfileUser] = useState<string>("");
   const { id } = route.params
-  const { fileData, setFileId } = useContext(fileContext);
+  const codeEditorRef = useRef<TextInput>(null);
   let fileId: number | null = null;
   if (id) {
     fileId = parseInt(id);
-    setFileId(parseInt(id));
   }
+  const { data: fileData, refetch: fileRefetch } = useQuery(GET_FILE_QUERY, {
+    variables: { fileId },
+  });
 
   const profile = useGetProfile();
 
@@ -29,13 +33,20 @@ const Editor = ( {navigation, route}): JSX.Element => {
   const [showWebView, setShowWebView] = useState(true);
   const [showConsole, setShowConsole] = useState(true);
 
-  useEffect(() => {
+  useFocusEffect(() => {
+    
     if (fileData && fileData.getFile) {
       setCode(fileData.getFile.content);
       setfileUser(fileData.getFile.user.username);
       console.log(fileData.getFile);
     }
-  }, [fileData]);
+    return () => {
+      if (!navigation.isFocused()) {
+        setCode("")
+        setResult("")
+      }
+    }
+  });
 
   const handleCodeChange = (value: string) => {
     setCode(value);
@@ -88,19 +99,46 @@ const Editor = ( {navigation, route}): JSX.Element => {
   const toggleConsole = () => {
     setShowConsole(!showConsole);
   };
-
+console.log(fileId)
   return (
-    <CodeEditor
+    <View style={{ flexDirection: "column" }}>
+      {code ?
+        <ScrollView style={result ? {width: '100%', height: '70%'} : {width: '100%', height: '90%'}}>
+          <CodeEditor
         style={{
             fontSize: 20,
             inputLineHeight: 26,
             highlighterLineHeight: 26,
         }}
         language="javascript"
-        initialValue='test'
+        initialValue={code}
         syntaxStyle={CodeEditorSyntaxStyles.atomOneDark}
-        showLineNumbers
-    />
+      showLineNumbers
+        ref={codeEditorRef}
+        readOnly
+          />
+        </ScrollView>
+          
+        : null}
+      <View style={{height: "10%", padding: 10, justifyContent: 'center'}}>
+      <Button
+                title="Exécuter"
+                onPress={handleRunCode}
+                disabled={loading}
+              />
+      </View>
+      {result ?
+        <ScrollView style={{ backgroundColor: 'red' }}>
+      <Text style={{ fontWeight: "bold"}}>Console</Text>
+      <Text>{result}</Text>
+        </ScrollView>
+        : null}
+      
+      </View>
+      
+
+
+    
 );
 };
 

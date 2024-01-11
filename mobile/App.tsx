@@ -36,7 +36,7 @@ import { REACT_APP_GRAPHQL_URI } from "@env";
 import { Title } from "react-native-paper";
 
 const httpLink = createHttpLink({
-  uri: REACT_APP_GRAPHQL_URI,
+  uri: "http://192.168.1.35:5000",
   fetchOptions: {
     mode: "no-cors",
   },
@@ -58,7 +58,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const apolloClient = new ApolloClient({
-  uri: REACT_APP_GRAPHQL_URI,
+  uri: "http://192.168.1.35:5000",
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
@@ -76,12 +76,13 @@ export default function App() {
   const HomeStack = () => (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="Accueil"
         component={Home}
         options={{ title: "Accueil" }}
       />
       <Stack.Screen name="Pricing" component={Pricing} />
-      <Stack.Screen name="S'inscrire" component={SignUp} />
+			<Stack.Screen name="S'inscrire" component={SignUp} />
+			<Stack.Screen name="Editor" component={Editor} />
     </Stack.Navigator>
   );
 
@@ -93,9 +94,9 @@ export default function App() {
             <Tab.Navigator>
               {isAuthenticated ? (
                 <>
-				<Tab.Screen name="Editor" component={Editor} />
+				          
                   <Tab.Screen
-                    name="Accueil "
+                    name="Accueil"
                     component={HomeStack}
                     options={{
                       tabBarIcon: ({ color, size }) => (
@@ -106,7 +107,8 @@ export default function App() {
                         />
                       ),
                       headerShown: false,
-                    }}
+										}}
+										
                   />
                   <Tab.Screen
                     name="Parcourir"
