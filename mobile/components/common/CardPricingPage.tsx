@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 const CardPricingPage = ({ navigation }) => {
   const handleLinkPress = (value) => {
     // Action à effectuer lorsque le lien est pressé
-    navigation.navigate("Sign-up", { type: value}); // Remplacez par l'action souhaitée
+    navigation.navigate("S'inscrire", { type: value }); // Remplacez par l'action souhaitée
   };
   return (
     <View style={[styles.marginSection]}>
@@ -21,9 +21,7 @@ const CardPricingPage = ({ navigation }) => {
 
           <TouchableOpacity
             style={styles.customButton}
-            onPress={() =>
-              handleLinkPress('free')
-            }
+            onPress={() => handleLinkPress("free")}
           >
             <Text style={styles.buttonText}>En savoir plus</Text>
           </TouchableOpacity>
@@ -53,9 +51,7 @@ const CardPricingPage = ({ navigation }) => {
 
           <TouchableOpacity
             style={[styles.customButton, { backgroundColor: "#fff" }]}
-            onPress={() =>
-              handleLinkPress('expert')
-            }
+            onPress={() => handleLinkPress("expert")}
           >
             <Text style={(styles.buttonText, { color: "#5340a9" })}>
               En savoir plus

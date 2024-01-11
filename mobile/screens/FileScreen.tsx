@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState, useContext } from "react";
 import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
-import AuthenticatedPage from "../utils/hoc/authenticatedPage";
 import { useNavigation } from "@react-navigation/native";
 import { authContext } from "../utils/context/AuthContext";
 import GridFile from "../components/common/GridFile";
@@ -17,8 +16,8 @@ const FileScreen = () => {
   const navigation = useNavigation();
   //const { isShow } = useContext(fileContext);
 
-  const { privateFiles } = useGetPrivateFiles();
-  const { publicFiles } = useGetPublicFiles();
+  const { privateFiles, refetchPrivate } = useGetPrivateFiles();
+  const { publicFiles, refetchPublic } = useGetPublicFiles();
 
   const { isAuthenticated, setIsAuth } = useContext(authContext);
 
@@ -30,11 +29,19 @@ const FileScreen = () => {
   };
 
   return isAuthenticated ? (
-    <ScrollView>
-      <GridFile filesCarousel={privateFiles} title="Privés" />
-      <GridFile filesCarousel={publicFiles} title="Publics" />
+    <View>
+      <GridFile
+        filesCarousel={privateFiles}
+        title="Privés"
+        refetch={refetchPrivate}
+      />
+      <GridFile
+        filesCarousel={publicFiles}
+        title="Publics"
+        refetch={refetchPublic}
+      />
       <Button title="Déconnexion" onPress={disconnect} />
-    </ScrollView>
+    </View>
   ) : (
     <>
       <Text>Not authenticated</Text>

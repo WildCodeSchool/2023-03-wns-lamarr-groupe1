@@ -23,7 +23,13 @@ import { authContext } from "./utils/context/AuthContext";
 import { FileProvider } from "./utils/context/FileContext";
 import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faFile, faHouse, faKey } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFile,
+  faHouse,
+  faKey,
+  faMagnifyingGlass,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const httpLink = createHttpLink({
@@ -74,7 +80,7 @@ export default function App() {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Pricing" component={Pricing} />
-      <Stack.Screen name="Sign-up" component={SignUp} />
+      <Stack.Screen name="S'inscrire" component={SignUp} />
     </Stack.Navigator>
   );
 
@@ -85,7 +91,7 @@ export default function App() {
           <NavigationContainer>
             <Tab.Navigator>
               <Tab.Screen
-                name="Home"
+                name="Accueil"
                 component={HomeStack}
                 options={{
                   tabBarIcon: ({ color, size }) => (
@@ -94,7 +100,20 @@ export default function App() {
                 }}
               />
               <Tab.Screen
-                name="Sign-in"
+                name="Parcourir"
+                component={SearchFiles}
+                options={{
+                  tabBarIcon: ({ color, size }) => (
+                    <FontAwesomeIcon
+                      icon={faMagnifyingGlass}
+                      color={color}
+                      size={size}
+                    />
+                  ),
+                }}
+              />
+              <Tab.Screen
+                name="Connexion"
                 component={SignIn}
                 options={{
                   tabBarIcon: ({ color, size }) => (
@@ -102,11 +121,10 @@ export default function App() {
                   ),
                 }}
               />
-              <Tab.Screen name="Search-files" component={SearchFiles} />
               {isAuthenticated ? (
                 <>
                   <Tab.Screen
-                    name="FilePage"
+                    name="Mes fichiers"
                     component={FileScreen}
                     options={{
                       tabBarIcon: ({ color, size }) => (
@@ -118,7 +136,19 @@ export default function App() {
                       ),
                     }}
                   />
-                  <Tab.Screen name="Profile" component={Profile} />
+                  <Tab.Screen
+                    name="Profile"
+                    component={Profile}
+                    options={{
+                      tabBarIcon: ({ color, size }) => (
+                        <FontAwesomeIcon
+                          icon={faUser}
+                          color={color}
+                          size={size}
+                        />
+                      ),
+                    }}
+                  />
                 </>
               ) : null}
             </Tab.Navigator>
