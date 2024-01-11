@@ -10,11 +10,25 @@ interface IFileData {
   isPublic: boolean;
   language: string;
 }
+
+const getImageSource = (language: string) => {
+  switch (language.toLowerCase()) {
+    case "javascript":
+      return require("../../assets/img/javascriptlogo.png");
+    case "php":
+      return require("../../assets/img/phplogo.png");
+    case "typescript":
+      return require("../../assets/img/typescript.png");
+    default:
+      return require("../../assets/img/questionmarklogo.png");
+  }
+};
 const CarouselFile = (fileInfo: IFileData) => {
+  const imgSource = getImageSource(fileInfo.language);
   return (
     <div className="card-carousel">
       <div className="content-img">
-        <img src={ImageCode} alt="Preview du fichier" />
+        <img src={imgSource} alt="Preview du fichier" />
       </div>
       <div className="content-info">
         <h4>{fileInfo.filename}</h4>
