@@ -36,6 +36,7 @@ export type GridFileProps = {
 	valueFilter: string;
 	refetch: () => void;
 	isFocused?: boolean;
+	navigation: any;
 };
 const GridFileSearch = ({
 	files,
@@ -43,6 +44,7 @@ const GridFileSearch = ({
 	valueFilter,
 	refetch,
 	isFocused,
+	navigation,
 }: GridFileProps) => {
 	const { setFileId } = useContext(fileContext);
 	const { isAuthenticated } = useContext(authContext);
@@ -98,9 +100,9 @@ const GridFileSearch = ({
 		);
 	};
 
-	const FileItem = ({ file }) => {
+	const FileItem = ({ file, navigation }) => {
 		return (
-			<View style={searchFiles.card}>
+			<TouchableOpacity onPress={() => navigation.navigate("Editor", {id: file.id })} style={searchFiles.card}>
 				<View style={searchFiles.actionContainer}>
 					<TouchableOpacity onPress={() => HandleToggleAction(file.id)}>
 						<FontAwesomeIcon icon={faEllipsis} size={28} />
@@ -129,7 +131,7 @@ const GridFileSearch = ({
 						/>
 					</View>
 				) : null}
-			</View>
+			</TouchableOpacity>
 		);
 	};
 
@@ -137,7 +139,7 @@ const GridFileSearch = ({
 		<SafeAreaView style={searchFiles.cardList}>
 			<FlatList
 				data={handleFilter()}
-				renderItem={({ item }) => <FileItem file={item} />}
+				renderItem={({ item }) => <FileItem file={item} navigation={navigation} />}
 				keyExtractor={(item) => item.id.toString()}
 			/>
 		</SafeAreaView>

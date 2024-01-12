@@ -1,24 +1,21 @@
 import CodeEditor, { CodeEditorSyntaxStyles } from '@rivascva/react-native-code-editor';
-import React, { useRef, useState, useEffect, useContext } from "react";
-import { View, Text, Button, ScrollView, TextInput, SafeAreaView } from "react-native";
+import React, { useContext, useRef, useState} from "react";
+import { View, Text, Button, ScrollView, TextInput} from "react-native";
 import { useMutation, useQuery } from "@apollo/client";
 import { RAN_CODE } from "../graphql/mutations/RAN_CODE";
-import { SAVE_CODE } from "../graphql/mutations/SAVE_CODE";
-//import Layout from "components/common/layouts/Layout";
-import { useGetProfile } from "../utils/hook/getProfile";
-import { fileContext } from "../utils/context/FileContext";
 import { GET_FILE_QUERY } from "../graphql/queries/GET_FILE_QUERY";
 import { useFocusEffect } from '@react-navigation/native'
 import { Languages } from '@rivascva/react-native-code-editor/lib/typescript/languages';
+import { authContext } from "../utils/context/AuthContext";
 
 const Editor = ( {navigation, route}): JSX.Element => {
   const [code, setCode] = useState<string>("");
   const [language, setLanguage] = useState<string>("");
   const [result, setResult] = useState<string>("");
   const [runCode, { loading }] = useMutation(RAN_CODE);
-  const [saveCode] = useMutation(SAVE_CODE);
   const [fileUser, setfileUser] = useState<string>("");
   const { id } = route.params
+  const { isAuthenticated } = useContext(authContext);
   const codeEditorRef = useRef<TextInput>(null);
   let fileId: number | null = null;
   if (id) {
@@ -28,11 +25,6 @@ const Editor = ( {navigation, route}): JSX.Element => {
     variables: { fileId },
   });
 
-  const profile = useGetProfile();
-
-  const webViewRef = useRef<any>(null);
-  const resultRef = useRef<TextInput | null>(null);
-  const [showWebView, setShowWebView] = useState(true);
   const [showConsole, setShowConsole] = useState(true);
 
   useFocusEffect(() => {
@@ -50,10 +42,6 @@ const Editor = ( {navigation, route}): JSX.Element => {
       }
     }
   });
-
-  const handleCodeChange = (value: string) => {
-    setCode(value);
-  };
 
   const handleRunCode = async () => {
     if (fileId) {
@@ -76,37 +64,11 @@ const Editor = ( {navigation, route}): JSX.Element => {
     }
   };
 
-  const handleSaveCode = async () => {
-    if (fileId) {
-      const saveCodeId = fileId;
-      const update = {
-        content: code,
-      };
-      try {
-        await saveCode({
-          variables: {
-            update: update,
-            updateFileId: saveCodeId,
-          },
-        });
-      } catch (error: any) {
-        console.log(error, error);
-      }
-    }
-  };
-
-  const toggleWebView = () => {
-    setShowWebView(!showWebView);
-  };
-
-  const toggleConsole = () => {
-    setShowConsole(!showConsole);
-  };
 console.log(fileId)
   return (
     <View style={{ flexDirection: "column" }}>
       {code ?
-        <ScrollView style={result ? {width: '100%', height: '70%', backgroundColor: 'black'} : {width: '100%', height: '90%', backgroundColor: 'black'}}>
+        <ScrollView style={result && isAuthenticated ? {width: '100%', height: '70%', backgroundColor: 'black'} :  isAuthenticated ? {width: '100%', height: '90%', backgroundColor: 'black' } : {width: '100%', height: '100%', backgroundColor: 'black' }}>
           <CodeEditor
         style={{
             fontSize: 20,
@@ -124,15 +86,34 @@ console.log(fileId)
           />
         </ScrollView>
           
-        : null}
+        : 
+        <CodeEditor
+      style={{
+          fontSize: 20,
+          inputLineHeight: 26,
+          highlighterLineHeight: 26,
+          backgroundColor: 'black',
+          
+      }}
+      language={language ? language as Languages : "javascript"}
+      initialValue="// Write a code"
+      syntaxStyle={CodeEditorSyntaxStyles.atomOneDark}
+    showLineNumbers
+      ref={codeEditorRef}
+      readOnly
+        />
+      }
+      
+      {code && isAuthenticated ?
       <View style={{height: "10%", padding: 10, justifyContent: 'center'}}>
-      <Button
+       <Button
                 title="Exécuter"
                 onPress={handleRunCode}
                 disabled={loading}
               />
       </View>
-      {result ?
+      : null}
+      {result && isAuthenticated?
         <ScrollView style={{ height: '20%'}}>
       <Text style={{ fontWeight: "bold"}}>Console</Text>
       <Text>{result}</Text>
@@ -140,10 +121,6 @@ console.log(fileId)
         : null}
       
       </View>
-      
-
-
-    
 );
 };
 
