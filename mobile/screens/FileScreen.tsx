@@ -19,8 +19,7 @@ import {
   useGetPublicFiles,
 } from "../utils/hook/getProfile";
 
-const FileScreen = () => {
-  const navigation = useNavigation();
+const FileScreen = ({navigation}) => {
   const { privateFiles, refetchPrivate } = useGetPrivateFiles();
   const { publicFiles, refetchPublic } = useGetPublicFiles();
   const { isAuthenticated, setIsAuth } = useContext(authContext);
@@ -53,12 +52,14 @@ const FileScreen = () => {
           filesCarousel={publicFiles}
           title="Publics"
           refetch={refetchPublic}
+          navigation={navigation}
         />
       ) : (
         <GridFile
           filesCarousel={privateFiles}
           title="Privés"
-          refetch={refetchPrivate}
+            refetch={refetchPrivate}
+            navigation={navigation}
         />
       )}
 

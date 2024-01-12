@@ -37,9 +37,10 @@ export type GridFileProps = {
 
   title: string;
   refetch: () => void;
+  navigation: any;
 };
 
-const GridFile = ({ title, filesCarousel, refetch }: GridFileProps) => {
+const GridFile = ({ title, filesCarousel, refetch, navigation }: GridFileProps) => {
   const { setFileId } = useContext(fileContext);
   const profile = useGetProfile();
   const [isActionOpen, setIsActionOpen] = useState<number | null>(null);
@@ -53,9 +54,9 @@ const GridFile = ({ title, filesCarousel, refetch }: GridFileProps) => {
     setFileId(id);
   };
 
-  const FileItem = ({ file }) => {
+  const FileItem = ({ file, navigation }) => {
     return (
-      <View style={searchFiles.card}>
+      <TouchableOpacity onPress={() => navigation.navigate("Editor", {id: file.id })} style={searchFiles.card}>
         <View style={searchFiles.actionContainer}>
           <TouchableOpacity onPress={() => HandleToggleAction(file.id)}>
             <FontAwesomeIcon icon={faEllipsis} size={28} />
@@ -81,7 +82,7 @@ const GridFile = ({ title, filesCarousel, refetch }: GridFileProps) => {
             username={profile?.username}
           />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -89,7 +90,7 @@ const GridFile = ({ title, filesCarousel, refetch }: GridFileProps) => {
     <SafeAreaView style={searchFiles.cardListMyfiles}>
       <FlatList
         data={filesCarousel}
-        renderItem={({ item }) => <FileItem file={item} />}
+        renderItem={({ item }) => <FileItem file={item} navigation={navigation}  />}
         keyExtractor={(item) => item.id.toString()}
       />
     </SafeAreaView>

@@ -2,13 +2,14 @@ import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
-  Home,
-  SignIn,
-  Profile,
-  FileScreen,
-  Pricing,
-  SignUp,
-  SearchFiles,
+	Home,
+	SignIn,
+	Profile,
+	FileScreen,
+	Pricing,
+	SignUp,
+	SearchFiles,
+	Editor
 } from "./screens/ExportPages";
 import {
   ApolloClient,
@@ -35,10 +36,10 @@ import { REACT_APP_GRAPHQL_URI } from "@env";
 import { Title } from "react-native-paper";
 
 const httpLink = createHttpLink({
-  uri: REACT_APP_GRAPHQL_URI,
-  fetchOptions: {
-    mode: "no-cors",
-  },
+	uri: REACT_APP_GRAPHQL_URI,
+	fetchOptions: {
+		mode: "no-cors",
+	},
 });
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -57,9 +58,9 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const apolloClient = new ApolloClient({
-  uri: REACT_APP_GRAPHQL_URI,
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+	uri: REACT_APP_GRAPHQL_URI,
+	link: authLink.concat(httpLink),
+	cache: new InMemoryCache(),
 });
 
 const Tab = createBottomTabNavigator();
@@ -75,12 +76,13 @@ export default function App() {
   const HomeStack = () => (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="Accueil"
         component={Home}
         options={{ title: "Accueil" }}
       />
       <Stack.Screen name="Pricing" component={Pricing} />
-      <Stack.Screen name="S'inscrire" component={SignUp} />
+			<Stack.Screen name="S'inscrire" component={SignUp} />
+			<Stack.Screen name="Editor" component={Editor} />
     </Stack.Navigator>
   );
 
@@ -92,8 +94,9 @@ export default function App() {
             <Tab.Navigator>
               {isAuthenticated ? (
                 <>
+				          
                   <Tab.Screen
-                    name="Accueil "
+                    name="Accueil"
                     component={HomeStack}
                     options={{
                       tabBarIcon: ({ color, size }) => (
@@ -104,7 +107,8 @@ export default function App() {
                         />
                       ),
                       headerShown: false,
-                    }}
+										}}
+										
                   />
                   <Tab.Screen
                     name="Parcourir"
