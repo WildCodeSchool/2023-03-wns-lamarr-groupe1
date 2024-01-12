@@ -26,6 +26,7 @@ const CodingPage = () => {
 	
 	const [code, setCode] = useState<string>("");
 	const [result, setResult] = useState<string>("");
+	const [language, setLanguage] = useState<string>("");
 	const [runCode, { loading }] = useMutation(RAN_CODE);
 	const [saveCode] = useMutation(SAVE_CODE);
 	const [comments, setComments] = useState([]);
@@ -77,6 +78,7 @@ const CodingPage = () => {
 
 		if (fileData && fileData.getFile) {
 			setCode(fileData.getFile.content);
+			setLanguage(fileData.getFile.language.name);
 			setInteractions(fileData.getFile.interactions);
 			setfileUser(fileData.getFile.user.username);
 			console.log(fileData.getFile)
@@ -204,7 +206,7 @@ const CodingPage = () => {
 							<Editor
 								height="100%"
 								width="100%"
-								defaultLanguage="javascript"
+								defaultLanguage={language ? language : "javascript"}
 								defaultValue={code ? code : "// Write a code"}
 								onMount={handleEditorDidMount}
 								onChange={handleCodeChange as OnChange}
