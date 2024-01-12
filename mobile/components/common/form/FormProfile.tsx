@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
-import { useQuery, useMutation } from '@apollo/client';
-import { GET_PROFILE_INFO_QUERY } from '../../../graphql/queries/GET_PROFILE_INFO_QUERY';
-import { UPDATE_USER } from '../../../graphql/mutations/UPDATE_PROFILE';
-import profileStyles from '../../../styles/ProfileStyles';
-
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import { useForm, Controller } from "react-hook-form";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_PROFILE_INFO_QUERY } from "../../../graphql/queries/GET_PROFILE_INFO_QUERY";
+import { UPDATE_USER } from "../../../graphql/mutations/UPDATE_PROFILE";
+import profileStyles from "../../../styles/ProfileStyles";
 
 interface IuserProfile {
   firstname: string;
@@ -16,7 +15,12 @@ interface IuserProfile {
 }
 
 const FormProfile = () => {
-  const { control, handleSubmit, setValue, formState: { errors } } = useForm<IuserProfile>({ mode: "onBlur" });
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<IuserProfile>({ mode: "onBlur" });
   const { refetch, data } = useQuery(GET_PROFILE_INFO_QUERY, {
     variables: { filter: { isPublic: null } },
   });

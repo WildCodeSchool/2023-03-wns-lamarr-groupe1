@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { SIGN_UP_MUTATION } from "../../../graphql/mutations/SIGN_UP_MUTATION";
 import { useMutation } from "@apollo/client";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { authContext } from "../../../utils/context/AuthContext";
 
 interface IuserSignUp {
   firstname?: string;
@@ -25,6 +26,7 @@ const FormSignUp = ({ navigation, route }) => {
   const { type } = route.params;
   const [addUser, { loading }] = useMutation(SIGN_UP_MUTATION);
   const [toast, setToast] = useState(false);
+  const { setIsAuth } = useContext(authContext);
 
   const {
     control,
@@ -42,23 +44,10 @@ const FormSignUp = ({ navigation, route }) => {
     try {
       const result = await addUser({
         variables: { input },
-
-        // onError: (error) => {
-        //   const validationErrors: Record<string, string[]> =
-        //     extractValidationsErrors(error.graphQLErrors);
-        //   for (const fieldKey of Object.keys(validationErrors)) {
-        //     for (const message of validationErrors[fieldKey]) {
-        //       const testError = setError(fieldKey as keyof IuserSignUp, {
-        //         type: "manual",
-        //         message: message,
-        //       });
-        //       console.log(testError);
-        //     }
-        //   }
-        // },
       });
       const token = result.data.signUp;
       await AsyncStorage.setItem("token", token);
+      setIsAuth(true);
       setTimeout(() => {
         setToast(true);
         setTimeout(() => {

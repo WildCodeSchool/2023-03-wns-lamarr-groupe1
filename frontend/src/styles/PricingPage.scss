@@ -74,6 +74,7 @@
     }
 
     .container-pricing {
+      padding: 15px 0px;
       .price {
         font-weight: 900;
         font-size: 35px;
@@ -122,6 +123,7 @@
 
     .container-info {
       .content-info {
+        padding-bottom: 15px;
         @include flexCenterRow;
         p {
           padding-left: 10px;
@@ -140,7 +142,7 @@
 
     @include breakpoint(phone) {
       transform: translateY(0%);
-      width: 90%;
+      width: 70%;
       margin: 30px 0px;
     }
   }
