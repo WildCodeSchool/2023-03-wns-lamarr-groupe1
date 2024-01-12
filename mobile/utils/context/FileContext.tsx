@@ -75,47 +75,34 @@ export const FileProvider = ({ children }: FileProviderProps) => {
 
 	const downloadFile = async (code: string) => {
 		if (fileData && fileData.getFile) {
-			const dir = FileSystem.cacheDirectory + "creativeCode/";
 			const fileName = fileData.getFile.filename || `default_filename`;
-			const remoteUri = `http://192.168.1.12:8081/${dir}`;
-			const dirInfo = await FileSystem.getInfoAsync(dir);
-			if (!dirInfo.exists) {
-				console.log("creativeCode directory doesn't exist, creating…");
-				await FileSystem.makeDirectoryAsync(dir, { intermediates: true });
-			}
-			await FileSystem.StorageAccessFramework.createFileAsync(
-				dir,
-				fileName,
-				"Content-Type"
-			)
-				.then(async (uri) => {
-					await FileSystem.writeAsStringAsync(uri, code);
-				})
-				.catch((e) => console.log(e));
+			const dir =
+				FileSystem.StorageAccessFramework.getUriForDirectoryInRoot("Documents");
 
-			const result = await FileSystem.downloadAsync(
-				remoteUri,
-				FileSystem.documentDirectory + `${fileName}`
-			);
-			saveFile(result.uri, `${fileName}.txt`, result.headers["Content-Type"], code);
+			try {
+				saveFile(dir, `${fileName}.txt`, "Content-Type", code);
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	};
-	async function saveFile(uri, filename, mimetype, code) {
+	async function saveFile(dir, filename, mimetype, code) {
 		if (Platform.OS === "android") {
 			const permissions =
-				await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+				await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync(
+					dir
+				);
 
 			if (permissions.granted) {
-
-				await FileSystem.StorageAccessFramework.createFileAsync(
-					permissions.directoryUri,
-					filename,
-					mimetype
-				)
-					.then(async (uri) => {
-						await FileSystem.writeAsStringAsync(uri, code);
-					})
-					.catch((e) => console.log(e));
+				 await FileSystem.StorageAccessFramework.createFileAsync(
+						permissions.directoryUri,
+						filename,
+						mimetype
+					)
+						.then(async (uri) => {
+							await FileSystem.writeAsStringAsync(uri, code);
+						})
+						.catch((e) => console.log(e));
 			}
 		}
 	}
