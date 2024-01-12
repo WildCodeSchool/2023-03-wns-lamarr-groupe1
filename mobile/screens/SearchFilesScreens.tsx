@@ -31,6 +31,7 @@ const SearchFileScreens = ({ navigation }) => {
 					valueFilter={filteredTextValue}
 					refetch={refetch}
 					isFocused={navigation.isFocused()}
+					navigation={navigation}
 				/>
 			</View>
 		</View>

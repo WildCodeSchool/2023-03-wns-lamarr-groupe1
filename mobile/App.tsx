@@ -76,7 +76,7 @@ export default function App() {
   const HomeStack = () => (
     <Stack.Navigator>
       <Stack.Screen
-        name="Accueil"
+        name="Home"
         component={Home}
         options={{ title: "Accueil" }}
       />

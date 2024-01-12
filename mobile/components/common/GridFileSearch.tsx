@@ -13,31 +13,33 @@ import { authContext } from "../../utils/context/AuthContext";
 import { View, SafeAreaView, TouchableOpacity, FlatList } from "react-native";
 
 export type GridFileProps = {
-  files: Array<{
-    id: number;
-    filename: string;
-    content?: string;
-    createdAt: string;
-    isPublic: boolean;
-    interactions: Array<{
-      type: string;
-      user: { username: string };
-    }>;
-    language: {
-      name: string;
-    };
-  }>;
-  value: string;
-  valueFilter: string;
-  refetch: () => void;
-  isFocused?: boolean;
+	files: Array<{
+		id: number;
+		filename: string;
+		content?: string;
+		createdAt: string;
+		isPublic: boolean;
+		interactions: Array<{
+			type: string;
+			user: { username: string };
+		}>;
+		language: {
+			name: string;
+		};
+	}>;
+	value: string;
+	valueFilter: string;
+	refetch: () => void;
+	isFocused?: boolean;
+	navigation: any;
 };
 const GridFileSearch = ({
-  files,
-  value,
-  valueFilter,
-  refetch,
-  isFocused,
+	files,
+	value,
+	valueFilter,
+	refetch,
+	isFocused,
+	navigation,
 }: GridFileProps) => {
   const { setFileId } = useContext(fileContext);
   const { isAuthenticated } = useContext(authContext);
@@ -93,50 +95,50 @@ const GridFileSearch = ({
     );
   };
 
-  const FileItem = ({ file }) => {
-    return (
-      <View style={searchFiles.card}>
-        <View style={searchFiles.actionContainer}>
-          <TouchableOpacity onPress={() => HandleToggleAction(file.id)}>
-            <FontAwesomeIcon icon={faEllipsis} size={28} />
-          </TouchableOpacity>
-          {isActionOpen === file.id ? (
-            <FileActionMenu isFocused={isFocused} />
-          ) : null}
-        </View>
-        <View>
-          <ListingFile
-            id={file.id}
-            filename={file.filename}
-            content={file.content}
-            createdAt={handleDate(file.createdAt)}
-            isPublic={file.isPublic}
-            language={file?.language?.name}
-          />
-        </View>
-        {isAuthenticated ? (
-          <View>
-            <AddNewInteraction
-              id={file.id}
-              interactions={file.interactions}
-              refetch={refetch}
-              username={profile?.username}
-            />
-          </View>
-        ) : null}
-      </View>
-    );
-  };
+	const FileItem = ({ file, navigation }) => {
+		return (
+			<TouchableOpacity onPress={() => navigation.navigate("Editor", {id: file.id })} style={searchFiles.card}>
+				<View style={searchFiles.actionContainer}>
+					<TouchableOpacity onPress={() => HandleToggleAction(file.id)}>
+						<FontAwesomeIcon icon={faEllipsis} size={28} />
+					</TouchableOpacity>
+					{isActionOpen === file.id ? (
+						<FileActionMenu isFocused={isFocused} />
+					) : null}
+				</View>
+				<View>
+					<ListingFile
+						id={file.id}
+						filename={file.filename}
+						content={file.content}
+						createdAt={handleDate(file.createdAt)}
+						isPublic={file.isPublic}
+						language={file?.language?.name}
+					/>
+				</View>
+				{isAuthenticated ? (
+					<View>
+						<AddNewInteraction
+							id={file.id}
+							interactions={file.interactions}
+							refetch={refetch}
+							username={profile?.username}
+						/>
+					</View>
+				) : null}
+			</TouchableOpacity>
+		);
+	};
 
-  return (
-    <SafeAreaView style={searchFiles.cardList}>
-      <FlatList
-        data={handleFilter()}
-        renderItem={({ item }) => <FileItem file={item} />}
-        keyExtractor={(item) => item.id.toString()}
-      />
-    </SafeAreaView>
-  );
+	return (
+		<SafeAreaView style={searchFiles.cardList}>
+			<FlatList
+				data={handleFilter()}
+				renderItem={({ item }) => <FileItem file={item} navigation={navigation} />}
+				keyExtractor={(item) => item.id.toString()}
+			/>
+		</SafeAreaView>
+	);
 };
 
 export default GridFileSearch;
