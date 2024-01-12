@@ -36,10 +36,10 @@ import { REACT_APP_GRAPHQL_URI } from "@env";
 import { Title } from "react-native-paper";
 
 const httpLink = createHttpLink({
-  uri: "http://192.168.1.35:5000",
-  fetchOptions: {
-    mode: "no-cors",
-  },
+	uri: REACT_APP_GRAPHQL_URI,
+	fetchOptions: {
+		mode: "no-cors",
+	},
 });
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -58,9 +58,9 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const apolloClient = new ApolloClient({
-  uri: "http://192.168.1.35:5000",
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+	uri: REACT_APP_GRAPHQL_URI,
+	link: authLink.concat(httpLink),
+	cache: new InMemoryCache(),
 });
 
 const Tab = createBottomTabNavigator();
