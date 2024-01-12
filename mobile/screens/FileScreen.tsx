@@ -25,13 +25,6 @@ const FileScreen = ({navigation}) => {
   const { isAuthenticated, setIsAuth } = useContext(authContext);
   const [isPublic, setIsPublic] = useState(true);
 
-  const disconnect = async () => {
-    await AsyncStorage.removeItem("token");
-    setIsAuth(false);
-    //@ts-ignore
-    navigation.navigate("Connexion");
-  };
-
   return isAuthenticated ? (
     <View>
       <View style={styles.containerButtons}>
@@ -70,7 +63,7 @@ const FileScreen = ({navigation}) => {
         />
       )}
 
-      {/* <Button title="Déconnexion" onPress={disconnect} /> */}
+
     </View>
   ) : (
     <>

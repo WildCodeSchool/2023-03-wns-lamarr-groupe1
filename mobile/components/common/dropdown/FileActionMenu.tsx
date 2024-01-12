@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { fileContext } from "../../../utils/context/FileContext";
 import { SOFT_REMOVE_FILE_MUTATION } from "../../../graphql/mutations/SOFT_REMOVE_FILE_MUTATION";
 import { useMutation } from "@apollo/client";
@@ -12,7 +12,7 @@ import searchFiles from "../../../styles/SearchFiles";
 const FileActionMenu = ({ isFocused }) => {
   const { downloadFile, fileData, fileId, handleOpenModal, setIsCreate } =
     useContext(fileContext);
-  const [deleteFile, { loading }] = useMutation(SOFT_REMOVE_FILE_MUTATION, {
+  const [deleteFile] = useMutation(SOFT_REMOVE_FILE_MUTATION, {
     variables: { fileId },
   });
   const { refetchPrivate } = useGetPrivateFiles();
@@ -35,10 +35,10 @@ const FileActionMenu = ({ isFocused }) => {
           <TouchableOpacity
             onPress={() => downloadFile(fileData?.getFile.content)}
           >
-            <Text>Telecharger</Text>
+            <Text style={searchFiles.actionMenuContentText}>Telecharger</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleArchiveFile}>
-            <Text>Archiver</Text>
+            <Text style={searchFiles.actionMenuContentText}>Archiver</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -46,7 +46,7 @@ const FileActionMenu = ({ isFocused }) => {
           <TouchableOpacity
             onPress={() => downloadFile(fileData?.getFile.content)}
           >
-            <Text>Telecharger</Text>
+            <Text style={searchFiles.actionMenuContentText}>Telecharger</Text>
           </TouchableOpacity>
         </View>
       )}
