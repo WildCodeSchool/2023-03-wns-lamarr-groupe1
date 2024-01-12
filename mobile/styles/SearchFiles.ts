@@ -86,8 +86,15 @@ const searchFiles = StyleSheet.create({
     margin: 0,
   },
   actionMenuContent: {
-    paddingHorizontal: 10,
-    paddingVertical: 7,
+    flex: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 15,
+    gap: 12,
+  },
+  actionMenuContentText: {
+    color: "#5340a9",
+    fontWeight: "bold",
+    fontSize: 14,
   },
   interactionsContainer: {
     paddingHorizontal: 10,

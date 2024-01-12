@@ -33,7 +33,7 @@ const FormSignIn = ({ navigation }) => {
 
   const handleLinkPress = (value) => {
     // Action à effectuer lorsque le lien est pressé
-    navigation.navigate("S'incrire'", { type: value }); // Remplacez par l'action souhaitée
+    navigation.navigate("S'inscrire", { type: value }); // Remplacez par l'action souhaitée
   };
 
   const onSubmit: SubmitHandler<IuserSignIn> = async (data) => {

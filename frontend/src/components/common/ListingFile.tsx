@@ -1,5 +1,4 @@
 import React from "react";
-import ImageCode from "assets/img/our_project.png";
 import "styles/components/ListingFile.scss";
 import { useNavigate } from "react-router-dom";
 
